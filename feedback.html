@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="Envía sugerencias, errores o ideas para la DiosesmonWiki.">
+  <title>Feedback | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=9">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/feedback.css?v=3">
+  <script src="assets/js/feedback.js?v=3" defer></script>
+  <script src="assets/js/site-nav.js?v=5" defer></script>
+</head>
+<body>
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <span class="server-status"><i></i> DIOSESMON NETWORK · COBBLEMON</span>
+    </div>
+  </header>
+
+  <main class="fb-shell">
+    <section class="fb-hero">
+      <div class="fb-hero-copy">
+        <p class="eyebrow">BUZÓN DEL SERVIDOR</p>
+        <h1>Feedback</h1>
+        <p class="fb-lead">¿Viste un dato raro en la página, se te ocurrió una sección nueva o algo no funciona? Cuéntanos: cada mensaje llega directo al equipo de la wiki.</p>
+        <ul class="fb-tips">
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/rare-candy.png" alt="" width="30" height="30">Ideas y secciones nuevas</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png" alt="" width="30" height="30">Datos incorrectos o errores</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/town-map.png" alt="" width="30" height="30">Cosas difíciles de encontrar</li>
+        </ul>
+      </div>
+      <div class="fb-hero-art" aria-hidden="true">
+        <span class="fb-ball"><i></i></span>
+        <img class="fb-mon fb-mon-1" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="">
+        <img class="fb-mon fb-mon-2" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="">
+        <img class="fb-mon fb-mon-3" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/479.png" alt="">
+      </div>
+    </section>
+
+    <section class="fb-card" aria-labelledby="fb-form-title">
+      <form id="feedback-form" class="fb-form" novalidate>
+        <h2 id="fb-form-title"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="" width="34" height="34">Envía tu mensaje</h2>
+
+        <label class="fb-field">
+          <span class="fb-label">Nombre de usuario <em>*</em></span>
+          <span class="fb-input-wrap">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/exp-share.png" alt="" width="30" height="30">
+            <input id="fb-name" name="usuario" type="text" maxlength="40" autocomplete="nickname" placeholder="Tu nombre en el servidor" required>
+          </span>
+          <small class="fb-error" data-error-for="fb-name" hidden>Escribe tu nombre de usuario.</small>
+        </label>
+
+        <fieldset class="fb-field fb-kinds">
+          <legend class="fb-label">Tipo de mensaje</legend>
+          <label class="fb-kind"><input type="radio" name="tipo" value="Sugerencia" checked><span><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/rare-candy.png" alt="" width="30" height="30">Sugerencia</span></label>
+          <label class="fb-kind"><input type="radio" name="tipo" value="Error en la página"><span><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png" alt="" width="30" height="30">Error</span></label>
+          <label class="fb-kind"><input type="radio" name="tipo" value="Dato incorrecto"><span><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/town-map.png" alt="" width="30" height="30">Dato incorrecto</span></label>
+          <label class="fb-kind"><input type="radio" name="tipo" value="Otro"><span><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png" alt="" width="30" height="30">Otro</span></label>
+        </fieldset>
+
+        <label class="fb-field">
+          <span class="fb-label">Tu feedback o sugerencia <em>*</em></span>
+          <textarea id="fb-message" name="mensaje" rows="7" maxlength="2000" placeholder="Por ejemplo: «En la sección de… falta…» o «Sería genial tener una página de…»" required></textarea>
+          <span class="fb-meta"><small class="fb-error" data-error-for="fb-message" hidden>Escribe al menos 10 caracteres.</small><small class="fb-count" id="fb-count">0 / 2000</small></span>
+        </label>
+
+        <!-- Trampa para bots: las personas no ven este campo. -->
+        <input class="fb-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <button class="fb-submit" type="submit"><span class="fb-submit-ball" aria-hidden="true"></span><span class="fb-submit-text">Lanzar mensaje</span></button>
+        <p class="fb-status" id="fb-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="fb-done" id="fb-done" hidden>
+        <span class="fb-catch" aria-hidden="true"><i></i></span>
+        <h2>¡Mensaje capturado!</h2>
+        <p>Gracias, <strong id="fb-done-name"></strong>. Tu mensaje llegó al equipo de la wiki y lo revisaremos pronto.</p>
+        <button class="fb-again" type="button" id="fb-again">Enviar otro mensaje</button>
+      </div>
+    </section>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · FEEDBACK</span><span>Los mensajes se envían por correo al equipo de la wiki.</span></footer>
+  </main>
+</body>
+</html>

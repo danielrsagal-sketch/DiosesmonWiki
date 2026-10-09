@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="DiosesmonWiki: Pokédex, recompensas, gimnasios y guías del servidor de Cobblemon Diosesmon.">
+  <title>DiosesmonWiki | Inicio</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=9">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/home.css?v=3">
+  <script src="assets/js/site-nav.js?v=5" defer></script>
+  <script src="data/fusion-data.js" defer></script>
+  <script src="data/gimnasios-data.js?v=4" defer></script>
+  <script src="assets/js/home.js?v=2" defer></script>
+</head>
+<body>
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <span class="server-status"><i></i> DIOSESMON NETWORK · COBBLEMON</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="home-hero">
+      <div class="home-hero-glow" aria-hidden="true"></div>
+      <img class="home-mon home-mon-1" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" alt="" aria-hidden="true">
+      <img class="home-mon home-mon-2" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="" aria-hidden="true">
+      <img class="home-mon home-mon-3" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/448.png" alt="" aria-hidden="true">
+      <img class="home-mon home-mon-4" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/384.png" alt="" aria-hidden="true">
+      <div class="home-hero-inner">
+        <img class="home-emblem" src="assets/img/diosesmon-emblem.png" alt="Emblema de Diosesmon" width="246" height="231">
+        <p class="eyebrow">WIKI COMUNITARIA DEL SERVIDOR</p>
+        <h1 class="home-title">Diosesmon<span>Wiki</span></h1>
+        <p class="home-lead">Todo lo que necesitas para tu aventura en el servidor de <strong>Cobblemon</strong> en español: Pokédex, recompensas, gimnasios y guías.</p>
+        <div class="home-ip">
+          <div><small>IP DEL SERVIDOR · JAVA 1.21</small><strong>mc.diosesmon.net</strong></div>
+          <button class="home-ip-copy" type="button" data-copy-ip><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="" width="28" height="28"><span>Copiar IP</span></button>
+        </div>
+        <div class="home-actions">
+          <a class="home-btn is-yellow" href="https://pack.diosesmon.net" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="" width="30" height="30">Empieza a jugar</a>
+          <a class="home-btn is-discord" href="https://discord.gg/diosesmon" target="_blank" rel="noreferrer"><svg class="home-btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18.2 18.2 0 0 0-5.6 0L8.6 3a19.5 19.5 0 0 0-4.9 1.4C.6 9 -.3 13.5.2 17.9a19.8 19.8 0 0 0 6 3l1.3-2a12.8 12.8 0 0 1-2-1l.5-.4a14 14 0 0 0 12 0l.5.4c-.6.4-1.3.7-2 1l1.3 2a19.7 19.7 0 0 0 6-3c.5-5.1-.9-9.6-3.5-13.5ZM8 15.2c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.4 8 10.4s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>Discord oficial</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="home-shell">
+      <section aria-labelledby="home-progress-title">
+        <div class="home-section-head">
+          <p class="eyebrow">TU AVENTURA</p>
+          <h2 id="home-progress-title">Tu progreso</h2>
+          <p>Se calcula con lo que marcas en la Pokédex y en Gimnasios, guardado en este navegador.</p>
+        </div>
+        <div class="home-progress-grid" id="home-progress"></div>
+      </section>
+
+      <section aria-labelledby="home-sections-title">
+        <div class="home-section-head">
+          <p class="eyebrow">EXPLORA LA WIKI</p>
+          <h2 id="home-sections-title">Secciones</h2>
+          <p>Elige por dónde empezar. Las secciones en construcción se irán llenando poco a poco.</p>
+        </div>
+        <div id="home-cards"></div>
+      </section>
+
+      <section aria-labelledby="home-join-title">
+        <div class="home-section-head is-center">
+          <p class="eyebrow">EMPIEZA EN 3 MINUTOS</p>
+          <h2 id="home-join-title">Cómo unirte</h2>
+          <p>Instala el modpack, conéctate con la IP y empieza tu aventura. Compatible con Minecraft Java 1.21.</p>
+        </div>
+        <ol class="home-steps">
+          <li>
+            <span class="home-step-num">1</span>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/exp-share.png" alt="" width="48" height="48">
+            <h3>Descarga el modpack</h3>
+            <p>Instálalo en 1 clic. Incluye Cobblemon y todos los mods del servidor.</p>
+            <a class="home-btn is-green is-small" href="https://pack.diosesmon.net" target="_blank" rel="noreferrer">Descargar el pack ↗</a>
+          </li>
+          <li>
+            <span class="home-step-num">2</span>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/town-map.png" alt="" width="48" height="48">
+            <h3>Conéctate a la IP</h3>
+            <p>Abre Minecraft, entra en Multijugador, añade el servidor y pega la dirección.</p>
+            <div class="home-ip is-small"><strong>mc.diosesmon.net</strong><button class="home-ip-copy" type="button" data-copy-ip><span>Copiar</span></button></div>
+          </li>
+          <li>
+            <span class="home-step-num">3</span>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png" alt="" width="48" height="48">
+            <h3>¡Atrápalos a todos!</h3>
+            <p>Elige a tu primer compañero, explora el mundo y prepárate para retar a los líderes de gimnasio.</p>
+            <a class="home-btn is-discord is-small" href="https://discord.gg/diosesmon" target="_blank" rel="noreferrer">¿Dudas? Discord ↗</a>
+          </li>
+        </ol>
+      </section>
+
+      <section class="home-cta">
+        <img class="home-cta-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" aria-hidden="true">
+        <div>
+          <h2>¿Falta algo en la wiki?</h2>
+          <p>Cuéntanos qué dato está mal, qué sección te gustaría ver o qué no funciona. <strong>Cada mensaje llega al equipo.</strong></p>
+        </div>
+        <div class="home-cta-actions">
+          <a class="home-btn is-yellow" href="feedback.html">Enviar feedback</a>
+          <a class="home-btn is-ghost" href="https://www.diosesmon.net" target="_blank" rel="noreferrer">Sitio de Diosesmon ↗</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="home-footer">
+    <div class="home-footer-inner">
+      <div class="home-footer-brand">
+        <a class="dex-brand" href="index.html"><img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40"><span>Diosesmon<span class="brand-accent">Wiki</span></span></a>
+        <p>Wiki comunitaria del servidor de Cobblemon Diosesmon. Información, registros y herramientas para tu aventura.</p>
+        <img class="home-footer-network" src="assets/img/diosesmon-network.png" alt="Diosesmon Network" width="64" height="64">
+      </div>
+      <nav class="home-footer-links" aria-label="Enlaces del pie">
+        <div><h3>Wiki</h3><a href="pokedex.html">Pokédex</a><a href="pokedex.html?kind=fusion">Fusiones</a><a href="dexrewards.html">DexRewards</a><a href="gimnasios.html">Gimnasios</a><a href="feedback.html">Feedback</a></div>
+        <div><h3>Servidor</h3><a href="https://www.diosesmon.net" target="_blank" rel="noreferrer">Sitio oficial</a><a href="https://pack.diosesmon.net" target="_blank" rel="noreferrer">Descargar modpack</a><a href="https://www.diosesmon.net/reglas.html" target="_blank" rel="noreferrer">Reglas</a><a href="https://wiki.diosesmon.net" target="_blank" rel="noreferrer">Tutoriales</a></div>
+        <div><h3>Comunidad</h3><a href="https://discord.gg/diosesmon" target="_blank" rel="noreferrer">Discord</a><a href="https://tienda.diosesmon.net" target="_blank" rel="noreferrer">Tienda</a><a href="feedback.html">Sugerencias</a></div>
+      </nav>
+    </div>
+    <div class="home-footer-legal">
+      <span>DIOSESMONWIKI · Proyecto comunitario</span>
+      <span>No afiliado con Mojang, Microsoft, Nintendo, Game Freak ni The Pokémon Company.</span>
+    </div>
+  </footer>
+</body>
+</html>

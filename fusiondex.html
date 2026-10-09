@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redirigiendo… | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <script>
+    // Enlaces antiguos tipo fusiondex.html#laprasian -> ficha de la fusión en la Pokédex.
+    const fusionIds = { aerotales: 9004, alakapharos: 9007, arcarados: 9003, feralimuk: 9005, gentoise: 9009, golenium: 9002, laprasian: 9001, starmonite: 9012, steelizard: 9008, venolax: 9011, victrosion: 9010 };
+    const fusionId = fusionIds[location.hash.slice(1).toLowerCase()];
+    location.replace("pokedex.html?kind=fusion" + (fusionId ? `#fusion/${fusionId}` : ""));
+  </script>
+  <noscript><meta http-equiv="refresh" content="0; url=pokedex.html?kind=fusion"></noscript>
+</head>
+<body>
+  <p>Esta página se movió a la <a href="pokedex.html?kind=fusion">Pokédex de DiosesmonWiki</a>.</p>
+</body>
+</html>

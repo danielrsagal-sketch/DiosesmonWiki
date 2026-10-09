@@ -1,44 +1,70 @@
-# DiosesWiki
+# DiosesmonWiki
 
-## Visión general
+Wiki comunitaria del servidor de Cobblemon **Diosesmon**: Pokédex con formas regionales y fusiones, DexRewards, Gimnasios y guías.
 
-DiosesWiki es una wiki web estática diseñada para el servidor de Minecraft DiosesMon. Su propósito es ofrecer una guía rápida y visual sobre los Pokémon del servidor, incluyendo datos de aparición, estadísticas, rarezas, biomas, métodos de captura y detalles adicionales útiles para los jugadores.
+Es un sitio estático (HTML, CSS y JavaScript), sin servidor ni base de datos. El progreso de cada jugador (vistos, capturados, gimnasios vencidos) se guarda en su propio navegador.
 
-## Cómo luciría el proyecto terminado
+## Estructura
 
-La experiencia final se verá como una interfaz moderna, ligera y de alto contraste, con enfoque en la legibilidad de información técnica.
+```
+/                     Páginas del sitio (index.html, pokedex.html, gimnasios.html…)
+assets/
+  css/                Estilos (topbar.css es la barra común; site-base.css la base común)
+  js/                 Lógica de cada página (site-nav.js define las pestañas del sitio)
+  img/                Logos, favicons e imágenes de las fusiones
+data/                 Datos que usan las páginas
+  dexrewards-data.js    Hitos y recompensas de /dexrewards        ← editar a mano
+  gimnasios-data.js     Líderes, recompensas, equipos y level caps ← editar a mano
+  drop-overrides.js     Drops desactivados en el servidor         ← editar a mano
+  pokemon-data.js       Generado por tools/build_pokemon_data.py
+  pokemon-details.js    Generado por tools/build_cobblemon_data.py
+  pokemon-catalog-extra.js  Generado por tools/build_cobblemon_data.py
+  fusion-data.js        Generado por tools/build_fusion_data.py
+tools/                Scripts que generan los datos (no forman parte de la web)
+  source/               Excel de fusiones y logos originales
+  legacy/               Código antiguo de CheckDex/FusionDex (ya no se usa)
+docs/                 Notas del proyecto
+```
 
-### Experiencia visual
+`checkdex.html` y `fusiondex.html` solo redirigen a la Pokédex para que los enlaces antiguos sigan funcionando.
 
-- Tema oscuro por defecto para mejorar la lectura y la coherencia visual.
-- Paleta de colores consistente con el estilo del servidor:
-  - Amarillo para botones y elementos destacados.
-  - Azul para enlaces e interacciones.
-  - Verde para estados de éxito o indicadores positivos.
-- Diseño limpio, con tarjetas bien estructuradas que muestran la información principal sin saturar la vista.
+## Añadir o cambiar secciones
 
-### Funcionalidades visibles
+Las pestañas de la barra y las tarjetas de Inicio salen de la lista `SITE_SECTIONS` en `assets/js/site-nav.js`. Con `ready: true` la tarjeta de Inicio deja de mostrarse como «En construcción».
 
-- Barra de búsqueda rápida para encontrar criaturas por nombre o ID.
-- Filtros avanzados para refinar resultados por generación, tipo, rareza, bioma y método de captura.
-- Tarjetas interactivas que pueden expandirse para mostrar detalles más profundos.
-- Sistema de favoritos persistente en el navegador para guardar criaturas de interés.
-- Carga rápida y navegación fluida, sin depender de una base de datos externa.
+## Probar en local
 
-## Arquitectura general
+Desde la carpeta del proyecto:
 
-- El proyecto se basa en archivos estáticos y un archivo JSON maestro generado desde datos locales.
-- El frontend consume este archivo mediante JavaScript y renderiza la interfaz directamente en el navegador.
-- La actualización del contenido no requiere cambios en el código frontend, solo regenerar el archivo de datos.
+```
+python -m http.server 8000
+```
 
-## Estructura conceptual del proyecto
+y abrir <http://localhost:8000>. Abrir los `.html` con doble clic (`file://`) no sirve: el formulario de Feedback y algunas cargas de datos necesitan un servidor.
 
-- data/: archivos JSON generados y fuente de información.
-- scripts/: herramientas para procesar y transformar datos.
-- src/: lógica frontend, renderizado y manejo de filtros.
-- assets/: estilos, imágenes y recursos visuales.
-- index.html: punto de entrada principal de la wiki.
+## Regenerar los datos
 
-## Resultado esperado
+Requiere Python 3. Los scripts descargan lo que necesitan la primera vez (en `tools/build-cache/`, que no se sube a GitHub).
 
-El proyecto terminado debería sentirse como una wiki útil, profesional y fácil de mantener, pensada para ser consultada en segundos por jugadores que necesitan información precisa sobre la progresión y captura de criaturas en DiosesMon.
+```
+python tools/build_pokemon_data.py     # especies, tipos, stats (PokéAPI)
+python tools/build_cobblemon_data.py   # fichas, formas, evoluciones, biomas (Cobblemon 1.7.3 + Terralith)
+python tools/build_fusion_data.py      # fusiones desde tools/source/FUSIONES DIOSESMON.xlsx
+```
+
+Al cambiar un archivo de `assets/` o `data/`, sube su número de versión (`?v=N`) en las páginas que lo cargan para que los navegadores no usen la copia antigua.
+
+## Publicar con GitHub Pages
+
+1. Crea un repositorio en GitHub y sube esta carpeta (la raíz del repositorio debe ser la que contiene `index.html`).
+2. En el repositorio: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, rama `main`, carpeta `/ (root)`.
+3. En uno o dos minutos la wiki queda en `https://<usuario>.github.io/<repositorio>/`.
+
+Para usar un dominio propio (por ejemplo un subdominio de diosesmon.net), escríbelo en **Settings → Pages → Custom domain** y crea en el DNS un registro `CNAME` que apunte a `<usuario>.github.io`.
+
+El formulario de Feedback usa [FormSubmit](https://formsubmit.co): al publicarlo en el dominio definitivo puede pedir una nueva activación por correo.
+
+## Créditos
+
+Datos de [Cobblemon](https://gitlab.com/cable-mc/cobblemon), [PokéAPI](https://pokeapi.co), Minecraft y [Terralith](https://modrinth.com/datapack/terralith). Sprites de PokéAPI y Pokémon Showdown.
+No afiliado con Mojang, Microsoft, Nintendo, Game Freak ni The Pokémon Company.

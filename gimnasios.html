@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="Gimnasios, Alto Mando y Campeones del servidor Diosesmon por región, con level caps y reglas.">
+  <title>Gimnasios | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=9">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/pokepad.css?v=1">
+  <link rel="stylesheet" href="assets/css/gimnasios.css?v=5">
+  <script src="assets/js/site-nav.js?v=5" defer></script>
+  <script src="data/pokemon-data.js?v=2" defer></script>
+  <script src="data/gimnasios-data.js?v=4" defer></script>
+  <script src="assets/js/rewards.js?v=1" defer></script>
+  <script src="assets/js/gimnasios.js?v=4" defer></script>
+</head>
+<body>
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <span class="server-status"><i></i> DIOSESMON NETWORK · COBBLEMON</span>
+    </div>
+  </header>
+
+  <main class="dr-shell">
+    <section class="dr-heading">
+      <div>
+        <p class="eyebrow">DESAFÍOS DEL SERVIDOR</p>
+        <h1>Gimnasios</h1>
+        <p class="dr-lead">Líderes, Alto Mando y Campeón de cada región. Cada medalla sube tu <strong>level cap</strong>: supera los 16 gimnasios de Kanto y Johto para llegar al nivel máximo.</p>
+        <ul class="hero-tips">
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/badges/1.png" alt="">8 gimnasios por región</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/rare-candy.png" alt="">Level cap por medalla</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png" alt="">Alto Mando y Campeón</li>
+        </ul>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <span class="hero-ball"><i></i></span>
+        <img class="hero-mon hero-mon-1" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/95.png" alt="">
+        <img class="hero-mon hero-mon-2" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/121.png" alt="">
+        <img class="hero-mon hero-mon-3" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png" alt="">
+      </div>
+    </section>
+
+    <section class="pokepad" aria-label="Gimnasios por región">
+      <div class="pokepad-top"><span>POKEPAD</span></div>
+      <div class="pokepad-screen">
+        <div class="pokepad-bar">
+          <h2>Liga Pokémon</h2>
+          <span class="pokepad-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="pokepad-body">
+          <nav class="dr-list" id="gym-list" aria-label="Regiones"></nav>
+          <article class="dr-detail" id="gym-detail" aria-live="polite"></article>
+        </div>
+      </div>
+    </section>
+
+    <div class="gym-modal" id="gym-modal" hidden>
+      <div class="gym-modal-backdrop" data-close-team></div>
+      <section class="gym-modal-panel" id="gym-modal-panel" role="dialog" aria-modal="true" aria-labelledby="gym-modal-title" tabindex="-1"></section>
+    </div>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · GIMNASIOS</span><span>Progreso guardado en este navegador</span></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="Recompensas de la Pokédex del servidor (/dexrewards) y tu progreso por generación.">
+  <title>DexRewards | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=9">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/pokepad.css?v=1">
+  <link rel="stylesheet" href="assets/css/dexrewards.css?v=6">
+  <script src="assets/js/site-nav.js?v=5" defer></script>
+  <script src="data/fusion-data.js" defer></script>
+  <script src="data/dexrewards-data.js?v=2" defer></script>
+  <script src="assets/js/rewards.js?v=1" defer></script>
+  <script src="assets/js/dexrewards.js?v=6" defer></script>
+</head>
+<body>
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <span class="server-status"><i></i> DIOSESMON NETWORK · COBBLEMON</span>
+    </div>
+  </header>
+
+  <main class="dr-shell">
+    <section class="dr-heading">
+      <div>
+        <p class="eyebrow">/DEXREWARDS</p>
+        <h1>DexRewards</h1>
+        <p class="dr-lead">Recompensas por completar la Pokédex: la general y la de cada generación. Tu progreso se calcula con lo que marcas como <strong>Capturado</strong> en la <a href="pokedex.html">Pokédex de la wiki</a>.</p>
+        <ul class="hero-tips">
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/coupon-1.png" alt="">PokéDólares</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/rare-candy.png" alt="">Caramelos Raros</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/tm-normal.png" alt="">DT</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/nugget.png" alt="">Dcoins</li>
+        </ul>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <span class="hero-ball"><i></i></span>
+        <img class="hero-mon hero-mon-1" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="">
+        <img class="hero-mon hero-mon-2" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/175.png" alt="">
+        <img class="hero-mon hero-mon-3" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/258.png" alt="">
+      </div>
+    </section>
+
+    <section class="pokepad" aria-label="Recompensas de la Pokédex">
+      <div class="pokepad-top"><span>POKEPAD</span></div>
+      <div class="pokepad-screen">
+        <div class="pokepad-bar">
+          <h2>Recompensas de la Pokédex</h2>
+          <span class="pokepad-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="pokepad-body">
+          <nav class="dr-list" id="dr-list" aria-label="Secciones de recompensas"></nav>
+          <article class="dr-detail" id="dr-detail" aria-live="polite"></article>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · DEXREWARDS</span><span>Progreso guardado en este navegador</span></footer>
+  </main>
+</body>
+</html>

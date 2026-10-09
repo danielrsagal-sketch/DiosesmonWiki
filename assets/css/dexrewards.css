@@ -1,0 +1,21 @@
+/* DexRewards: hitos y recompensas (el marco PokePad está en pokepad.css). */
+.dr-milestones { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.dr-milestone { --milestone-color: #6cf0b2; padding: 14px 16px; background: #102a47; border: 1px solid #22405f; border-left: 4px solid var(--milestone-color); border-radius: 9px; }
+.dr-milestone-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.dr-milestone h4 { margin: 0; color: var(--milestone-color); font: 700 19px "DM Mono", monospace; }
+.dr-milestone-head p { margin: 4px 0 0; color: #a9bad6; font-size: 15px; }
+.dr-status { display: grid; justify-items: end; gap: 2px; color: #c2cee2; font-size: 15px; font-weight: 600; white-space: nowrap; }
+.dr-status small { color: #8f9fba; font-size: 13px; font-weight: 400; }
+.dr-status.is-ready { padding: 5px 12px; color: #08101f; background: #6cf0b2; border-radius: 999px; }
+.dr-milestone.is-reached { background: #10352f; border-color: #2b7a5c; }
+.dr-rewards { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+.dr-rewards li { display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px 3px 4px; color: #fff; background: #16385c; border: 1px solid #2b5f8c; border-radius: 6px; font-size: 15px; }
+.dr-rewards img { width: 30px; height: 30px; }
+.dr-reward-pending { margin: 10px 0 0; color: #8f9fba; font-size: 14px; font-style: italic; }
+.dr-empty { margin: 18px 0 0; color: #a9bad6; font-size: 16px; }
+
+@media (max-width: 860px) {
+  .dr-milestone { padding: 12px; }
+  .dr-milestone h4 { font-size: 17px; }
+  .dr-milestone-head p { font-size: 14px; }
+}

@@ -1,0 +1,13 @@
+# Descargas de los generadores de datos (Cobblemon, Minecraft, Terralith, PokéAPI): ~20 MB, se vuelven a bajar solas.
+tools/build-cache/
+
+# Python
+__pycache__/
+*.pyc
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

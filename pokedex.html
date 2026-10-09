@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="Pokédex unificada de Pokémon y fusiones de Diosesmon.">
+  <title>Pokédex | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=9">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/pokedex.css?v=12">
+  <script src="data/pokemon-data.js?v=2" defer></script>
+  <script src="data/pokemon-catalog-extra.js?v=2" defer></script>
+  <script src="data/fusion-data.js" defer></script>
+  <script src="data/drop-overrides.js?v=1" defer></script>
+  <script src="assets/js/pokedex.js?v=13" defer></script>
+  <script src="assets/js/site-nav.js?v=5" defer></script>
+</head>
+<body>
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <span class="server-status"><i></i> DIOSESMON NETWORK · COBBLEMON</span>
+    </div>
+  </header>
+
+  <main class="dex-shell">
+    <section class="dex-heading">
+      <div>
+        <p class="eyebrow">REGISTRO DE ESPECIES DEL SERVIDOR</p>
+        <h1>Pokédex</h1>
+        <p class="heading-copy">Explora los Pokémon de Diosesmon y sus fusiones.</p>
+        <ul class="hero-tips">
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">Pokémon de Kanto a Sinnoh</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/town-map.png" alt="">Formas regionales</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/dna-splicers.png" alt="">Fusiones de Diosesmon</li>
+        </ul>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <span class="hero-ball"><i></i></span>
+        <img class="hero-mon hero-mon-1" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="">
+        <img class="hero-mon hero-mon-2" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" alt="">
+        <img class="hero-mon hero-mon-3" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" alt="">
+      </div>
+    </section>
+
+    <section class="progress-strip" aria-label="Resumen del progreso">
+      <div><span id="available-label">Especies disponibles</span><strong id="available-count">493</strong><small id="available-total">de 1.025 nacionales</small></div>
+      <div><span>Vistos</span><strong id="seen-count">0</strong><small id="seen-total">de 504</small></div>
+      <div><span>Capturados</span><strong id="caught-count">0</strong><small id="caught-total">de 504</small></div>
+      <div class="progress-meter"><span>PROGRESO DE CAPTURA</span><strong id="progress-percent">0%</strong><i><b id="progress-fill"></b></i></div>
+    </section>
+
+    <div class="catalog-layout">
+      <aside class="filter-rail" aria-label="Filtros de la Pokédex">
+        <label class="global-search"><span aria-hidden="true">⌕</span><span class="visually-hidden">Buscar por nombre o número</span><input id="search-input" type="search" placeholder="Buscar Pokémon..." autocomplete="off"></label>
+        <fieldset class="kind-filters"><legend>Mostrar</legend>
+          <button type="button" data-kind="all" class="kind-filter is-active">Todos <span id="kind-count-all">0</span></button>
+          <button type="button" data-kind="pokemon" class="kind-filter">Pokémon <span id="kind-count-pokemon">0</span></button>
+          <button type="button" data-kind="regional" class="kind-filter">Regionales <span id="kind-count-regional">0</span></button>
+          <button type="button" data-kind="fusion" class="kind-filter">Fusiones <span id="kind-count-fusion">0</span></button>
+        </fieldset>
+        <div class="filter-field"><span id="status-filter-label">ESTADO</span><div class="multi-filter" id="status-filter" data-placeholder="Todos los estados" aria-labelledby="status-filter-label"></div></div>
+        <div class="filter-field"><span id="region-filter-label">REGIÓN</span><div class="multi-filter" id="region-filter" data-placeholder="Todas las regiones" aria-labelledby="region-filter-label"></div></div>
+        <div class="filter-field"><span id="type-filter-label">TIPO</span><div class="multi-filter" id="type-filter" data-placeholder="Todos los tipos" aria-labelledby="type-filter-label"></div></div>
+        <div class="filter-field"><span id="egg-filter-label">GRUPO HUEVO</span><div class="multi-filter" id="egg-filter" data-placeholder="Todos los grupos" aria-labelledby="egg-filter-label"></div></div>
+        <div class="filter-field"><span id="form-filter-label">FORMA REGIONAL</span><div class="multi-filter" id="form-filter" data-placeholder="Todas las formas" aria-labelledby="form-filter-label"></div></div>
+        <button class="clear-filters" id="clear-filters" type="button">Limpiar filtros</button>
+        <div class="catalog-key"><span><i class="key-seen"></i>Visto</span><span><i class="key-caught"></i>Capturado</span><span><i class="key-locked"></i>Próximamente</span></div>
+      </aside>
+
+      <section class="results-pane">
+        <div class="catalog-meta"><span id="result-count">Cargando Pokédex...</span><span id="result-range">#001—#1025</span></div>
+        <div id="catalog" class="pokemon-grid" aria-label="Pokémon y fusiones" aria-live="polite"></div>
+        <p class="empty-state" id="empty-state" hidden>No hay resultados con esos filtros.</p>
+      </section>
+    </div>
+
+    <div id="detail-modal" class="detail-modal" hidden>
+      <div class="detail-backdrop" data-close-detail></div>
+      <section id="detail" class="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detail-title" tabindex="-1"></section>
+    </div>
+
+    <footer class="dex-footer"><span>DIOSESMONWIKI · POKÉDEX</span><span>Datos base: PokéAPI · Fusiones: Diosesmon</span><a href="https://diosesmondex.onrender.com/pokedex" target="_blank" rel="noreferrer">Spawns y biomas del servidor ↗</a></footer>
+  </main>
+</body>
+</html>

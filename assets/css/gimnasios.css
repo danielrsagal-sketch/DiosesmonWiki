@@ -1,0 +1,100 @@
+/* Gimnasios (el marco PokePad está en pokepad.css). */
+:root {
+  --type-planta: #368d56; --type-fuego: #cc493d; --type-agua: #367cc1; --type-psiquico: #ba5795; --type-dragon: #7150bb;
+  --type-acero: #657a8b; --type-normal: #817f74; --type-roca: #947445; --type-volador: #537cc0; --type-veneno: #8551a4;
+  --type-electrico: #c29420; --type-fantasma: #554b79; --type-bicho: #77942c; --type-hada: #c36c9a; --type-lucha: #a04437;
+  --type-tierra: #aa8150; --type-hielo: #51a4b6; --type-siniestro: #514859;
+}
+.dr-item-art .gym-list-badge { width: 40px; height: 40px; image-rendering: auto; }
+.dr-item.is-soon { opacity: .6; }
+
+.gym-rules { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; padding: 0; list-style: none; }
+.gym-rules li { display: grid; gap: 2px; padding: 8px 12px; color: #fff; background: #102a47; border: 1px solid #22405f; border-radius: 9px; font-size: 15px; }
+.gym-rules b { color: #a9bad6; font: 600 12px "DM Mono", monospace; letter-spacing: .05em; text-transform: uppercase; }
+.gym-rules li.is-cap { border-color: var(--section-color); font: 700 20px "DM Mono", monospace; }
+
+.gym-group { margin-top: 22px; }
+.gym-group-title { margin: 0 0 12px; padding-left: 12px; color: #fff; border-left: 4px solid var(--section-color); font-size: 20px; }
+.gym-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.gym-grid.is-single { grid-template-columns: 1fr; }
+
+.gym-card { position: relative; display: grid; grid-template-columns: 96px minmax(0, 1fr); align-content: start; gap: 12px; padding: 12px 14px; background: #102a47; border: 1px solid #22405f; border-left: 4px solid var(--type-color); border-radius: 10px; }
+.gym-card.kind-champion { background: linear-gradient(135deg, #2a2340, #102a47 60%); border-color: #ffd44266; border-left-color: #ffd442; }
+.gym-card.is-done { background: #10352f; border-color: #2b7a5c; }
+.gym-trainer { position: relative; width: 96px; height: 96px; overflow: hidden; background: radial-gradient(circle at 50% 60%, #1f4a73, #0d1f36 70%); border-radius: 50%; }
+.gym-trainer img { position: absolute; left: 50%; bottom: -6px; width: 96px; height: 96px; transform: translateX(-50%); }
+.gym-info { min-width: 0; }
+.gym-step { color: #a9bad6; font: 600 12px "DM Mono", monospace; letter-spacing: .05em; text-transform: uppercase; }
+.gym-step em { margin-left: 6px; padding: 1px 6px; color: #ffb3c0; background: #4a1c2a; border-radius: 4px; font-style: normal; text-transform: none; }
+.gym-card h4 { margin: 3px 0 8px; color: #fff; font-size: 21px; }
+.gym-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.gym-type { padding: 3px 9px; color: #fff; background: var(--type-color); border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.gym-badge { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 4px; color: #e2e9f6; background: #16385c; border: 1px solid #2b5f8c; border-radius: 999px; font-size: 13px; }
+.gym-badge img { width: 24px; height: 24px; image-rendering: auto; }
+.gym-cap { margin: 9px 0 0; color: #c2cee2; font-size: 15px; }
+.gym-cap b { color: var(--dex-yellow, #ffd442); font-family: "DM Mono", monospace; }
+.gym-note { margin: 6px 0 0; color: #8f9fba; font-size: 14px; }
+.gym-footer { grid-column: 1 / -1; display: grid; gap: 10px; padding-top: 10px; border-top: 1px solid #22405f; }
+.gym-rewards { display: grid; gap: 6px; }
+.gym-rewards > span { color: #a9bad6; font: 600 12px "DM Mono", monospace; letter-spacing: .05em; text-transform: uppercase; }
+.gym-reward-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.gym-reward-list li { display: inline-flex; align-items: center; gap: 5px; padding: 2px 11px 2px 3px; color: #fff; background: #16385c; border: 1px solid #2b5f8c; border-radius: 6px; font-size: 14px; }
+.gym-reward-list img { width: 28px; height: 28px; }
+.gym-team-pending { margin: 0; color: #8f9fba; font-size: 14px; font-style: italic; }
+.gym-team { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+.gym-team li { display: grid; justify-items: center; width: 74px; padding: 4px; color: #e2e9f6; background: #0d1f36; border: 1px solid #22405f; border-radius: 8px; font-size: 12px; text-align: center; }
+.gym-team img { width: 56px; height: 56px; }
+.gym-team small { color: #ffd442; font-family: "DM Mono", monospace; }
+.gym-done { justify-self: start; display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px; color: #c2cee2; background: #0d1f36; border: 1px solid #2b5f8c; border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.gym-done input { width: 16px; height: 16px; margin: 0; accent-color: #43db95; }
+.gym-card.is-done .gym-done { color: #08101f; background: #6cf0b2; border-color: #6cf0b2; }
+
+.gym-elite-note { margin: 0; color: #a9bad6; font-size: 14px; font-style: italic; }
+.gym-team-btn { justify-self: start; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px 0 8px; color: #08101f; background: var(--dex-yellow, #ffd442); border: 0; border-radius: 999px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 16px #ffd44226; }
+.gym-team-btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.gym-team-btn img { width: 28px; height: 28px; }
+
+/* Ventana emergente del equipo */
+body.modal-open { overflow: hidden; }
+.gym-modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 24px; }
+.gym-modal-backdrop { position: absolute; inset: 0; background: #030812cc; backdrop-filter: blur(3px); }
+.gym-modal-panel { position: relative; width: min(980px, 100%); max-height: calc(100dvh - 48px); overflow-y: auto; overscroll-behavior: contain; padding: 24px 26px; background: #0d1f36; border: 2px solid var(--section-color, #2b5f8c); border-radius: 16px; box-shadow: 0 24px 60px #000a; outline: none; }
+.gym-modal-close { position: sticky; top: 0; z-index: 2; float: right; width: 40px; height: 40px; display: grid; place-items: center; margin: -8px -10px 0 10px; padding: 0; color: #c4d0e5; background: #102a47; border: 1px solid #2b5f8c; border-radius: 9px; font-size: 26px; line-height: 1; cursor: pointer; }
+.gym-modal-close:hover { color: #fff; border-color: #9fb2d1; }
+.gym-modal-head { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 18px; align-items: center; padding-bottom: 18px; border-bottom: 1px solid #22405f; }
+.gym-trainer.is-large { width: 130px; height: 130px; }
+.gym-trainer.is-large img { width: 130px; height: 130px; }
+.gym-modal-head h2 { margin: 4px 0 10px; color: #fff; font-size: clamp(28px, 4vw, 38px); }
+.gym-modal-rules { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; }
+.gym-modal-rules li { padding: 5px 11px; color: #d8e3f6; background: #102a47; border: 1px solid #22405f; border-radius: 999px; font-size: 14px; }
+.gym-stages { display: grid; gap: 14px; margin: 20px 0 0; padding: 0; list-style: none; }
+.gym-stage { padding: 14px 16px; background: #102a47; border: 1px solid #22405f; border-radius: 12px; }
+.gym-stage.is-main { background: linear-gradient(135deg, #2a2340, #102a47 60%); border-color: #ffd44266; }
+.gym-stage h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; color: #fff; font-size: 19px; }
+.gym-stage h3 span { width: 30px; height: 30px; display: grid; place-items: center; flex: none; color: #08101f; background: var(--section-color, #ffd442); border-radius: 50%; font: 700 14px "DM Mono", monospace; }
+.gym-stage.is-main h3 span { background: #ffd442; }
+.gym-mon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.gym-mon { position: relative; display: grid; justify-items: center; gap: 6px; padding: 10px 8px 12px; color: #fff; background: #0d1f36; border: 1px solid #22405f; border-radius: 10px; text-align: center; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+.gym-mon:hover { border-color: var(--section-color, #4bb6ff); transform: translateY(-2px); }
+.gym-mon img { width: 96px; height: 96px; filter: drop-shadow(0 6px 5px #0008); }
+.gym-mon strong { font-size: 16px; }
+.gym-mon-types { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+.gym-mon small { color: #ffd442; font: 13px "DM Mono", monospace; }
+.gym-mon.is-shiny { background: radial-gradient(circle at 50% 35%, #4a3a12, #0d1f36 70%); border-color: #ffd44299; }
+.gym-mon-shiny { position: absolute; top: 6px; left: 6px; padding: 2px 8px; color: #08101f; background: #ffd442; border-radius: 999px; font-size: 11px; font-weight: 700; }
+
+@media (max-width: 1100px) {
+  .gym-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .gym-modal { padding: 0; place-items: stretch; }
+  .gym-modal-panel { max-height: none; height: 100%; padding: 16px 12px; border: 0; border-radius: 0; }
+  .gym-modal-head { grid-template-columns: 90px minmax(0, 1fr); gap: 12px; }
+  .gym-trainer.is-large, .gym-trainer.is-large img { width: 90px; height: 90px; }
+  .gym-mon-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gym-mon img { width: 80px; height: 80px; }
+  .gym-card { grid-template-columns: 72px minmax(0, 1fr); padding: 12px; }
+  .gym-trainer { width: 72px; height: 72px; }
+  .gym-trainer img { width: 80px; height: 80px; }
+  .gym-card h4 { font-size: 19px; }
+}

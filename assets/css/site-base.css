@@ -1,0 +1,46 @@
+/* Base común de las páginas de la wiki (colores, fondo, tipografía). */
+:root {
+  color-scheme: dark;
+  --dex-bg: #08101f;
+  --dex-panel: #121d32;
+  --dex-line: #2b3d5c;
+  --dex-ink: #f2f4fb;
+  --dex-muted: #9aa9c4;
+  --dex-red: #e90a2d;
+  --dex-yellow: #ffd442;
+  --dex-green: #43db95;
+  --dex-blue: #4bb6ff;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--dex-bg); }
+body { margin: 0; min-height: 100vh; color: var(--dex-ink); background: radial-gradient(ellipse at 50% -25%, #172442 0, var(--dex-bg) 57%); font-family: "Space Grotesk", sans-serif; }
+button, input, textarea { font: inherit; color: inherit; }
+img { image-rendering: pixelated; }
+.eyebrow { margin: 0 0 10px; color: var(--dex-yellow); font: 13px "DM Mono", monospace; letter-spacing: .12em; }
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 30px; padding: 15px 2px; color: #7688a6; border-top: 1px solid #22334f; font: 12px "DM Mono", monospace; letter-spacing: .04em; }
+.site-footer a { color: #86cfff; text-decoration: none; }
+/* Decoración de cabecera: Poké Ball grande con Pokémon flotando y etiquetas con objetos. */
+.hero-art { position: relative; width: min(100%, 340px); height: 230px; flex: none; }
+.hero-ball { position: absolute; top: 50%; left: 50%; width: min(200px, 72%); aspect-ratio: 1; display: grid; place-items: center; transform: translate(-50%, -50%); background: linear-gradient(180deg, #e90a2d 0 47%, #0a0d14 47% 53%, #e8ecf4 53%); border: 6px solid #0a0d14; border-radius: 50%; box-shadow: 0 0 0 3px #2b3d5c, 0 24px 50px #000a, inset -16px -16px 0 #0002; opacity: .9; }
+.hero-ball i { width: 52px; height: 52px; background: #e8ecf4; border: 8px solid #0a0d14; border-radius: 50%; box-shadow: inset 0 0 0 5px #fff; }
+.hero-mon { position: absolute; width: 104px; height: 104px; filter: drop-shadow(0 10px 8px #000a); animation: site-float 4s ease-in-out infinite; }
+.hero-mon-1 { top: -8px; left: 0; }
+.hero-mon-2 { top: 34px; right: -6px; animation-delay: -1.3s; }
+.hero-mon-3 { bottom: -12px; left: 36%; animation-delay: -2.6s; }
+.hero-tips { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+.hero-tips li { display: inline-flex; align-items: center; gap: 6px; padding: 4px 13px 4px 6px; color: #d8e3f6; background: #121d32; border: 1px solid #2b3d5c; border-radius: 999px; font-size: 15px; }
+.hero-tips img { width: 30px; height: 30px; }
+@media (max-width: 760px) {
+  .hero-art { width: 100%; height: 160px; }
+  .hero-ball { width: 140px; }
+  .hero-ball i { width: 36px; height: 36px; border-width: 6px; }
+  .hero-mon { width: 78px; height: 78px; }
+  .hero-mon-1 { left: 6%; }
+  .hero-mon-2 { right: 6%; }
+  .hero-tips li { font-size: 14px; }
+}
+@keyframes site-float { 50% { transform: translateY(-10px); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

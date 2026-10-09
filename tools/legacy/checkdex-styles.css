@@ -1,0 +1,72 @@
+* { box-sizing: border-box; }
+:root {
+  --ink: #171a23;
+  --muted: #737984;
+  --line: #dfe2e6;
+  --paper: #f4f2ed;
+  --panel: #ffffff;
+  --coral: #f06449;
+  --coral-dark: #d94d35;
+  --mint: #cce7d9;
+  --shadow: 0 16px 40px rgba(38, 42, 50, .08);
+}
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Space Grotesk", sans-serif; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+.app-shell { max-width: 1440px; margin: 0 auto; padding: 0 42px 38px; }
+.topbar { height: 86px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 11px; color: var(--ink); font-weight: 700; letter-spacing: .11em; text-decoration: none; font-size: 15px; }
+.brand-accent { color: var(--coral); }
+.brand-mark { width: 28px; height: 28px; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 50%; position: relative; }
+.brand-mark::before { content: ""; position: absolute; left: 0; right: 0; top: 11px; border-top: 2px solid var(--ink); }
+.brand-mark span { width: 7px; height: 7px; background: var(--coral); border: 2px solid var(--ink); border-radius: 50%; z-index: 1; }
+.topbar-meta { color: var(--muted); font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: .07em; text-transform: uppercase; }
+.status-dot, .led { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #65ba88; margin-right: 7px; box-shadow: 0 0 0 3px rgba(101, 186, 136, .14); }
+.intro { display: flex; align-items: end; justify-content: space-between; gap: 32px; padding: 62px 0 45px; }
+.eyebrow, .pc-label, .footer, .progress-heading, .progress-numbers { font-family: "DM Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.eyebrow { color: var(--coral); font-size: 11px; margin: 0 0 14px; }
+h1 { margin: 0; font-size: clamp(48px, 7vw, 88px); letter-spacing: -.07em; line-height: .92; font-weight: 700; }
+h1 span { color: #b9bdc4; font-size: .42em; letter-spacing: -.03em; vertical-align: top; margin-left: 10px; }
+.intro-copy { max-width: 450px; line-height: 1.6; color: var(--muted); font-size: 15px; margin: 24px 0 0; }
+.generation-tabs { display: flex; gap: 5px; overflow-x: auto; padding: 0 0 18px; scrollbar-width: thin; }
+.generation-button { border: 1px solid var(--line); background: var(--panel); color: var(--muted); padding: 10px 15px; font-size: 11px; white-space: nowrap; }
+.generation-button.active { background: var(--coral); border-color: var(--coral); color: white; }
+.progress-card { width: 280px; padding-bottom: 4px; }
+.progress-heading, .progress-numbers { font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; }
+.progress-heading strong { font-family: "Space Grotesk", sans-serif; color: var(--ink); font-size: 25px; letter-spacing: -.04em; }
+.progress-track { height: 8px; margin: 15px 0 10px; background: #deddd8; overflow: hidden; border-radius: 20px; }
+.progress-fill { width: 0; height: 100%; background: var(--coral); transition: width .3s ease; }
+.progress-numbers b { color: var(--ink); font-family: "Space Grotesk", sans-serif; font-size: 13px; letter-spacing: 0; }
+.toolbar { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.search-box { height: 48px; flex: 1; max-width: 390px; display: flex; align-items: center; gap: 9px; background: var(--panel); border: 1px solid var(--line); padding: 0 15px; box-shadow: var(--shadow); }
+.search-box span { color: var(--coral); font-size: 25px; line-height: 0; transform: rotate(-20deg); }
+.search-box input { width: 100%; border: 0; outline: 0; color: var(--ink); background: transparent; font-size: 13px; }
+.search-box input::placeholder { color: #a4a8ad; }
+.filter-group { display: flex; gap: 4px; background: #e6e4df; padding: 4px; }
+.filter-button, .reset-button { border: 0; background: transparent; color: var(--muted); font-size: 12px; height: 40px; padding: 0 13px; }
+.filter-button span { font-family: "DM Mono", monospace; font-size: 10px; margin-left: 5px; }
+.filter-button.active { background: var(--ink); color: white; }
+.reset-button { margin-left: auto; color: var(--coral-dark); }
+.reset-button span { font-size: 18px; vertical-align: -1px; margin-right: 3px; }
+.pc-frame { background: var(--panel); border: 1px solid #d9d9d5; padding: 20px; box-shadow: var(--shadow); }
+.pc-label { display: flex; align-items: center; color: var(--muted); font-size: 10px; margin: 0 0 18px 2px; }
+.pc-label-count { margin-left: auto; color: #a9adb2; }
+.pokemon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 8px; }
+.pokemon-card { min-height: 157px; padding: 11px 10px 9px; border: 1px solid #e5e5e2; background: #fbfbfa; position: relative; transition: transform .18s ease, border-color .18s ease, background .18s ease; text-align: left; }
+.pokemon-card:hover { transform: translateY(-3px); border-color: var(--coral); z-index: 1; }
+.pokemon-card.caught { background: #eff8f2; border-color: #b9dbc6; }
+.card-number { color: #a7abb0; font: 10px "DM Mono", monospace; }
+.card-sprite { height: 83px; display: grid; place-items: center; }
+.card-sprite img { width: 78px; height: 78px; image-rendering: pixelated; object-fit: contain; transition: filter .2s ease; }
+.pokemon-card:not(.caught) .card-sprite img { filter: grayscale(1) opacity(.42); }
+.card-name { display: block; font-size: 13px; font-weight: 600; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-status { display: flex; align-items: center; gap: 4px; margin-top: 5px; font: 9px "DM Mono", monospace; color: #a1a6aa; text-transform: uppercase; }
+.caught .card-status { color: #429268; }
+.pokeball { width: 10px; height: 10px; border: 1px solid currentColor; border-radius: 50%; position: relative; display: inline-block; }
+.pokeball::before { content: ""; position: absolute; top: 4px; left: 0; right: 0; border-top: 1px solid currentColor; }
+.pokeball::after { content: ""; position: absolute; width: 3px; height: 3px; border: 1px solid currentColor; background: #eff8f2; border-radius: 50%; top: 2px; left: 2px; }
+.empty-state { text-align: center; color: var(--muted); padding: 70px 0; font-size: 14px; }
+.footer { display: flex; gap: 24px; align-items: center; color: #a0a3a7; font-size: 9px; padding: 28px 2px 0; }
+.footer a { margin-left: auto; color: var(--coral-dark); text-decoration: none; }
+@media (max-width: 700px) { .app-shell { padding: 0 16px 24px; } .topbar { height: 70px; } .topbar-meta { font-size: 8px; } .intro { display: block; padding: 43px 0 32px; } h1 { font-size: 56px; } .progress-card { width: 100%; margin-top: 35px; } .toolbar { flex-wrap: wrap; } .search-box { max-width: none; flex-basis: 100%; } .filter-group { order: 2; } .reset-button { order: 3; } .pc-frame { padding: 12px; } .pokemon-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; } .pokemon-card { min-height: 142px; padding: 8px 7px; } .card-sprite { height: 73px; } .card-sprite img { width: 67px; height: 67px; } .card-name { font-size: 11px; } .footer { flex-wrap: wrap; gap: 10px; } .footer a { margin-left: 0; } }

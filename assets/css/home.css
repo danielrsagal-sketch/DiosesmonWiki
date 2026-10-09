@@ -1,0 +1,150 @@
+/* Inicio de DiosesmonWiki. */
+main { overflow-x: clip; }
+.home-shell { width: min(100% - 40px, 1200px); margin: 0 auto; padding-bottom: 50px; }
+
+/* Portada */
+.home-hero { position: relative; padding: 56px 20px 64px; text-align: center; border-bottom: 1px solid #1d2a42; }
+.home-hero-glow { position: absolute; top: -40px; left: 50%; width: min(900px, 120%); height: 520px; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 30%, #ffd44233, transparent 62%); pointer-events: none; }
+.home-hero-inner { position: relative; max-width: 820px; margin: 0 auto; }
+.home-emblem { width: 168px; height: auto; filter: drop-shadow(0 0 28px #ffd44266) drop-shadow(0 16px 20px #000a); animation: site-float 5s ease-in-out infinite; }
+.home-hero .eyebrow { margin-top: 18px; }
+.home-title { margin: 0; color: #f2f4fb; font-size: clamp(46px, 9vw, 104px); font-weight: 700; letter-spacing: -.03em; line-height: .95; text-shadow: 0 6px 0 #0a0d14, 0 10px 30px #000c; }
+.home-title span { color: var(--dex-yellow); }
+.home-lead { max-width: 640px; margin: 18px auto 26px; color: #c2cee2; font-size: 19px; line-height: 1.55; }
+.home-lead strong { color: var(--dex-yellow); }
+
+.home-ip { display: inline-flex; align-items: stretch; overflow: hidden; background: #0d1729; border: 1px solid #344766; border-radius: 12px; box-shadow: 0 12px 30px #0008; text-align: left; }
+.home-ip > div { display: grid; gap: 2px; padding: 10px 18px; }
+.home-ip small { color: #8f9fba; font: 11px "DM Mono", monospace; letter-spacing: .08em; }
+.home-ip strong { color: #fff; font: 16px "Press Start 2P", "DM Mono", monospace; letter-spacing: .02em; }
+.home-ip-copy { display: inline-flex; align-items: center; gap: 8px; padding: 0 18px; color: #08101f; background: var(--dex-yellow); border: 0; font-size: 15px; font-weight: 700; cursor: pointer; }
+.home-ip-copy img { width: 28px; height: 28px; }
+.home-ip-copy:hover { filter: brightness(1.06); }
+.home-ip-copy.is-copied { background: #6cf0b2; }
+.home-ip.is-small { display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-radius: 9px; box-shadow: none; }
+.home-ip.is-small strong { padding: 12px 14px; font: 600 15px "DM Mono", monospace; }
+.home-ip.is-small .home-ip-copy { align-self: stretch; padding: 0 14px; font-size: 14px; }
+.home-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 22px; }
+
+.home-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 24px 0 16px; color: #08101f; border-radius: 12px; font-size: 17px; font-weight: 700; text-decoration: none; box-shadow: 0 8px 22px #0006; transition: transform .15s ease, filter .15s ease; }
+.home-btn:hover { filter: brightness(1.07); transform: translateY(-2px); }
+.home-btn img { width: 30px; height: 30px; }
+.home-btn-icon { width: 26px; height: 26px; }
+.home-btn.is-yellow { background: var(--dex-yellow); }
+.home-btn.is-blue { color: #04121f; background: #5ec8f0; }
+.home-btn.is-green { color: #04170d; background: #43db95; }
+.home-btn.is-discord { color: #fff; background: #5865f2; }
+.home-btn.is-ghost { color: #fff; background: #ffffff1a; border: 1px solid #ffffff40; box-shadow: none; }
+.home-btn.is-small { min-height: 42px; margin-top: auto; padding: 0 16px; font-size: 15px; }
+
+.home-mon { position: absolute; width: 120px; height: 120px; filter: drop-shadow(0 12px 10px #000a); opacity: .9; animation: site-float 4.5s ease-in-out infinite; pointer-events: none; }
+.home-mon-1 { top: 70px; left: 8%; }
+.home-mon-2 { top: 330px; left: 7%; animation-delay: -1.5s; }
+.home-mon-3 { top: 80px; right: 9%; animation-delay: -2.4s; }
+.home-mon-4 { top: 330px; right: 5%; width: 150px; height: 150px; animation-delay: -3.2s; }
+
+/* Encabezados de sección */
+.home-section-head { margin: 46px 0 18px; }
+.home-section-head h2 { margin: 0; padding-left: 12px; color: #fff; border-left: 4px solid var(--dex-yellow); font-size: clamp(28px, 3.4vw, 38px); }
+.home-section-head p:not(.eyebrow) { margin: 8px 0 0; color: #a9bad6; font-size: 16px; }
+.home-section-head.is-center { text-align: center; }
+.home-section-head.is-center h2 { display: inline-block; padding: 0 0 6px; border-left: 0; border-bottom: 4px solid var(--dex-yellow); }
+
+/* Progreso */
+.home-progress-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.home-stat { --stat-color: #ffd442; position: relative; display: grid; gap: 4px; padding: 16px 18px 18px; color: inherit; background: #121d32; border: 1px solid #2b3d5c; border-radius: 14px; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+.home-stat:hover { border-color: var(--stat-color); transform: translateY(-2px); }
+.home-stat img { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; image-rendering: pixelated; }
+.home-stat-label { color: #a9bad6; font: 600 13px "DM Mono", monospace; letter-spacing: .05em; text-transform: uppercase; }
+.home-stat strong { color: var(--stat-color); font-size: 34px; line-height: 1.1; }
+.home-stat small { color: #8f9fba; font-size: 14px; }
+.home-stat i { height: 8px; margin-top: 8px; overflow: hidden; background: #22324f; border-radius: 5px; }
+.home-stat i b { height: 100%; display: block; background: var(--stat-color); }
+
+/* Tarjetas de secciones */
+.home-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.home-cards-grid.is-main { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.home-cards-subtitle { margin: 26px 0 12px; color: #c2cee2; font-size: 18px; }
+.home-card { --card-color: #ffd442; position: relative; display: grid; grid-template-columns: 58px minmax(0, 1fr); align-items: start; gap: 14px; padding: 18px; overflow: hidden; color: inherit; background: #121d32; border: 1px solid #2b3d5c; border-radius: 14px; text-decoration: none; transition: border-color .15s ease, transform .15s ease, background .15s ease; }
+.home-card::after { content: ""; position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; background: radial-gradient(circle, color-mix(in srgb, var(--card-color) 28%, transparent), transparent 70%); pointer-events: none; }
+.home-card:hover { background: #172540; border-color: var(--card-color); transform: translateY(-3px); }
+.home-card-icon { position: relative; width: 58px; height: 58px; display: grid; place-items: center; background: color-mix(in srgb, var(--card-color) 18%, #0d1729); border: 1px solid color-mix(in srgb, var(--card-color) 45%, transparent); border-radius: 12px; }
+.home-card-icon img { width: 44px; height: 44px; image-rendering: pixelated; }
+.home-card-text { display: grid; gap: 6px; min-width: 0; padding-right: 8px; }
+.home-card-text strong { color: #fff; font-size: 19px; }
+.home-card-text small { color: #a9bad6; font-size: 14px; line-height: 1.45; }
+.home-card-tag { grid-column: 2; justify-self: start; padding: 3px 10px; color: #08101f; background: var(--card-color); border-radius: 999px; font: 700 11px "DM Mono", monospace; letter-spacing: .04em; text-transform: uppercase; }
+.home-card.is-main { min-height: 170px; }
+.home-cards-grid.is-main .home-card { grid-template-columns: 1fr; min-height: 200px; }
+.home-cards-grid.is-main .home-card-tag { grid-column: 1; }
+.home-card.is-soon { background: #0f192c; }
+.home-card.is-soon .home-card-tag { color: #c2cee2; background: #22324f; }
+.home-card.is-soon .home-card-icon img { opacity: .85; }
+
+/* Cómo unirte */
+.home-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.home-steps li { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 22px; background: #121d32; border: 1px solid #2b3d5c; border-radius: 16px; }
+.home-step-num { width: 44px; height: 44px; display: grid; place-items: center; color: var(--dex-yellow); background: #0d1729; border: 1px solid #344766; border-radius: 10px; font: 16px "Press Start 2P", "DM Mono", monospace; }
+.home-steps li > img { position: absolute; top: 18px; right: 18px; width: 48px; height: 48px; }
+.home-steps h3 { margin: 6px 0 0; color: #fff; font-size: 21px; }
+.home-steps p { margin: 0 0 6px; color: #a9bad6; font-size: 15px; line-height: 1.5; }
+
+/* Llamada a la acción */
+.home-cta { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 24px; margin-top: 46px; padding: 30px 36px; overflow: hidden; background: linear-gradient(120deg, #2a3d63, #155485 55%, #1f6fa8); border: 1px solid #3c6c9c; border-radius: 20px; box-shadow: 0 18px 40px #0007; }
+.home-cta-mon { width: 120px; height: 120px; filter: drop-shadow(0 10px 8px #0008); animation: site-float 4s ease-in-out infinite; }
+.home-cta h2 { margin: 0; color: #fff; font-size: clamp(24px, 3vw, 34px); }
+.home-cta p { margin: 8px 0 0; color: #dbe7f7; font-size: 16px; line-height: 1.5; }
+.home-cta-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Pie */
+.home-footer { padding: 40px 0 24px; background: #0a0f1a; border-top: 1px solid #1d2a42; }
+.home-footer-inner { width: min(100% - 40px, 1200px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 30px; margin: 0 auto; }
+.home-footer-brand p { max-width: 420px; margin: 14px 0; color: #8f9fba; font-size: 15px; line-height: 1.55; }
+.home-footer-network { width: 64px; height: 64px; border-radius: 14px; box-shadow: 0 0 0 1px #2b3d5c; image-rendering: auto; }
+.home-footer-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.home-footer-links h3 { margin: 0 0 10px; color: var(--dex-yellow); font: 11px "Press Start 2P", "DM Mono", monospace; }
+.home-footer-links a { display: block; margin-bottom: 9px; color: #c2cee2; font-size: 15px; text-decoration: none; }
+.home-footer-links a:hover { color: #fff; }
+.home-footer-legal { width: min(100% - 40px, 1200px); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin: 26px auto 0; padding-top: 16px; color: #6f80a0; border-top: 1px solid #1d2a42; font: 12px "DM Mono", monospace; }
+
+@media (max-width: 1100px) {
+  .home-cards-grid.is-main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-progress-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-mon-2, .home-mon-4 { display: none; }
+}
+@media (max-width: 760px) {
+  .home-shell, .home-footer-inner, .home-footer-legal { width: calc(100% - 24px); }
+  .home-hero { padding: 34px 12px 44px; }
+  .home-emblem { width: 120px; }
+  .home-lead { font-size: 16px; }
+  .home-mon { width: 76px; height: 76px; }
+  .home-mon-1 { top: 30px; left: 2%; }
+  .home-mon-3 { top: 30px; right: 2%; }
+  .home-ip { flex-direction: column; width: 100%; }
+  .home-ip > div { padding: 12px 14px; }
+  .home-ip strong { font-size: 13px; }
+  .home-ip-copy { justify-content: center; min-height: 46px; }
+  .home-ip.is-small { flex-direction: row; }
+  .home-btn { flex: 1 1 100%; justify-content: center; }
+  .home-btn.is-small { flex: 0 0 auto; }
+  .home-cards-grid.is-main, .home-steps { grid-template-columns: 1fr; }
+  .home-progress-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .home-stat { padding: 12px; }
+  .home-stat img { width: 30px; height: 30px; top: 8px; right: 8px; }
+  .home-stat strong { font-size: 26px; }
+  .home-stat small { font-size: 12px; }
+  .home-cards-grid:not(.is-main) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .home-cards-grid:not(.is-main) .home-card { grid-template-columns: 1fr; gap: 8px; padding: 12px; }
+  .home-cards-grid:not(.is-main) .home-card-icon { width: 44px; height: 44px; }
+  .home-cards-grid:not(.is-main) .home-card-icon img { width: 34px; height: 34px; }
+  .home-cards-grid:not(.is-main) .home-card-text strong { font-size: 16px; }
+  .home-cards-grid:not(.is-main) .home-card-text small { font-size: 12px; }
+  .home-cards-grid:not(.is-main) .home-card-tag { grid-column: 1; font-size: 9px; }
+  .home-cards-grid.is-main .home-card { min-height: 0; grid-template-columns: 58px minmax(0, 1fr); }
+  .home-cards-grid.is-main .home-card-tag { grid-column: 2; }
+  .home-cta { grid-template-columns: 1fr; padding: 24px 20px; text-align: center; }
+  .home-cta-mon { justify-self: center; width: 96px; height: 96px; }
+  .home-cta-actions { justify-content: center; }
+  .home-footer-inner { grid-template-columns: 1fr; }
+  .home-footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

@@ -1,0 +1,58 @@
+/* Diseño PokePad compartido (DexRewards, Gimnasios…): marco, lista a la izquierda y detalle a la derecha. */
+.dr-shell { width: min(100% - 40px, 1240px); margin: 0 auto; padding: 30px 0 40px; }
+.dr-heading { display: flex; align-items: center; justify-content: space-between; gap: 28px; margin-bottom: 26px; }
+.dr-heading .hero-art { margin-right: 3%; }
+.dr-heading h1 { margin: 0; font-size: clamp(38px, 4.6vw, 54px); letter-spacing: -.025em; line-height: 1; }
+.dr-lead { max-width: 760px; margin: 12px 0 0; color: #b6c3d9; font-size: 17px; line-height: 1.55; }
+.dr-lead a { color: #86cfff; }
+
+.pokepad { position: relative; padding: 34px 16px 16px; background: linear-gradient(180deg, #e0343a, #b81f2b); border: 4px solid #3a0d12; border-radius: 26px; box-shadow: inset 0 0 0 3px #f2646a, 0 24px 50px #000a; }
+.pokepad-top { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); padding: 7px 34px; color: #fff; background: linear-gradient(180deg, #e0343a, #b81f2b); border: 4px solid #3a0d12; border-radius: 12px; box-shadow: inset 0 0 0 3px #f2646a; font: 700 18px "DM Mono", monospace; letter-spacing: .14em; }
+.pokepad-screen { overflow: hidden; background: #0b1a2e; border: 4px solid #3a0d12; border-radius: 16px; }
+.pokepad-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; background: linear-gradient(180deg, #1f6fa8, #155485); border-bottom: 3px solid #0b2f4f; }
+.pokepad-bar h2 { margin: 0; color: #fff; font: 700 17px "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.pokepad-signal { display: flex; align-items: end; gap: 3px; height: 16px; }
+.pokepad-signal i { width: 4px; background: #e8ecf4; border-radius: 1px; }
+.pokepad-signal i:nth-child(1) { height: 5px; } .pokepad-signal i:nth-child(2) { height: 8px; } .pokepad-signal i:nth-child(3) { height: 12px; } .pokepad-signal i:nth-child(4) { height: 16px; }
+.pokepad-body { display: grid; grid-template-columns: minmax(270px, 340px) minmax(0, 1fr); gap: 14px; padding: 14px; background: #10426b; }
+
+/* Lista de secciones */
+.dr-list { display: grid; align-content: start; gap: 8px; max-height: 640px; overflow-y: auto; padding-right: 4px; scrollbar-color: #2b5f8c transparent; }
+.dr-item { --section-color: #5ee1ff; display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: center; gap: 10px; padding: 8px 10px 8px 8px; color: #e8ecf4; background: #0d1f36; border: 2px solid #1d4a73; border-radius: 10px; text-align: left; cursor: pointer; transition: border-color .15s ease, background .15s ease; }
+.dr-item:hover { border-color: var(--section-color); }
+.dr-item.is-active { background: #13304f; border-color: var(--section-color); box-shadow: 0 0 0 2px #0008, inset 4px 0 0 var(--section-color); }
+.dr-item-art { position: relative; width: 52px; height: 52px; overflow: hidden; background: #1b3a5c; border-radius: 8px; }
+.dr-item-art img { position: absolute; top: 50%; left: 50%; width: 78px; height: 78px; transform: translate(-50%, -50%); }
+.dr-item-text { display: grid; gap: 4px; min-width: 0; }
+.dr-item strong { overflow: hidden; color: var(--section-color); font: 700 14px "DM Mono", monospace; letter-spacing: .02em; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.dr-item small { color: #a9bad6; font: 12px "DM Mono", monospace; }
+.dr-item small em { color: #ff9aaa; font-style: normal; }
+.dr-item-bar { height: 6px; overflow: hidden; background: #22405f; border-radius: 4px; }
+.dr-item-bar b { height: 100%; display: block; background: var(--section-color); }
+
+/* Detalle */
+.dr-detail { --section-color: #5ee1ff; min-width: 0; padding: 18px 20px; background: #0d1f36; border: 2px solid #1d4a73; border-radius: 12px; }
+.dr-detail-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: center; padding-bottom: 18px; border-bottom: 1px solid #22405f; }
+.dr-detail-head h3 { margin: 0; color: var(--section-color); font: 700 26px "DM Mono", monospace; letter-spacing: .02em; text-transform: uppercase; }
+.dr-count { margin: 6px 0 10px; color: #fff; font: 600 17px "DM Mono", monospace; }
+.dr-description { max-width: 560px; margin: 0; color: #b6c3d9; font-size: 16px; line-height: 1.5; }
+.dr-warning { margin: 10px 0 0; color: #ff9aaa; font-size: 15px; }
+.dr-link { display: inline-block; margin-top: 12px; color: #86cfff; font-size: 15px; font-weight: 600; text-decoration: none; }
+.dr-link:hover { color: #fff; }
+.dr-ring { --percent: 0; width: 132px; aspect-ratio: 1; display: grid; place-items: center; background: conic-gradient(var(--section-color) calc(var(--percent) * 1%), #22405f 0); border-radius: 50%; }
+.dr-ring span { width: 104px; aspect-ratio: 1; display: grid; place-items: center; color: #fff; background: #0d1f36; border-radius: 50%; font: 700 21px "DM Mono", monospace; }
+
+@media (max-width: 860px) {
+  .dr-heading { display: grid; gap: 0; }
+  .dr-heading .hero-art { order: -1; margin: 0; }
+  .dr-shell { width: calc(100% - 24px); padding-top: 20px; }
+  .pokepad { padding: 30px 8px 8px; border-radius: 18px; }
+  .pokepad-body { grid-template-columns: 1fr; padding: 8px; }
+  .dr-list { grid-auto-flow: column; grid-auto-columns: minmax(230px, 78%); max-height: none; overflow-x: auto; overflow-y: hidden; padding: 0 0 6px; scroll-snap-type: x mandatory; }
+  .dr-item { scroll-snap-align: start; }
+  .dr-detail { padding: 14px; scroll-margin-top: 100px; }
+  .dr-detail-head { gap: 12px; align-items: start; }
+  .dr-ring { width: 84px; }
+  .dr-ring span { width: 66px; font-size: 15px; }
+  .dr-detail-head h3 { font-size: 20px; }
+}
