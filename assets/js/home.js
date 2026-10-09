@@ -31,7 +31,7 @@ function renderCards() {
         <strong>${escapeHtml(section.label)}</strong>
         <small>${escapeHtml(section.description)}</small>
       </span>
-      <span class="home-card-tag">${section.ready ? "Disponible" : "En construcción"}</span>
+      <span class="home-card-tag">${section.badge ?? (section.ready ? "Disponible" : "En construcción")}</span>
     </a>`;
   document.querySelector("#home-cards").innerHTML = `
     <div class="home-cards-grid is-main">${ready.map(card).join("")}</div>

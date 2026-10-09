@@ -3,7 +3,9 @@
 // Las pestañas que no caben a lo ancho pasan solas al menú «Más».
 //   icon: sprite de PokéAPI (items/<nombre> o pokemon/<número>)
 //   ready: false muestra la tarjeta de Inicio como «En construcción»
+//   badge: etiqueta destacada en la pestaña y en la tarjeta (p. ej. «NUEVO»)
 const SITE_SECTIONS = [
+  { href: "safari.html", label: "Safari", badge: "NUEVO", ready: true, icon: "items/safari-ball", color: "#43db95", description: "Mapa interactivo con zoom: zonas, spawn, taxis, Poképaradas y entrenadores." },
   { href: "index.html", label: "Inicio" },
   { href: "pokedex.html", label: "Pokédex", ready: true, icon: "items/poke-ball", color: "#ff5a5a", description: "Pokémon, formas regionales y fusiones con stats, hábitat, movimientos y captura." },
   { href: "dexrewards.html", label: "DexRewards", ready: true, icon: "items/coupon-1", color: "#5ee1ff", description: "Premios por completar la Pokédex general y la de cada generación." },
@@ -23,7 +25,7 @@ const SITE_SECTIONS = [
 
 (function renderSiteNav() {
   const current = location.pathname.split("/").pop() || "index.html";
-  const link = ({ href, label }) => `<a href="${href}"${href === current ? ' class="active" aria-current="page"' : ""}>${label}</a>`;
+  const link = ({ href, label, badge }) => `<a href="${href}"${href === current ? ' class="active" aria-current="page"' : ""}>${label}${badge ? `<span class="nav-badge">${badge}</span>` : ""}</a>`;
 
   document.querySelectorAll("[data-site-nav]").forEach((nav, index) => {
     const menuId = `nav-more-menu-${index}`;
@@ -88,6 +90,7 @@ const SITE_SECTIONS = [
       }
     });
     layout();
+    nav.classList.add("is-ready");
     window.addEventListener("resize", layout);
     document.fonts?.ready.then(layout);
   });

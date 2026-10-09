@@ -1,6 +1,6 @@
 # DiosesmonWiki
 
-Wiki comunitaria del servidor de Cobblemon **Diosesmon**: Pokédex con formas regionales y fusiones, DexRewards, Gimnasios y guías.
+Wiki comunitaria del servidor de Cobblemon **Diosesmon**: mapa interactivo de la Zona Safari, Pokédex con formas regionales y fusiones, DexRewards, Gimnasios y guías.
 
 Es un sitio estático (HTML, CSS y JavaScript), sin servidor ni base de datos. El progreso de cada jugador (vistos, capturados, gimnasios vencidos) se guarda en su propio navegador.
 
@@ -11,22 +11,27 @@ Es un sitio estático (HTML, CSS y JavaScript), sin servidor ni base de datos. E
 assets/
   css/                Estilos (topbar.css es la barra común; site-base.css la base común)
   js/                 Lógica de cada página (site-nav.js define las pestañas del sitio)
-  img/                Logos, favicons e imágenes de las fusiones
+  img/                Logos, favicons, fusiones y teselas del mapa Safari (img/safari/)
 data/                 Datos que usan las páginas
   dexrewards-data.js    Hitos y recompensas de /dexrewards        ← editar a mano
   gimnasios-data.js     Líderes, recompensas, equipos y level caps ← editar a mano
   drop-overrides.js     Drops desactivados en el servidor         ← editar a mano
+  safari-data.js        Zonas y puntos del mapa de la Zona Safari ← editar a mano
   pokemon-data.js       Generado por tools/build_pokemon_data.py
   pokemon-details.js    Generado por tools/build_cobblemon_data.py
   pokemon-catalog-extra.js  Generado por tools/build_cobblemon_data.py
   fusion-data.js        Generado por tools/build_fusion_data.py
 tools/                Scripts que generan los datos (no forman parte de la web)
-  source/               Excel de fusiones y logos originales
+  source/               Excel de fusiones, logos originales y mapa original de la Zona Safari
   legacy/               Código antiguo de CheckDex/FusionDex (ya no se usa)
 docs/                 Notas del proyecto
 ```
 
 `checkdex.html` y `fusiondex.html` solo redirigen a la Pokédex para que los enlaces antiguos sigan funcionando.
+
+## Mapa de la Zona Safari
+
+`safari.html` muestra el mapa con zoom (Leaflet) en coordenadas de Minecraft: el centro es X 0 · Z 0 y cada píxel del zoom máximo es un bloque. Los puntos (Poképaradas, Taxis, Entrenadores…) se añaden en `data/safari-data.js`, una línea por punto. Para pasar un waypoint de Xaero's Minimap (`waypoint:Nombre:P:X:Y:Z:…`) se usan X, Y y Z en ese orden. En el propio mapa, al hacer clic en cualquier punto se pueden copiar sus coordenadas.
 
 ## Añadir o cambiar secciones
 
@@ -50,6 +55,7 @@ Requiere Python 3. Los scripts descargan lo que necesitan la primera vez (en `to
 python tools/build_pokemon_data.py     # especies, tipos, stats (PokéAPI)
 python tools/build_cobblemon_data.py   # fichas, formas, evoluciones, biomas (Cobblemon 1.7.3 + Terralith)
 python tools/build_fusion_data.py      # fusiones desde tools/source/FUSIONES DIOSESMON.xlsx
+python tools/build_safari_tiles.py     # teselas con zoom del mapa desde tools/source/ZonaSafari/
 ```
 
 Al cambiar un archivo de `assets/` o `data/`, sube su número de versión (`?v=N`) en las páginas que lo cargan para que los navegadores no usen la copia antigua.

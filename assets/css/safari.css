@@ -1,0 +1,83 @@
+/* Zona Safari: mapa interactivo (el marco PokePad está en pokepad.css). */
+.sf-new { display: inline-block; vertical-align: middle; margin-left: 8px; padding: 4px 12px; color: #08101f; background: #43db95; border-radius: 999px; font: 700 14px "DM Mono", monospace; letter-spacing: .08em; animation: sf-pulse 2s ease-in-out infinite; }
+@keyframes sf-pulse { 50% { box-shadow: 0 0 0 8px #43db9500; } 0%, 100% { box-shadow: 0 0 0 0 #43db9566; } }
+.sf-ball { background: linear-gradient(180deg, #3f8f3a 0 47%, #0a0d14 47% 53%, #e8ecf4 53%); }
+
+.sf-coords { padding: 4px 12px; color: #fff; background: #0b2f4f; border: 1px solid #2b5f8c; border-radius: 999px; font: 600 14px "DM Mono", monospace; white-space: nowrap; }
+.sf-body { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 14px; padding: 14px; background: #10426b; }
+
+/* Mapa */
+.sf-map-wrap { align-self: start; position: relative; z-index: 0; isolation: isolate; min-width: 0; overflow: hidden; border: 2px solid #1d4a73; border-radius: 12px; }
+.sf-map { height: min(72vh, 760px); min-height: 420px; background: #050608; }
+.sf-map-wrap.is-fullscreen { border: 0; border-radius: 0; }
+.sf-map-wrap.is-fullscreen .sf-map { height: 100vh; }
+.sf-map .leaflet-tile { image-rendering: pixelated; }
+.sf-fullscreen { position: absolute; right: 12px; bottom: 12px; z-index: 500; display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; color: #fff; background: #0d1f36e6; border: 1px solid #2b5f8c; border-radius: 9px; font: 600 14px "Space Grotesk", sans-serif; cursor: pointer; }
+.sf-fullscreen:hover { border-color: #ffd442; }
+.leaflet-container { font-family: "Space Grotesk", sans-serif; }
+.leaflet-bar a { width: 36px; height: 36px; line-height: 34px; color: #fff; background: #0d1f36; border-color: #2b5f8c; font-size: 20px; }
+.leaflet-bar a:hover { color: #08101f; background: #ffd442; }
+.leaflet-bar { border: 1px solid #2b5f8c !important; border-radius: 9px !important; overflow: hidden; }
+
+/* Etiquetas de zona */
+.sf-zone-label { background: none; border: 0; }
+.sf-map.is-close .sf-zone-label span { opacity: .45; }
+.sf-zone-label span { transition: opacity .2s ease; }
+.sf-zone-label span { --zone-color: #fff; display: block; transform: translate(-50%, -50%); padding: 6px 14px; color: #fff; background: #0a0d14cc; border: 2px solid var(--zone-color); border-radius: 999px; box-shadow: 0 6px 16px #000a; font: 700 15px "Space Grotesk", sans-serif; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; text-shadow: 0 0 8px var(--zone-color); pointer-events: none; }
+
+/* Marcadores */
+.sf-pin { background: none; border: 0; }
+.sf-pin-body { --pin-color: #ffd442; position: relative; width: 44px; height: 44px; display: grid; place-items: center; background: #0d1f36; border: 3px solid var(--pin-color); border-radius: 50% 50% 50% 4px; transform: scale(var(--pin-scale, 1)) rotate(-45deg); transform-origin: 50% 100%; box-shadow: 0 6px 14px #000c; }
+.sf-pin-body img { width: 38px; height: 38px; transform: rotate(45deg); image-rendering: pixelated; object-fit: contain; }
+/* Iconos propios (no pixel art), como el de la Poképarada: se ven suaves. */
+.sf-panel img[src^="assets/"], .sf-pin-body img[src^="assets/"] { image-rendering: auto; }
+.sf-pin.is-pokeparada .sf-pin-body img { width: 32px; height: 32px; }
+.sf-pin.is-spawn .sf-pin-body::after { content: ""; position: absolute; inset: -9px; border: 2px solid var(--pin-color); border-radius: inherit; animation: sf-ring 1.8s ease-out infinite; }
+@keyframes sf-ring { from { opacity: .9; transform: scale(.8); } to { opacity: 0; transform: scale(1.5); } }
+
+/* Ventanas emergentes */
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { color: #f2f4fb; background: #0d1f36; border: 1px solid #2b5f8c; box-shadow: 0 12px 30px #000c; }
+.leaflet-popup-content { margin: 12px 16px; }
+.leaflet-container a.leaflet-popup-close-button { color: #a9bad6; }
+.sf-popup { display: grid; gap: 6px; min-width: 190px; }
+.sf-popup strong { font-size: 16px; }
+.sf-popup p { margin: 0; color: #b6c3d9; font-size: 14px; line-height: 1.45; }
+.sf-popup code { color: #ffd442; font: 13px "DM Mono", monospace; }
+.sf-popup-type { justify-self: start; padding: 2px 9px; color: #08101f; background: var(--pin-color); border-radius: 999px; font: 700 11px "DM Mono", monospace; text-transform: uppercase; }
+.sf-copy { padding: 7px 10px; color: #08101f; background: #ffd442; border: 0; border-radius: 7px; font: 700 13px "Space Grotesk", sans-serif; cursor: pointer; }
+
+/* Panel lateral */
+.sf-panel { display: grid; align-content: start; gap: 16px; max-height: min(72vh, 760px); overflow-y: auto; scrollbar-color: #2b5f8c transparent; padding: 14px; background: #0d1f36; border: 2px solid #1d4a73; border-radius: 12px; }
+.sf-panel h3 { margin: 0 0 10px; padding-left: 10px; color: #fff; border-left: 4px solid #ffd442; font-size: 17px; }
+.sf-legend, .sf-zones, .sf-points { display: grid; gap: 6px; }
+.sf-legend-item { --pin-color: #ffd442; display: grid; grid-template-columns: auto 34px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 6px 10px; background: #102a47; border: 1px solid #22405f; border-left: 4px solid var(--pin-color); border-radius: 8px; font-size: 14px; cursor: pointer; }
+.sf-legend-item input { width: 16px; height: 16px; margin: 0; accent-color: #43db95; }
+.sf-legend-item img { width: 34px; height: 34px; object-fit: contain; }
+.sf-legend-item small { color: #8f9fba; font: 12px "DM Mono", monospace; }
+.sf-zones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sf-zone-btn { --zone-color: #fff; padding: 9px 8px; color: #fff; background: #102a47; border: 1px solid var(--zone-color); border-radius: 8px; font: 600 13px "Space Grotesk", sans-serif; text-align: center; cursor: pointer; }
+.sf-zone-btn:hover { background: color-mix(in srgb, var(--zone-color) 25%, #102a47); }
+.sf-point-group { background: #102a47; border: 1px solid #22405f; border-left: 4px solid var(--pin-color); border-radius: 8px; }
+.sf-point-group summary { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 6px 10px; font-size: 14px; font-weight: 600; cursor: pointer; list-style: none; }
+.sf-point-group summary::-webkit-details-marker { display: none; }
+.sf-point-group summary img { width: 34px; height: 34px; object-fit: contain; }
+.sf-point-group summary small { color: #08101f; background: var(--pin-color); padding: 1px 8px; border-radius: 999px; font: 700 12px "DM Mono", monospace; }
+.sf-point-items { display: grid; gap: 4px; max-height: 260px; overflow-y: auto; padding: 0 8px 8px; }
+.sf-point-btn { --pin-color: #ffd442; display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: 8px; padding: 6px 10px; color: #fff; background: #102a47; border: 1px solid #22405f; border-left: 4px solid var(--pin-color); border-radius: 8px; text-align: left; cursor: pointer; }
+.sf-point-btn:hover { border-color: var(--pin-color); }
+.sf-point-btn strong { display: block; font-size: 14px; }
+.sf-point-btn small { color: #ffd442; font: 12px "DM Mono", monospace; }
+.sf-empty { margin: 0; color: #8f9fba; font-size: 14px; }
+
+@media (max-width: 960px) {
+  .sf-body { grid-template-columns: 1fr; padding: 8px; }
+  .sf-panel { max-height: none; overflow: visible; }
+  .sf-map { height: 62vh; min-height: 360px; }
+  .sf-zones { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .sf-zones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sf-zone-label span { padding: 4px 10px; font-size: 12px; }
+  .sf-fullscreen span { display: none; }
+  .pokepad-bar { flex-wrap: wrap; }
+}
