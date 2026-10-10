@@ -75,7 +75,7 @@
   const spawnScore = (entry) => (entry.spawn ? RARITY_RANK[entry.spawn.rarity] * 100 + Number.parseInt(entry.spawn.level, 10) + entry.spawn.notes.length * 12 - entry.spawn.places.length * 3 : 1000);
 
   // --- Estado y guardado ---
-  const state = { target: null, objective: null, custom: null, breeder: null, browse: "competitive", type: null, query: "", selected: null };
+  const state = { target: null, objective: null, custom: null, breeder: null, start: null, browse: "competitive", type: null, query: "", selected: null };
   const loadStore = () => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; } };
   const saveStore = (store) => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); } catch { /* sin almacenamiento */ } };
   // Por plan: cruces hechos, Pokémon que ya tienes y especies cambiadas a mano.
@@ -211,12 +211,14 @@
     tree: document.getElementById("br-tree"),
     treeWrap: document.getElementById("br-tree-wrap"),
     editor: document.getElementById("br-editor"),
+    start: document.getElementById("br-start"),
     summary: document.getElementById("br-summary"),
     steps: document.getElementById("br-steps"),
     planner: document.getElementById("br-planner"),
   };
 
-  const statChips = (stats) => stats.map((stat) => `<span class="br-stat" style="--stat-color:${statByKey[stat].color}">${statByKey[stat].short}</span>`).join("");
+  const STAT_ORDER = STATS.map((stat) => stat.key);
+  const statChips = (stats) => [...stats].sort((a, b) => STAT_ORDER.indexOf(a) - STAT_ORDER.indexOf(b)).map((stat) => `<span class="br-stat" style="--stat-color:${statByKey[stat].color}">${statByKey[stat].short}</span>`).join("");
   const sexIcon = (sex) => (sex === "male" ? '<span class="br-sex is-male" title="Macho">♂</span>' : sex === "female" ? '<span class="br-sex is-female" title="Hembra">♀</span>' : "");
   const sexText = (sex) => (sex === "male" ? " ♂" : sex === "female" ? " ♀" : "");
 
@@ -355,13 +357,32 @@
       </div>`;
   }
 
+  // Elegir con qué IV a 31 empieza tu Pokémon objetivo (el de la rama dorada).
+  function renderStart(info, stats, startStat) {
+    const starter = VOLBEAT_ILLUMISE.has(state.target.id) ? byId[314] : info.parent;
+    const sex = info.mode === "ditto" ? (starter.male < 0 ? "" : " ♂") : " ♀";
+    els.start.innerHTML = `
+      <img src="${SPRITES}/${starter.id}.png" alt="" width="56" height="56">
+      <div>
+        <strong>¿Con qué IV a 31 empieza tu ${escapeHtml(starter.name)}${sex}?</strong>
+        <small>Elige el IV perfecto que ya tiene tu Pokémon de partida y la cadena se arma desde ahí.</small>
+        <div class="br-start-chips">${stats.map((stat) => `<button type="button" class="br-start-chip" data-start="${stat}" aria-pressed="${stat === startStat}" style="--stat-color:${statByKey[stat].color}">${statByKey[stat].label}</button>`).join("")}</div>
+      </div>`;
+  }
+
   function renderPlan(info) {
     if (!info.parent || info.mode === "nidoran") {
       els.planner.hidden = true;
       return;
     }
     els.planner.hidden = false;
-    const stats = currentStats(info);
+    const baseStats = currentStats(info);
+    if (!baseStats.includes(state.start)) state.start = null;
+    // La rama de tu especie empieza con el IV elegido: en el árbol, esa stat va al final (en la cadena con Ditto, al principio).
+    const startStat = state.start ?? (info.mode === "ditto" ? baseStats[0] : baseStats[baseStats.length - 1]);
+    const others = baseStats.filter((stat) => stat !== startStat);
+    const stats = info.mode === "ditto" ? [startStat, ...others] : [...others, startStat];
+    renderStart(info, baseStats, startStat);
     if (stats.length < 2) {
       els.tree.innerHTML = '<p class="br-note">Elige al menos 2 stats para armar una cadena.</p>';
       els.summary.innerHTML = "";
@@ -456,7 +477,7 @@
     renderBreeders(info, breeders);
     renderPlan(info);
     renderBrowser();
-    history.replaceState(null, "", `#${state.target.id}-${state.objective}${state.objective === "custom" ? `-${state.custom.join(".")}` : ""}${state.breeder ? `-b${state.breeder}` : ""}`);
+    history.replaceState(null, "", `#${state.target.id}-${state.objective}${state.objective === "custom" ? `-${state.custom.join(".")}` : ""}${state.breeder ? `-b${state.breeder}` : ""}${state.start ? `-s${state.start}` : ""}`);
   }
 
   function selectTarget(id, scroll) {
@@ -465,6 +486,7 @@
     state.target = target;
     state.objective = null;
     state.breeder = null;
+    state.start = null;
     state.selected = null;
     render();
     if (scroll) els.target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -577,6 +599,13 @@
     const id = state.selected;
     updatePlan((plan) => { delete plan.species[id]; plan.owned = plan.owned.filter((value) => value !== id); });
   });
+  els.start.addEventListener("click", (event) => {
+    const chip = event.target.closest("[data-start]");
+    if (!chip) return;
+    state.start = chip.dataset.start;
+    state.selected = null;
+    render();
+  });
   els.summary.addEventListener("change", (event) => {
     if (!event.target.matches("[data-rank]")) return;
     try { localStorage.setItem(RANK_KEY, event.target.value); } catch { /* sin almacenamiento */ }
@@ -585,14 +614,15 @@
 
   // Estado inicial desde el enlace (#468-5f-b21) o Togekiss por defecto.
   function fromHash() {
-    const found = location.hash.match(/^#(\d+)(?:-(4|5f|5e|6|trf|tre|custom))?(?:-([a-z.]+))?(?:-b(\d+))?$/);
+    const found = location.hash.match(/^#(\d+)(?:-(4|5f|5e|6|trf|tre|custom))?(?:-((?:hp|atk|def|spa|spd|spe)(?:\.(?:hp|atk|def|spa|spd|spe))*))?(?:-b(\d+))?(?:-s(hp|atk|def|spa|spd|spe))?$/);
     if (!found || !byId[found[1]]) return false;
     const objective = found[2] ?? null;
-    if (Number(found[1]) === state.target?.id && (objective ?? state.objective) === state.objective && Number(found[4] ?? 0) === (state.breeder ?? 0)) return true;
+    if (Number(found[1]) === state.target?.id && (objective ?? state.objective) === state.objective && Number(found[4] ?? 0) === (state.breeder ?? 0) && (found[5] ?? null) === state.start) return true;
     state.target = byId[found[1]];
     state.objective = objective;
     if (objective === "custom") state.custom = (found[3] ?? "").split(".").filter((key) => statByKey[key]);
     state.breeder = found[4] ? Number(found[4]) : null;
+    state.start = found[5] ?? null;
     state.selected = null;
     render();
     return true;

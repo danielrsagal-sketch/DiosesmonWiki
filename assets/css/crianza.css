@@ -71,6 +71,14 @@
 .br-breeder em { color: #ffb3d6; font-size: 11px; font-style: normal; }
 .br-breeder-pick { margin-top: 10px; }
 
+.br-start { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; align-items: center; margin-bottom: 12px; padding: 10px 14px; background: linear-gradient(135deg, #2e2414, #121d32 70%); border: 1px solid #ffd44288; border-radius: 12px; }
+.br-start img { width: 56px; height: 56px; }
+.br-start strong { display: block; color: #fff; font-size: 16px; }
+.br-start small { color: #c2cee2; font-size: 13px; }
+.br-start-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.br-start-chip { padding: 5px 12px; color: #c2cee2; background: #0d1729; border: 2px solid color-mix(in srgb, var(--stat-color) 55%, #253753); border-radius: 999px; font: 700 13px "Space Grotesk", sans-serif; cursor: pointer; }
+.br-start-chip:hover { color: #fff; }
+.br-start-chip[aria-pressed="true"] { color: #08101f; background: var(--stat-color); border-color: var(--stat-color); box-shadow: 0 0 0 2px #ffd442; }
 .br-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 8px; color: #c2cee2; font-size: 13px; }
 .br-legend span { display: inline-flex; align-items: center; gap: 6px; }
 .br-legend i { width: 18px; height: 3px; border-radius: 2px; }
