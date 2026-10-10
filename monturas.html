@@ -4,19 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0d14">
-  <meta name="description" content="Pokémon que puedes montar por tierra, agua y aire, con sus estilos y asientos.">
+  <meta name="description" content="Monturas de Cobblemon en Diosesmon: qué Pokémon se pueden montar por tierra, agua y aire, sus estadísticas y las mejores recomendaciones.">
   <title>Monturas | DiosesmonWiki</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/topbar.css?v=11">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=13">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <script src="assets/js/site-nav.js?v=7" defer></script>
+  <link rel="stylesheet" href="assets/css/guides.css?v=6">
+  <script src="assets/js/site-nav.js?v=11" defer></script>
+  <script src="data/monturas-data.js?v=1" defer></script>
+  <script src="assets/js/type-colors.js?v=1" defer></script>
+  <script src="assets/js/monturas.js?v=1" defer></script>
 </head>
-<body>
+<body style="--section-color: #4bb6ff">
   <header class="dex-topbar">
     <div class="dex-header-inner">
       <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
@@ -28,16 +32,17 @@
         <a href="pokedex.html">Pokédex</a>
         <a href="feedback.html">Feedback</a>
       </nav>
-      <span class="server-status"><i></i> DIOSESMON NETWORK · COBBLEMON</span>
+      <a class="feedback-cta" href="feedback.html" title="Envíanos ideas, errores o datos que falten"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" width="44" height="44"><span><i aria-hidden="true"></i><b>¿Ideas o errores?</b> <em>Cuéntanos</em></span></a>
     </div>
   </header>
 
   <main class="sec-shell">
     <section class="sec-hero">
       <div>
-        <p class="eyebrow">VIAJES Y EXPLORACIÓN</p>
+        <p class="eyebrow">POKÉ JINETES</p>
         <h1>Monturas</h1>
-        <p class="sec-lead">Pokémon que puedes montar por tierra, agua y aire, con sus estilos y asientos.</p>
+        <p class="sec-lead">En Cobblemon no hace falta silla: muchos Pokémon te llevan a cuestas por tierra, agua y aire. Aquí tienes cuáles se pueden montar en Diosesmon, cómo se manejan y cuáles merecen la pena.</p>
+        <ul class="hero-tips" id="mount-tips"></ul>
       </div>
       <div class="sec-art" aria-hidden="true">
         <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" alt="">
@@ -45,20 +50,62 @@
       </div>
     </section>
 
-    <section class="sec-card" aria-labelledby="sec-wip-title">
-      <h2 id="sec-wip-title">Sección en construcción <span class="sec-badge">Próximamente</span></h2>
-      <p>Estamos preparando esta página con la información del servidor. Se irá llenando poco a poco.</p>
-      <h3>Ideas para esta sección</h3>
-      <ul class="sec-ideas">
-          <li>Pokémon montables del servidor por medio (tierra, agua, aire)</li>
-          <li>Estilos de montura y número de asientos</li>
-          <li>Estadísticas de montura: velocidad, aguante, salto…</li>
-          <li>Cómo empezar a montar</li>
-      </ul>
-      <a class="sec-cta" href="feedback.html"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">¿Qué te gustaría ver aquí? Cuéntanos</a>
+    <section class="guide-block" aria-labelledby="mount-how-title">
+      <h2 class="guide-title" id="mount-how-title">Cómo montar</h2>
+      <ol class="guide-steps is-three">
+        <li class="guide-step">
+          <span class="guide-step-num">1</span>
+          <img class="guide-step-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="" width="48" height="48">
+          <h3>Saca a tu Pokémon</h3>
+          <p>Tiene que ser <strong>tuyo</strong> y estar fuera de su Poké Ball. Solo se pueden montar las especies de la lista de abajo.</p>
+        </li>
+        <li class="guide-step">
+          <span class="guide-step-num">2</span>
+          <img class="guide-step-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/town-map.png" alt="" width="48" height="48">
+          <h3>Elige «Montar»</h3>
+          <p>Abre su rueda de interacción con <strong>Mayús + clic derecho</strong> y pulsa <strong>Montar</strong>. Si tiene varios asientos, tus amigos pueden subirse también.</p>
+        </li>
+        <li class="guide-step">
+          <span class="guide-step-num">3</span>
+          <img class="guide-step-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/rare-candy.png" alt="" width="48" height="48">
+          <h3>Mejóralo con Bongurchatas</h3>
+          <p>Cada estadística de montura tiene un <strong>valor base</strong> y un <strong>máximo</strong>. Dale <strong>Bongurchatas</strong> de distintos sabores para subirlas hasta el máximo.</p>
+        </li>
+      </ol>
     </section>
 
-    <footer class="site-footer"><span>DIOSESMONWIKI · MONTURAS</span><span>Contenido en preparación</span></footer>
+    <section class="guide-block" aria-labelledby="mount-rec-title">
+      <h2 class="guide-title" id="mount-rec-title">Monturas recomendadas</h2>
+      <p class="guide-intro">Nuestra selección según sus estadísticas de montura. Los valores son <strong>base–máximo</strong>.</p>
+      <div class="rec-grid" id="mount-recs"></div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="mount-styles-title">
+      <h2 class="guide-title" id="mount-styles-title">Estilos y estadísticas</h2>
+      <div class="style-grid" id="mount-styles"></div>
+      <div class="stat-defs" id="mount-stats"></div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="mount-all-title">
+      <h2 class="guide-title" id="mount-all-title">Todas las monturas <span class="guide-count is-ok" id="mount-count"></span></h2>
+      <p class="guide-intro">Solo Pokémon disponibles en el servidor (generaciones 1 a 4). Pulsa una tarjeta para ver todas sus estadísticas.</p>
+      <div class="guide-filters" role="toolbar" aria-label="Filtrar monturas">
+        <div class="guide-chips" id="mount-env-filter"></div>
+        <div class="guide-chips">
+          <label class="guide-select"><span>Orden</span><select id="mount-sort">
+            <option value="speed">Más rápidas</option>
+            <option value="dex">Nº de Pokédex</option>
+            <option value="seats">Más asientos</option>
+            <option value="name">Nombre</option>
+          </select></label>
+          <label class="guide-toggle"><input type="checkbox" id="mount-hide-legendary"> Ocultar legendarios</label>
+        </div>
+      </div>
+      <div class="mount-grid" id="mount-grid"></div>
+      <p class="guide-empty" id="mount-empty" hidden>Ninguna montura coincide con el filtro.</p>
+    </section>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · MONTURAS</span><span>Datos de Cobblemon 1.7.3 · <a href="https://wiki.cobblemon.com/index.php/Riding" target="_blank" rel="noreferrer">Wiki de Cobblemon</a></span></footer>
   </main>
 </body>
 </html>

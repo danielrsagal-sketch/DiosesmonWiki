@@ -21,6 +21,10 @@ data/                 Datos que usan las páginas
   pokemon-details.js    Generado por tools/build_cobblemon_data.py
   pokemon-catalog-extra.js  Generado por tools/build_cobblemon_data.py
   fusion-data.js        Generado por tools/build_fusion_data.py
+  fosiles-data.js, monturas-data.js  Generados por tools/build_fosiles_monturas.py
+  entrenamiento-data.js Generado por tools/build_ev_data.py
+  crianza-data.js       Generado por tools/build_crianza_data.py
+  kits-data.js          Generado por tools/build_kits_data.py (desde extra/, no publicado)
 tools/                Scripts que generan los datos (no forman parte de la web)
   source/               Excel de fusiones, logos originales y mapa original de la Zona Safari
   legacy/               Código antiguo de CheckDex/FusionDex (ya no se usa)
@@ -56,6 +60,10 @@ python tools/build_pokemon_data.py     # especies, tipos, stats (PokéAPI)
 python tools/build_cobblemon_data.py   # fichas, formas, evoluciones, biomas (Cobblemon 1.7.3 + Terralith)
 python tools/build_fusion_data.py      # fusiones desde tools/source/FUSIONES DIOSESMON.xlsx
 python tools/build_safari_tiles.py     # teselas con zoom del mapa desde tools/source/ZonaSafari/
+python tools/build_fosiles_monturas.py # fósiles, yacimientos y monturas (Cobblemon 1.7.3)
+python tools/build_ev_data.py          # EVs y spawns para Entrenamiento EV
+python tools/build_crianza_data.py     # grupos huevo y géneros para Crianza (después de build_ev_data)
+python tools/build_kits_data.py        # kits desde las capturas de extra/PaginaDioses/DiosesmonKits
 ```
 
 Al cambiar un archivo de `assets/` o `data/`, sube su número de versión (`?v=N`) en las páginas que lo cargan para que los navegadores no usen la copia antigua.

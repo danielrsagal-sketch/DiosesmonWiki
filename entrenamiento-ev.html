@@ -4,19 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0d14">
-  <meta name="description" content="Guía para repartir los puntos de esfuerzo (EVs) y sacar el máximo a cada Pokémon.">
+  <meta name="description" content="Entrenamiento EV en Cobblemon y Diosesmon: qué son los EVs, piezas recias, vitaminas, mochis, combates 3v3, los mejores Pokémon para entrenar cada stat y la tabla de EVs de todos los Pokémon.">
   <title>Entrenamiento EV | DiosesmonWiki</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/topbar.css?v=11">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=13">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <script src="assets/js/site-nav.js?v=7" defer></script>
+  <link rel="stylesheet" href="assets/css/guides.css?v=6">
+  <script src="assets/js/site-nav.js?v=11" defer></script>
+  <script src="data/entrenamiento-data.js?v=2" defer></script>
+  <script src="assets/js/type-colors.js?v=1" defer></script>
+  <script src="assets/js/iv-shop.js?v=2" defer></script>
+  <script src="assets/js/entrenamiento.js?v=2" defer></script>
 </head>
-<body>
+<body style="--section-color: #ff8a3d">
   <header class="dex-topbar">
     <div class="dex-header-inner">
       <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
@@ -28,37 +33,112 @@
         <a href="pokedex.html">Pokédex</a>
         <a href="feedback.html">Feedback</a>
       </nav>
-      <span class="server-status"><i></i> DIOSESMON NETWORK · COBBLEMON</span>
+      <a class="feedback-cta" href="feedback.html" title="Envíanos ideas, errores o datos que falten"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" width="44" height="44"><span><i aria-hidden="true"></i><b>¿Ideas o errores?</b> <em>Cuéntanos</em></span></a>
     </div>
   </header>
 
   <main class="sec-shell">
     <section class="sec-hero">
       <div>
-        <p class="eyebrow">ESTADÍSTICAS</p>
+        <p class="eyebrow">GIMNASIO DE ESFUERZO</p>
         <h1>Entrenamiento EV</h1>
-        <p class="sec-lead">Guía para repartir los puntos de esfuerzo (EVs) y sacar el máximo a cada Pokémon.</p>
+        <p class="sec-lead">Los puntos de esfuerzo (EVs) son el entrenamiento extra que hace que tu Pokémon sea más fuerte que uno salvaje del mismo nivel. Aquí tienes cómo ganarlos rápido en Diosesmon, qué Pokémon combatir y cuánto te falta.</p>
+        <ul class="hero-tips">
+          <li><img src="assets/img/items/cobblemon/power_bracer.png" alt="">Piezas recias +8</li>
+          <li><img src="assets/img/items/cobblemon/protein.png" alt="">Vitaminas +10</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">Combates 3v3</li>
+        </ul>
       </div>
-      <div class="sec-art" aria-hidden="true">
-        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/214.png" alt="">
-        <img class="sec-item" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/power-bracer.png" alt="">
+      <div class="ev-gym" aria-hidden="true">
+        <div class="ev-gym-floor"></div>
+        <img class="ev-gym-mon ev-gym-main" src="https://play.pokemonshowdown.com/sprites/ani/machamp.gif" alt="">
+        <img class="ev-gym-mon ev-gym-left" src="https://play.pokemonshowdown.com/sprites/ani/hitmonchan.gif" alt="">
+        <img class="ev-gym-mon ev-gym-right" src="https://play.pokemonshowdown.com/sprites/ani/hitmonlee.gif" alt="">
+        <img class="ev-gym-mon ev-gym-back" src="https://play.pokemonshowdown.com/sprites/ani/lucario.gif" alt="">
+        <img class="ev-gym-item ev-gym-item-1" src="assets/img/items/cobblemon/power_weight.png" alt="">
+        <img class="ev-gym-item ev-gym-item-2" src="assets/img/items/cobblemon/power_bracer.png" alt="">
+        <img class="ev-gym-item ev-gym-item-3" src="assets/img/items/cobblemon/power_anklet.png" alt="">
       </div>
     </section>
 
-    <section class="sec-card" aria-labelledby="sec-wip-title">
-      <h2 id="sec-wip-title">Sección en construcción <span class="sec-badge">Próximamente</span></h2>
-      <p>Estamos preparando esta página con la información del servidor. Se irá llenando poco a poco.</p>
-      <h3>Ideas para esta sección</h3>
-      <ul class="sec-ideas">
-          <li>Qué son los EVs y sus límites</li>
-          <li>Mejores Pokémon para entrenar cada estadística</li>
-          <li>Objetos recios (Pesa, Brazal…) y vitaminas</li>
-          <li>Cómo reiniciar EVs con bayas</li>
-      </ul>
-      <a class="sec-cta" href="feedback.html"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">¿Qué te gustaría ver aquí? Cuéntanos</a>
+    <section class="guide-block" aria-labelledby="ev-what-title">
+      <h2 class="guide-title" id="ev-what-title">¿Qué son los EVs?</h2>
+      <p class="guide-intro">Cada vez que tu Pokémon derrota a otro, gana puntos de esfuerzo en una o varias estadísticas según la especie derrotada. Al nivel 100, <strong>cada 4 EVs suman 1 punto</strong> a esa estadística. No confundir con los <a href="#ev-iv-title">IVs</a>, que son genéticos.</p>
+      <div class="ev-facts">
+        <div><strong>252</strong><span>EVs máximos en una estadística</span></div>
+        <div><strong>510</strong><span>EVs máximos en total (dos stats al máximo y 6 de sobra)</span></div>
+        <div><strong>+63</strong><span>puntos de stat al nivel 100 con 252 EVs</span></div>
+        <div><strong>1–3</strong><span>EVs que da cada Pokémon derrotado</span></div>
+      </div>
+      <div class="ev-stat-row" id="ev-stat-legend"></div>
     </section>
 
-    <footer class="site-footer"><span>DIOSESMONWIKI · ENTRENAMIENTO EV</span><span>Contenido en preparación</span></footer>
+    <section class="guide-block" aria-labelledby="ev-how-title">
+      <h2 class="guide-title" id="ev-how-title">Cómo se consiguen en Cobblemon</h2>
+      <p class="guide-intro">Todas las formas de sumar (o quitar) EVs que hay en el servidor, con su receta. Cada objeto tiene una versión para cada estadística.</p>
+      <div class="ev-methods" id="ev-methods"></div>
+      <p class="guide-note-line">En Cobblemon <strong>no existen</strong> el Brazal Firme ni el Pokérus, así que nada duplica los EVs: la clave es la pieza recia y combatir contra muchos rivales a la vez.</p>
+    </section>
+
+    <section class="ev-method3" aria-labelledby="ev-3v3-title">
+      <div class="ev-method3-head">
+        <p class="eyebrow">MÉTODO DIOSESMON</p>
+        <h2 id="ev-3v3-title">Combates 3v3 con piezas recias</h2>
+        <p>La forma más rápida de entrenar en el servidor: tres Pokémon tuyos contra tres salvajes a la vez, cada uno con su pieza recia.</p>
+      </div>
+      <ol class="ev-method3-steps">
+        <li><img src="assets/img/items/cobblemon/power_bracer.png" alt="" width="40" height="40"><div><strong>Equipa las piezas recias</strong><span>Dale a cada Pokémon la pieza de la stat que quieres subir. Suma <b>+8</b> en esa stat por cada rival derrotado, dé lo que dé el rival.</span></div></li>
+        <li><img src="assets/img/items/cobblemon/kelpsy_berry.png" alt="" width="40" height="40"><div><strong>Ve a por el Pokémon correcto</strong><span>Busca una zona con muchos spawns de los <a href="#ev-rec-title">recomendados</a>. Un Poké Snack o un cebo con la baya EV de esa stat atrae más Pokémon que dan esos EVs.</span></div></li>
+        <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="" width="40" height="40"><div><strong>Combate 3v3</strong><span>Lanza a tus tres Pokémon contra el grupo de salvajes. Cada rival que cae da sus EVs a tus Pokémon que combatieron contra él: tres rivales por combate en vez de uno.</span></div></li>
+        <li><img src="assets/img/items/cobblemon/exp_candy_l.png" alt="" width="40" height="40"><div><strong>Repite y mira tus EVs</strong><span>Comprueba los EVs en el resumen del Pokémon y para al llegar a 252. Si te pasas, quita con las bayas reductoras.</span></div></li>
+      </ol>
+      <div class="ev-calc" id="ev-calc">
+        <h3>Calculadora de entrenamiento</h3>
+        <div class="ev-calc-form">
+          <label><span>EVs que da el rival</span><select data-calc="yield"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option></select></label>
+          <label><span>EVs actuales</span><input data-calc="current" type="number" min="0" max="252" value="0" inputmode="numeric"></label>
+          <label><span>Objetivo</span><input data-calc="target" type="number" min="0" max="252" value="252" inputmode="numeric"></label>
+          <label class="guide-toggle"><input data-calc="item" type="checkbox" checked> Con pieza recia</label>
+        </div>
+        <div class="ev-calc-out" id="ev-calc-out" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="ev-rec-title">
+      <h2 class="guide-title" id="ev-rec-title">Pokémon recomendados para entrenar</h2>
+      <p class="guide-intro">Elegidos por los EVs que dan y por su spawn en el servidor: comunes y fáciles de encontrar. El tercero de cada stat aparece a nivel bajo, para empezar pronto.</p>
+      <div class="ev-rec-grid" id="ev-recs"></div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="ev-iv-title">
+      <h2 class="guide-title" id="ev-iv-title">¿Y los IVs? La Tienda de IVs</h2>
+      <p class="guide-intro">Los IVs (0 a 31 en cada stat) vienen de nacimiento y no se entrenan combatiendo. En Diosesmon los <strong>caramelos de IV están desactivados</strong>: para mejorarlos tienes la <a href="crianza.html">crianza</a> y el <strong>NPC Tienda de IVs</strong>, que sube o baja cualquier IV a cambio de Pokédólares.</p>
+      <div class="iv-shop-layout">
+        <div class="iv-shop-info">
+          <h3>Precio por punto</h3>
+          <p>Cada punto se cobra según el valor en el que queda el IV. Bajar también cuesta (por ejemplo, Velocidad a 0 para Espacio Raro).</p>
+          <ul class="iv-shop-bands" id="iv-shop-bands"></ul>
+          <p class="iv-shop-tip"><strong>Consejo:</strong> subir un IV de 0 a 31 cuesta <strong>$320.000</strong> (los 6: <strong>$1.920.000</strong>). Sale mucho más barato criar y usar la tienda solo para rematar un IV o bajar uno a 0.</p>
+        </div>
+        <div class="iv-shop" id="iv-shop"></div>
+      </div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="ev-table-title">
+      <h2 class="guide-title" id="ev-table-title">EVs de todos los Pokémon <span class="guide-count is-ok" id="ev-count"></span></h2>
+      <p class="guide-intro">Los EVs que da cada Pokémon del servidor (generaciones 1 a 4) al derrotarlo, y dónde aparece. Filtra por la stat que quieres entrenar.</p>
+      <div class="guide-filters" role="toolbar" aria-label="Filtrar tabla de EVs">
+        <div class="guide-chips" id="ev-filter"></div>
+        <div class="guide-chips">
+          <label class="guide-search"><span class="sr-only">Buscar Pokémon</span><input id="ev-search" type="search" placeholder="Buscar Pokémon…" autocomplete="off"></label>
+          <label class="guide-toggle"><input type="checkbox" id="ev-wild" checked> Solo salvajes</label>
+        </div>
+      </div>
+      <div class="ev-table" id="ev-table" role="table" aria-label="EVs por Pokémon"></div>
+      <p class="guide-empty" id="ev-empty" hidden>Ningún Pokémon coincide con el filtro.</p>
+    </section>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · ENTRENAMIENTO EV</span><span>Datos de Cobblemon 1.7.3 · Guía basada en <a href="https://www.wikidex.net/wiki/Puntos_de_esfuerzo" target="_blank" rel="noreferrer">WikiDex</a></span></footer>
   </main>
 </body>
 </html>

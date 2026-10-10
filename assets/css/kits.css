@@ -1,0 +1,97 @@
+/* Kits (el marco PokePad está en pokepad.css). */
+.kit-hero { position: relative; width: min(100%, 380px); height: 210px; flex: none; display: flex; align-items: flex-end; justify-content: center; }
+.kit-hero::before { content: ""; position: absolute; left: 4%; right: 4%; bottom: 0; height: 60px; background: radial-gradient(ellipse at center, #4bb6ff44, transparent 70%); }
+.kit-hero img { position: relative; width: 74px; height: auto; margin: 0 -6px; border-radius: 10px; box-shadow: 0 10px 18px #0009; animation: site-float 4s ease-in-out infinite; animation-delay: calc(var(--i) * -.6s); }
+.kit-hero img:nth-child(3) { width: 96px; z-index: 2; }
+.kit-hero img:nth-child(2), .kit-hero img:nth-child(4) { width: 84px; z-index: 1; }
+
+.kit-tabs { display: flex; gap: 6px; }
+.kit-tabs button { min-height: 34px; padding: 0 16px; color: #d8e3f6; background: #0d2f52; border: 2px solid #0b2f4f; border-radius: 999px; font: 700 13px "DM Mono", monospace; letter-spacing: .05em; text-transform: uppercase; cursor: pointer; }
+.kit-tabs button[aria-selected="true"] { color: #08101f; background: #ffd442; border-color: #ffd442; }
+
+.kit-list-art { background: #2a7fc7; }
+.kit-list-art img { top: 0; width: 52px; height: auto; transform: translateX(-50%); }
+.kit-coins { display: inline-flex; align-items: center; gap: 3px; color: #ffd442; }
+.kit-coins img { width: 18px; height: 18px; }
+
+.kit-detail { display: grid; gap: 16px; align-content: start; }
+.kit-head { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 18px; padding-bottom: 16px; border-bottom: 1px solid #22405f; }
+.kit-skin { width: 128px; height: auto; border: 2px solid var(--section-color); border-radius: 12px; box-shadow: 0 10px 20px #0008; }
+.kit-kind { margin: 0; color: #a9bad6; font: 600 12px "DM Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.kit-head h3 { margin: 2px 0 8px; color: var(--section-color); font: 700 28px "DM Mono", monospace; text-transform: uppercase; }
+.kit-price { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 10px; padding: 4px 14px 4px 6px; color: #fff; background: #3a3215; border: 1px solid #ffd44266; border-radius: 999px; font-size: 15px; }
+.kit-price strong { color: #ffd442; font: 700 18px "DM Mono", monospace; }
+.kit-price.is-small { font-size: 14px; }
+.kit-price.is-small strong { font-size: 15px; }
+.kit-specialty { display: grid; grid-template-columns: auto minmax(80px, 180px) auto; gap: 8px; align-items: center; margin-bottom: 10px; color: #d8e3f6; font-size: 14px; }
+.kit-specialty i { position: relative; height: 10px; overflow: hidden; background: #22405f; border-radius: 999px; }
+.kit-specialty i::after { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--value) * 10%); background: var(--section-color); border-radius: 999px; }
+.kit-specialty b { color: var(--section-color); font-family: "DM Mono", monospace; }
+.kit-perks { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.kit-perks li { padding: 5px 11px; color: #e2e9f6; background: #102a47; border: 1px solid #22405f; border-left: 3px solid var(--section-color); border-radius: 8px; font-size: 14px; }
+.kit-set-note { margin: 10px 0 0; color: #ffe9a6; font-size: 14px; }
+
+.kit-limits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+.kit-limits li { display: grid; gap: 1px; padding: 6px 10px; background: #0d1729; border: 1px solid #22405f; border-radius: 8px; }
+.kit-limits span { color: #9fb0cc; font: 600 10px "DM Mono", monospace; letter-spacing: .04em; text-transform: uppercase; }
+.kit-limits strong { color: #fff; font-size: 14px; }
+.kit-commands { margin: 8px 0 0; color: #c2cee2; font-size: 14px; }
+.kit-commands code, .kit-compare code { padding: 1px 6px; color: #ffe9a6; background: #2a2412; border-radius: 4px; font: 13px "DM Mono", monospace; }
+.kit-commands small { color: #8f9fba; }
+.kit-store { display: inline-block; margin-top: 10px; color: #86cfff; font-size: 14px; font-weight: 600; text-decoration: none; }
+.kit-store:hover { color: #fff; }
+.kit-yes { color: #6cf0b2; font-weight: 700; }
+.kit-no { color: #5a6a86; }
+.kit-compare-group th { padding-top: 14px; color: #ffd442 !important; background: #0d1729; font: 700 12px "DM Mono", monospace; letter-spacing: .08em; text-align: left; text-transform: uppercase; }
+
+/* Slot como el del menú de kits del juego */
+.kit-slot { position: relative; width: 56px; height: 56px; display: grid; place-items: center; flex: none; background: #2f77a8; border: 3px solid #74b4e1; border-radius: 4px; box-shadow: inset 0 0 0 2px #2b6d9c; }
+.kit-slot img { width: 40px; height: 40px; image-rendering: pixelated; }
+.kit-slot.is-capture { padding: 0; background: none; border: 0; box-shadow: none; }
+.kit-slot.is-capture img { width: 56px; height: 56px; image-rendering: auto; border-radius: 4px; }
+.kit-slot b { position: absolute; right: 2px; bottom: 0; color: #fff; font: 700 14px "DM Mono", monospace; text-shadow: 2px 2px 0 #3f3f3f; }
+.kit-slot.is-big { width: 72px; height: 72px; }
+.kit-slot.is-big img { width: 52px; height: 52px; }
+.kit-slot.is-big.is-capture img { width: 72px; height: 72px; }
+
+.kit-info { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; padding: 12px 14px; background: #1a0e24; border: 2px solid #3b1f5a; border-radius: 10px; box-shadow: inset 0 0 0 1px #5a2f8a55; }
+.kit-info strong { display: block; color: #fff; font-size: 17px; }
+.kit-info small { color: #9a8fb3; font-size: 12px; }
+.kit-info code { color: #8d84a6; font-family: "DM Mono", monospace; }
+.kit-info ul { display: grid; gap: 2px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 14px; }
+.kit-info .is-enchant { color: #b8b8c8; }
+.kit-info .is-attr { color: #6fdc6f; }
+.kit-info .is-lore { color: #e6b1ff; }
+.kit-info p { margin: 6px 0 0; color: #9a8fb3; font-size: 14px; }
+
+.kit-category h4 { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; color: #fff; font-size: 16px; }
+.kit-category h4 span { padding: 1px 8px; color: #08101f; background: var(--section-color); border-radius: 999px; font: 700 11px "DM Mono", monospace; }
+.kit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.kit-item { display: grid; justify-items: center; gap: 5px; padding: 8px 4px; color: #e2e9f6; background: #102035; border: 1px solid #1f3a5c; border-radius: 9px; font: 600 12px "Space Grotesk", sans-serif; text-align: center; cursor: pointer; transition: border-color .15s ease, transform .15s ease; }
+.kit-item:hover { border-color: var(--section-color); transform: translateY(-2px); }
+.kit-item.is-active { background: #16304f; border-color: var(--section-color); }
+.kit-item-name { line-height: 1.25; }
+
+.kit-compare-block { margin-top: 30px; }
+.kit-title { margin: 0 0 6px; padding-left: 12px; color: #fff; border-left: 4px solid #ffd442; font-size: 24px; }
+.kit-intro { margin: 0 0 12px; color: #b6c3d9; }
+.kit-compare-wrap { overflow-x: auto; background: var(--dex-panel); border: 1px solid var(--dex-line); border-radius: 12px; }
+.kit-compare { width: 100%; min-width: 720px; border-collapse: collapse; font-size: 14px; }
+.kit-compare th, .kit-compare td { padding: 10px 12px; border-bottom: 1px solid #1f2f4a; text-align: center; }
+.kit-compare tbody th { color: #a9bad6; font: 600 12px "DM Mono", monospace; letter-spacing: .04em; text-align: left; text-transform: uppercase; white-space: nowrap; }
+.kit-compare td { color: #e2e9f6; }
+.kit-compare thead th button { display: grid; justify-items: center; gap: 4px; width: 100%; padding: 0; color: var(--kit-color); background: none; border: 0; font: 700 14px "DM Mono", monospace; text-transform: uppercase; cursor: pointer; }
+.kit-compare thead th img { width: 48px; height: auto; border-radius: 6px; }
+
+@media (max-width: 860px) {
+  .kit-hero { width: 100%; height: 160px; }
+  .kit-hero img { width: 54px; }
+  .kit-hero img:nth-child(3) { width: 72px; }
+  .kit-hero img:nth-child(2), .kit-hero img:nth-child(4) { width: 62px; }
+  .kit-tabs button { padding: 0 10px; font-size: 11px; }
+  .kit-head { grid-template-columns: 84px minmax(0, 1fr); gap: 12px; }
+  .kit-skin { width: 84px; }
+  .kit-head h3 { font-size: 21px; }
+  .kit-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+  .kit-limits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

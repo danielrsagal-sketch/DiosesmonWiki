@@ -100,18 +100,30 @@ function teamButton(region, battle) {
     : '<p class="gym-team-pending">Equipo por confirmar</p>';
 }
 
+const REGIONAL_LABELS = { alola: "Alola", galar: "Galar", hisui: "Hisui", paldea: "Paldea" };
+
+// Megas y formas regionales usan su propio sprite de PokéAPI (campo sprite) y, si cambian, sus tipos.
 function pokemonCard(member) {
   const pokemon = speciesById.get(member.id);
-  const name = member.name ?? pokemon?.name ?? `#${member.id}`;
-  const sprite = `${POKEMON_SPRITES}/${member.shiny ? "shiny/" : ""}${member.id}.png`;
-  const types = (pokemon?.types ?? []).map((type) => `<span class="gym-type" style="--type-color:var(--type-${slug(type)}, #60718d)">${escapeHtml(type)}</span>`).join("");
-  return `<a class="gym-mon${member.shiny ? " is-shiny" : ""}" href="pokedex.html#pokemon/${member.id}" title="Ver ficha de ${escapeHtml(name)} en la Pokédex">
-      ${member.shiny ? '<span class="gym-mon-shiny" title="Shiny">★ Shiny</span>' : ""}
+  const baseName = member.name ?? pokemon?.name ?? `#${member.id}`;
+  const megaSuffix = typeof member.mega === "string" ? ` ${member.mega}` : "";
+  const name = member.mega ? `Mega-${baseName}${megaSuffix}` : member.form ? `${baseName} de ${REGIONAL_LABELS[member.form] ?? member.form}` : baseName;
+  const sprite = `${POKEMON_SPRITES}/${member.sprite ?? member.id}.png`;
+  const types = (member.types ?? pokemon?.types ?? []).map((type) => `<span class="gym-type" style="--type-color:var(--type-${slug(type)}, #60718d)">${escapeHtml(type)}</span>`).join("");
+  const link = `pokedex.html#pokemon/${member.id}${member.form ? `/${member.form}` : ""}`;
+  const tag = member.mega ? "Mega" : member.form ? REGIONAL_LABELS[member.form] : "";
+  // Especies de regiones no activas (p. ej. Annihilape) no tienen ficha abierta en la Pokédex: sin enlace.
+  const linked = pokemon?.available !== false;
+  const element = linked ? "a" : "div";
+  const attributes = linked ? ` href="${link}" title="Ver ficha de ${escapeHtml(baseName)} en la Pokédex"` : ' title="Especie aún no disponible en la Pokédex del servidor"';
+  return `<${element} class="gym-mon${member.mega ? " is-mega" : ""}"${attributes}>
+      ${tag ? `<span class="gym-mon-tag">${escapeHtml(tag)}</span>` : ""}
       <img src="${sprite}" alt="" loading="lazy">
       <strong>${escapeHtml(name)}</strong>
       <span class="gym-mon-types">${types}</span>
+      ${member.note ? `<small class="gym-mon-note">${escapeHtml(member.note)}</small>` : ""}
       ${member.level ? `<small>Nv. ${member.level}</small>` : ""}
-    </a>`;
+    </${element}>`;
 }
 
 function openTeam(region, battle, opener) {
@@ -132,6 +144,7 @@ function openTeam(region, battle, opener) {
         <ul class="gym-modal-rules">${rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")}</ul>
       </div>
     </header>
+    <p class="gym-shiny-note">✦ Cualquier Pokémon de estos equipos puede salir shiny: varía en cada combate.</p>
     <ol class="gym-stages">${stages.map((stage, index) => `<li class="gym-stage${stage.main ? " is-main" : ""}">
         <h3><span>${index + 1}</span>${escapeHtml(stage.label)}</h3>
         ${stage.team.length ? `<div class="gym-mon-grid">${stage.team.map(pokemonCard).join("")}</div>` : '<p class="gym-team-pending">Equipo por confirmar</p>'}

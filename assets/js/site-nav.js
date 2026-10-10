@@ -4,23 +4,24 @@
 //   icon: sprite de PokéAPI (items/<nombre> o pokemon/<número>)
 //   ready: false muestra la tarjeta de Inicio como «En construcción»
 //   badge: etiqueta destacada en la pestaña y en la tarjeta (p. ej. «NUEVO»)
+//   nav: false la deja fuera de las pestañas (Feedback va como botón fijo en la barra)
 const SITE_SECTIONS = [
   { href: "safari.html", label: "Safari", badge: "NUEVO", ready: true, icon: "items/safari-ball", color: "#43db95", description: "Mapa interactivo con zoom: zonas, spawn, taxis, Poképaradas y entrenadores." },
   { href: "index.html", label: "Inicio" },
   { href: "pokedex.html", label: "Pokédex", ready: true, icon: "items/poke-ball", color: "#ff5a5a", description: "Pokémon, formas regionales y fusiones con stats, hábitat, movimientos y captura." },
   { href: "dexrewards.html", label: "DexRewards", ready: true, icon: "items/coupon-1", color: "#5ee1ff", description: "Premios por completar la Pokédex general y la de cada generación." },
   { href: "gimnasios.html", label: "Gimnasios", ready: true, icon: "badges/1", color: "#ffd442", description: "Líderes, Alto Mando, Campeones y level caps de cada región." },
+  { href: "kits.html", label: "Kits", ready: true, icon: "items/premier-ball", color: "#e8ecf4", description: "Kits de rango y exclusivos: qué trae cada uno, ventajas y precio." },
   { href: "misiones.html", label: "Misiones", icon: "items/town-map", color: "#9ce35a", description: "Misiones del servidor, requisitos y recompensas." },
-  { href: "trabajo.html", label: "Trabajo", icon: "items/amulet-coin", color: "#ffa64d", description: "Oficios, pagos por acción y niveles de cada trabajo." },
-  { href: "kits.html", label: "Kits", icon: "items/premier-ball", color: "#e8ecf4", description: "Qué trae cada kit y cada cuánto se reclama." },
+  { href: "fosiles.html", label: "Fósiles", ready: true, icon: "items/old-amber", color: "#c9a26b", description: "Los 7 fósiles revivibles, los 23 yacimientos y la Máquina Restauradora." },
+  { href: "entrenamiento-ev.html", label: "Entrenamiento EV", ready: true, icon: "items/power-bracer", color: "#ff8a3d", description: "Piezas recias, vitaminas, combates 3v3, los mejores Pokémon para cada stat y los EVs de todos." },
+  { href: "crianza.html", label: "Crianza", ready: true, icon: "items/oval-charm", color: "#ff6fb1", description: "Planificador de cadena de crianza: 4, 5 o 6 IVs con breeders fáciles y costes." },
+  { href: "monturas.html", label: "Monturas", ready: true, icon: "items/air-balloon", color: "#4bb6ff", description: "54 Pokémon montables por tierra, agua y aire, con las mejores recomendaciones." },
   { href: "tesoros.html", label: "Tesoros", icon: "items/big-nugget", color: "#ffd442", description: "Tesoros escondidos, dónde buscarlos y qué guardan." },
+  { href: "trabajo.html", label: "Trabajos", icon: "items/amulet-coin", color: "#ffa64d", description: "Oficios, pagos por acción y niveles de cada trabajo." },
   { href: "torre-batalla.html", label: "Torre Batalla", icon: "items/muscle-band", color: "#b38cff", description: "Formato, rangos y premios de la Torre Batalla." },
-  { href: "crianza.html", label: "Crianza", icon: "items/oval-charm", color: "#ff6fb1", description: "Herencia, objetos útiles y huevos de 3.000 pasos." },
-  { href: "fosiles.html", label: "Fósiles", icon: "items/old-amber", color: "#c9a26b", description: "Fósiles, dónde encontrarlos y cómo revivirlos." },
-  { href: "monturas.html", label: "Monturas", icon: "items/air-balloon", color: "#4bb6ff", description: "Pokémon montables por tierra, agua y aire." },
-  { href: "entrenamiento-ev.html", label: "Entrenamiento EV", icon: "items/power-bracer", color: "#43db95", description: "Cómo repartir EVs y sacar el máximo a tu equipo." },
   { href: "pesca.html", label: "Pesca", icon: "items/super-rod", color: "#4bb6ff", description: "Cañas, cebos y qué se pesca en cada agua." },
-  { href: "feedback.html", label: "Feedback", ready: true, icon: "items/poke-ball", color: "#ffd442", description: "Envía ideas, errores o datos que falten en la wiki." },
+  { href: "feedback.html", label: "Feedback", nav: false, ready: true, icon: "items/poke-ball", color: "#ffd442", description: "Envía ideas, errores o datos que falten en la wiki." },
 ];
 
 (function renderSiteNav() {
@@ -29,10 +30,11 @@ const SITE_SECTIONS = [
 
   document.querySelectorAll("[data-site-nav]").forEach((nav, index) => {
     const menuId = `nav-more-menu-${index}`;
-    nav.innerHTML = `${SITE_SECTIONS.map(link).join("")}
+    const tabs = SITE_SECTIONS.filter((section) => section.nav !== false);
+    nav.innerHTML = `${tabs.map(link).join("")}
       <div class="nav-more">
         <button class="nav-more-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="${menuId}">Más <i aria-hidden="true"></i></button>
-        <div class="nav-more-menu" id="${menuId}" hidden>${SITE_SECTIONS.map(link).join("")}</div>
+        <div class="nav-more-menu" id="${menuId}" hidden>${tabs.map(link).join("")}</div>
       </div>`;
     const more = nav.querySelector(".nav-more");
     const button = more.querySelector(".nav-more-btn");

@@ -11,3 +11,6 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# Material de origen (capturas y Excel del servidor): no se publica.
+extra/

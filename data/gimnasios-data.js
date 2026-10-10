@@ -6,7 +6,10 @@
 //   badge: número de medalla en PokéAPI (sprites/badges/<n>.png)
 //   cap / capAfter: level cap al enfrentarlo y el que se desbloquea al vencerlo (Kanto y Johto)
 //   rewards: recompensas por vencerlo (el icono sale solo: PokéDólares, Dcoins, MT/DT…)
-//   team: equipo del líder o campeón, p. ej. [{ id: 74, shiny: true }, { id: 95, level: 14 }]  (id = número nacional)
+//   team: equipo del líder o campeón, p. ej. [{ id: 74 }, { id: 95, level: 14 }]  (id = número nacional)
+//     Megas: { id: 94, mega: true, sprite: 10038 } (mega: "X"/"Y" si tiene dos). Regionales: { id: 26, form: "alola", sprite: 10100, types: [...] }.
+//     sprite = número del Pokémon en PokéAPI para esa forma; note = texto extra (p. ej. "Habilidad: Levitación").
+//     No se marcan shiny: en el servidor varían en cada combate.
 //   trainers: los 2 entrenadores del gimnasio antes del líder, p. ej. [{ name: "Entrenador 1", team: [{ id: 138 }] }]
 //   El Alto Mando hace de entrenadores previos del Campeón: no da recompensa propia.
 //   unconfirmed: true marca nombres pendientes de confirmar en el servidor
@@ -28,19 +31,52 @@ window.GYM_REGIONS = [
           { name: "Entrenador 1", team: [{ id: 138 }, { id: 185 }] },
           { name: "Entrenador 2", team: [{ id: 222 }, { id: 213 }] },
         ],
-        team: [{ id: 74, shiny: true }, { id: 95 }, { id: 140 }] },
-      { kind: "leader", name: "Misty", type: "Agua", badge: 2, badgeName: "Medalla Cascada", trainer: "misty", cap: 19, capAfter: 24, rewards: ["13 Dcoins", "1.000 PokéDólares"], team: [] },
-      { kind: "leader", name: "Tte. Surge", type: "Eléctrico", badge: 3, badgeName: "Medalla Trueno", trainer: "ltsurge", cap: 24, capAfter: 28, rewards: ["13 Dcoins", "1.000 PokéDólares", "Megapulsera", "Repartir Exp"], team: [] },
-      { kind: "leader", name: "Erika", type: "Planta", badge: 4, badgeName: "Medalla Arcoíris", trainer: "erika", cap: 28, capAfter: 33, rewards: ["13 Dcoins", "1.000 PokéDólares"], team: [] },
-      { kind: "leader", name: "Sabrina", type: "Psíquico", badge: 6, badgeName: "Medalla Pantano", trainer: "sabrina", cap: 33, capAfter: 37, rewards: ["13 Dcoins", "1.000 PokéDólares"], team: [] },
-      { kind: "leader", name: "Koga", type: "Veneno", badge: 5, badgeName: "Medalla Alma", trainer: "koga", cap: 37, capAfter: 42, rewards: ["13 Dcoins", "1.000 PokéDólares"], team: [] },
-      { kind: "leader", name: "Blaine", type: "Fuego", badge: 7, badgeName: "Medalla Volcán", trainer: "blaine", cap: 42, capAfter: 46, rewards: ["13 Dcoins", "1.000 PokéDólares"], team: [] },
-      { kind: "leader", name: "Giovanni", type: "Tierra", badge: 8, badgeName: "Medalla Tierra", trainer: "giovanni", cap: 46, capAfter: 60, rewards: ["13 Dcoins", "1.000 PokéDólares"], team: [] },
-      { kind: "elite", name: "Lorelei", type: "Hielo", trainer: "lorelei-gen3", cap: 60, team: [], unconfirmed: true },
-      { kind: "elite", name: "Bruno", type: "Lucha", trainer: "bruno", cap: 60, team: [], unconfirmed: true },
-      { kind: "elite", name: "Agatha", type: "Fantasma", trainer: "agatha-gen3", cap: 60, team: [], unconfirmed: true },
-      { kind: "elite", name: "Lance", type: "Dragón", trainer: "lance", cap: 60, team: [], unconfirmed: true },
-      { kind: "champion", name: "Gary", title: "Campeón de Kanto", trainer: "blue", cap: 60, capAfter: 64, rewards: ["50 Dcoins", "4.000 PokéDólares", "MT Cola Férrea"], team: [] },
+        team: [{ id: 74 }, { id: 95 }, { id: 140 }] },
+      { kind: "leader", name: "Misty", type: "Agua", badge: 2, badgeName: "Medalla Cascada", trainer: "misty", cap: 19, capAfter: 24, rewards: ["13 Dcoins", "1.000 PokéDólares"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 194 }, { id: 98 }] },
+          { name: "Entrenador 2", team: [{ id: 90 }, { id: 170 }, { id: 222 }] },
+        ],
+        team: [{ id: 61 }, { id: 72 }, { id: 171 }, { id: 121 }] },
+      { kind: "leader", name: "Tte. Surge", type: "Eléctrico", badge: 3, badgeName: "Medalla Trueno", trainer: "ltsurge", cap: 24, capAfter: 28, rewards: ["13 Dcoins", "1.000 PokéDólares", "Megapulsera", "Repartir Exp"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 170 }, { id: 180 }] },
+          { name: "Entrenador 2", team: [{ id: 100 }, { id: 171 }, { id: 135 }] },
+        ],
+        team: [{ id: 101 }, { id: 26, mega: "X", sprite: 10304, note: "Habilidad: Levitación" }, { id: 82 }, { id: 125 }, { id: 181 }] },
+      { kind: "leader", name: "Erika", type: "Planta", badge: 4, badgeName: "Medalla Arcoíris", trainer: "erika", cap: 28, capAfter: 33, rewards: ["13 Dcoins", "1.000 PokéDólares"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 192 }, { id: 114 }, { id: 70 }] },
+          { name: "Entrenador 2", team: [{ id: 45 }, { id: 71 }, { id: 182 }] },
+        ],
+        team: [{ id: 189 }, { id: 3 }, { id: 103 }, { id: 47 }, { id: 154 }] },
+      { kind: "leader", name: "Sabrina", type: "Psíquico", badge: 6, badgeName: "Medalla Pantano", trainer: "sabrina", cap: 33, capAfter: 37, rewards: ["13 Dcoins", "1.000 PokéDólares"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 103 }, { id: 97 }] },
+          { name: "Entrenador 2", team: [{ id: 203 }, { id: 178 }, { id: 122 }] },
+        ],
+        team: [{ id: 26, form: "alola", sprite: 10100, types: ["Eléctrico", "Psíquico"] }, { id: 80 }, { id: 65, mega: true, sprite: 10037 }, { id: 196 }, { id: 202 }, { id: 124 }] },
+      { kind: "leader", name: "Koga", type: "Veneno", badge: 5, badgeName: "Medalla Alma", trainer: "koga", cap: 37, capAfter: 42, rewards: ["13 Dcoins", "1.000 PokéDólares"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 24 }, { id: 71 }] },
+          { name: "Entrenador 2", team: [{ id: 211 }, { id: 31 }, { id: 89 }] },
+        ],
+        team: [{ id: 169 }, { id: 34 }, { id: 73 }, { id: 94, mega: true, sprite: 10038 }, { id: 49 }, { id: 110 }] },
+      { kind: "leader", name: "Blaine", type: "Fuego", badge: 7, badgeName: "Medalla Volcán", trainer: "blaine", cap: 42, capAfter: 46, rewards: ["13 Dcoins", "1.000 PokéDólares"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 156 }, { id: 77 }] },
+          { name: "Entrenador 2", team: [{ id: 219 }, { id: 126 }, { id: 136 }] },
+        ],
+        team: [{ id: 38 }, { id: 6 }, { id: 229, mega: true, sprite: 10048 }, { id: 157, form: "hisui", sprite: 10233, types: ["Fuego", "Fantasma"] }, { id: 78 }, { id: 59, form: "hisui", sprite: 10230, types: ["Fuego", "Roca"] }] },
+      { kind: "leader", name: "Giovanni", type: "Tierra", badge: 8, badgeName: "Medalla Tierra", trainer: "giovanni", cap: 46, capAfter: 60, rewards: ["13 Dcoins", "1.000 PokéDólares"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 51 }, { id: 105 }] },
+          { name: "Entrenador 2", team: [{ id: 221 }, { id: 112 }, { id: 28 }] },
+        ],
+        team: [{ id: 248 }, { id: 34 }, { id: 195 }, { id: 115, mega: true, sprite: 10039 }, { id: 53 }, { id: 232 }] },
+      // Kanto no tiene Alto Mando: tras Giovanni se reta directamente al Campeón.
+      { kind: "champion", name: "Gary", title: "Campeón de Kanto", trainer: "blue", cap: 60, capAfter: 64, rewards: ["50 Dcoins", "4.000 PokéDólares", "MT Cola Férrea"],
+        team: [{ id: 112 }, { id: 130 }, { id: 94 }, { id: 6, mega: "Y", sprite: 10035 }, { id: 143 }, { id: 65 }] },
     ],
   },
   {
@@ -53,19 +89,57 @@ window.GYM_REGIONS = [
     levelRule: "Level cap según tus medallas",
     allowed: "Pokémon de cualquier generación",
     battles: [
-      { kind: "leader", name: "Pegaso", type: "Volador", badge: 9, badgeName: "Medalla Céfiro", trainer: "falkner", cap: 64, capAfter: 68, rewards: ["2.000 PokéDólares", "MT Respiro"], team: [] },
-      { kind: "leader", name: "Antón", type: "Bicho", badge: 10, badgeName: "Medalla Colmena", trainer: "bugsy", cap: 68, capAfter: 71, rewards: ["2.200 PokéDólares", "MT Tijera X"], team: [] },
-      { kind: "leader", name: "Blanca", type: "Normal", badge: 11, badgeName: "Medalla Planicie", trainer: "whitney", cap: 71, capAfter: 75, rewards: ["2.400 PokéDólares", "MT Gigaimpacto"], team: [] },
-      { kind: "leader", name: "Morti", type: "Fantasma", badge: 12, badgeName: "Medalla Niebla", trainer: "morty", cap: 75, capAfter: 79, rewards: ["2.600 PokéDólares", "MT Bola Sombra"], team: [] },
-      { kind: "leader", name: "Aníbal", type: "Lucha", badge: 13, badgeName: "Medalla Tormenta", trainer: "chuck", cap: 79, capAfter: 82, rewards: ["2.800 PokéDólares", "MT Puño Drenaje"], team: [] },
-      { kind: "leader", name: "Yasmina", type: "Acero", badge: 14, badgeName: "Medalla Mineral", trainer: "jasmine", cap: 82, capAfter: 86, rewards: ["3.000 PokéDólares", "MT Cola Férrea"], team: [] },
-      { kind: "leader", name: "Fredo", type: "Hielo", badge: 15, badgeName: "Medalla Glaciar", trainer: "pryce", cap: 86, capAfter: 90, rewards: ["3.200 PokéDólares", "MT Rayo Hielo"], team: [] },
-      { kind: "leader", name: "Débora", type: "Dragón", badge: 16, badgeName: "Medalla Dragón", trainer: "clair", cap: 90, capAfter: 100, rewards: ["3.400 PokéDólares", "MT Garra Dragón"], team: [] },
-      { kind: "elite", name: "Mento", type: "Psíquico", trainer: "will", cap: 100, team: [], unconfirmed: true },
-      { kind: "elite", name: "Koga", type: "Veneno", trainer: "koga", cap: 100, team: [], unconfirmed: true },
-      { kind: "elite", name: "Bruno", type: "Lucha", trainer: "bruno", cap: 100, team: [], unconfirmed: true },
-      { kind: "elite", name: "Karen", type: "Siniestro", trainer: "karen", cap: 100, team: [], unconfirmed: true },
-      { kind: "champion", name: "Lance", title: "Campeón de Johto", type: "Dragón", trainer: "lance", cap: 100, capAfter: 100, rewards: ["3.000 PokéDólares", "MT Cola Férrea"], team: [] },
+      { kind: "leader", name: "Pegaso", type: "Volador", badge: 9, badgeName: "Medalla Céfiro", trainer: "falkner", cap: 64, capAfter: 68, rewards: ["2.000 PokéDólares", "MT Respiro"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 130 }, { id: 142 }] },
+          { name: "Entrenador 2", team: [{ id: 169 }, { id: 6 }, { id: 85 }] },
+        ],
+        team: [{ id: 142 }, { id: 227 }, { id: 130 }, { id: 149 }, { id: 18, mega: true, sprite: 10073 }, { id: 6 }] },
+      { kind: "leader", name: "Antón", type: "Bicho", badge: 10, badgeName: "Medalla Colmena", trainer: "bugsy", cap: 68, capAfter: 71, rewards: ["2.200 PokéDólares", "MT Tijera X"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 168 }, { id: 214 }] },
+          { name: "Entrenador 2", team: [{ id: 213 }, { id: 12 }, { id: 212 }] },
+        ],
+        team: [{ id: 15, mega: true, sprite: 10090 }, { id: 123 }, { id: 127 }, { id: 205 }, { id: 212 }, { id: 214 }] },
+      { kind: "leader", name: "Blanca", type: "Normal", badge: 11, badgeName: "Medalla Planicie", trainer: "whitney", cap: 71, capAfter: 75, rewards: ["2.400 PokéDólares", "MT Gigaimpacto"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 40 }, { id: 206 }] },
+          { name: "Entrenador 2", team: [{ id: 203 }, { id: 143 }, { id: 53 }] },
+        ],
+        team: [{ id: 235 }, { id: 115 }, { id: 40 }, { id: 242 }, { id: 233 }, { id: 241 }] },
+      { kind: "leader", name: "Morti", type: "Fantasma", badge: 12, badgeName: "Medalla Niebla", trainer: "morty", cap: 75, capAfter: 79, rewards: ["2.600 PokéDólares", "MT Bola Sombra"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 94 }, { id: 200 }] },
+          { name: "Entrenador 2", team: [{ id: 94 }, { id: 93 }, { id: 200 }] },
+        ],
+        team: [{ id: 169 }, { id: 94, mega: true, sprite: 10038 }, { id: 429 }, { id: 200 }, { id: 979 }, { id: 157, form: "hisui", sprite: 10233, types: ["Fuego", "Fantasma"] }] },
+      { kind: "leader", name: "Aníbal", type: "Lucha", badge: 13, badgeName: "Medalla Tormenta", trainer: "chuck", cap: 79, capAfter: 82, rewards: ["2.800 PokéDólares", "MT Puño Drenaje"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 57 }, { id: 237 }] },
+          { name: "Entrenador 2", team: [{ id: 57 }, { id: 62 }, { id: 214 }] },
+        ],
+        team: [{ id: 68 }, { id: 106 }, { id: 57 }, { id: 62 }, { id: 107 }, { id: 237 }] },
+      { kind: "leader", name: "Yasmina", type: "Acero", badge: 14, badgeName: "Medalla Mineral", trainer: "jasmine", cap: 82, capAfter: 86, rewards: ["3.000 PokéDólares", "MT Cola Férrea"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 208 }, { id: 227 }] },
+          { name: "Entrenador 2", team: [{ id: 208 }, { id: 82 }, { id: 205 }] },
+        ],
+        team: [{ id: 227 }, { id: 462 }, { id: 205 }, { id: 208, mega: true, sprite: 10072 }, { id: 51 }, { id: 212 }] },
+      { kind: "leader", name: "Fredo", type: "Hielo", badge: 15, badgeName: "Medalla Glaciar", trainer: "pryce", cap: 86, capAfter: 90, rewards: ["3.200 PokéDólares", "MT Rayo Hielo"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 131 }, { id: 221 }] },
+          { name: "Entrenador 2", team: [{ id: 221 }, { id: 91 }, { id: 473 }] },
+        ],
+        team: [{ id: 473 }, { id: 87 }, { id: 131 }, { id: 91 }, { id: 221 }, { id: 124 }] },
+      { kind: "leader", name: "Débora", type: "Dragón", badge: 16, badgeName: "Medalla Dragón", trainer: "clair", cap: 90, capAfter: 100, rewards: ["3.400 PokéDólares", "MT Garra Dragón"],
+        trainers: [
+          { name: "Entrenador 1", team: [{ id: 230 }, { id: 149 }] },
+          { name: "Entrenador 2", team: [{ id: 230 }, { id: 149 }, { id: 149 }] },
+        ],
+        team: [{ id: 230 }, { id: 149 }, { id: 6, mega: "X", sprite: 10034, types: ["Fuego", "Dragón"] }, { id: 142 }, { id: 227 }, { id: 130 }] },
+      // Johto tampoco tiene Alto Mando: tras Débora se reta directamente al Campeón.
+      { kind: "champion", name: "Lance", title: "Campeón de Johto", type: "Dragón", trainer: "lance", cap: 100, capAfter: 100, rewards: ["3.000 PokéDólares", "MT Cola Férrea"],
+        team: [{ id: 160, mega: true, sprite: 10283 }, { id: 149 }, { id: 230 }, { id: 227 }, { id: 130 }, { id: 149 }] },
     ],
   },
   {

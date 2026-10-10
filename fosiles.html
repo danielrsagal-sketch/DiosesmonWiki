@@ -4,19 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0d14">
-  <meta name="description" content="Qué fósiles existen, dónde encontrarlos y cómo devolverlos a la vida.">
+  <meta name="description" content="Fósiles de Cobblemon en Diosesmon: cuáles se pueden revivir, en qué yacimientos aparecen y cómo usar la Máquina Restauradora.">
   <title>Fósiles | DiosesmonWiki</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/topbar.css?v=11">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=13">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <script src="assets/js/site-nav.js?v=7" defer></script>
+  <link rel="stylesheet" href="assets/css/guides.css?v=6">
+  <script src="assets/js/site-nav.js?v=11" defer></script>
+  <script src="data/fosiles-data.js?v=2" defer></script>
+  <script src="assets/js/type-colors.js?v=1" defer></script>
+  <script src="assets/js/fosiles.js?v=2" defer></script>
 </head>
-<body>
+<body style="--section-color: #c9a26b">
   <header class="dex-topbar">
     <div class="dex-header-inner">
       <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
@@ -28,7 +32,7 @@
         <a href="pokedex.html">Pokédex</a>
         <a href="feedback.html">Feedback</a>
       </nav>
-      <span class="server-status"><i></i> DIOSESMON NETWORK · COBBLEMON</span>
+      <a class="feedback-cta" href="feedback.html" title="Envíanos ideas, errores o datos que falten"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" width="44" height="44"><span><i aria-hidden="true"></i><b>¿Ideas o errores?</b> <em>Cuéntanos</em></span></a>
     </div>
   </header>
 
@@ -37,28 +41,62 @@
       <div>
         <p class="eyebrow">PALEONTOLOGÍA</p>
         <h1>Fósiles</h1>
-        <p class="sec-lead">Qué fósiles existen, dónde encontrarlos y cómo devolverlos a la vida.</p>
+        <p class="sec-lead">Excava en los yacimientos prehistóricos, limpia la arena y la grava sospechosas con un pincel y devuelve a la vida a Pokémon de hace millones de años.</p>
+        <ul class="hero-tips">
+          <li><img src="assets/img/items/minecraft/brush.png" alt="">Pincel</li>
+          <li><img src="assets/img/items/minecraft/suspicious_gravel.png" alt="">23 yacimientos</li>
+          <li><img src="assets/img/items/cobblemon/old_amber_fossil.png" alt="">7 fósiles revivibles</li>
+        </ul>
       </div>
       <div class="sec-art" aria-hidden="true">
         <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png" alt="">
-        <img class="sec-item" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/old-amber.png" alt="">
+        <img class="sec-item" src="assets/img/items/cobblemon/old_amber_fossil.png" alt="">
       </div>
     </section>
 
-    <section class="sec-card" aria-labelledby="sec-wip-title">
-      <h2 id="sec-wip-title">Sección en construcción <span class="sec-badge">Próximamente</span></h2>
-      <p>Estamos preparando esta página con la información del servidor. Se irá llenando poco a poco.</p>
-      <h3>Ideas para esta sección</h3>
-      <ul class="sec-ideas">
-          <li>Fósiles disponibles y el Pokémon que revive cada uno</li>
-          <li>Dónde encontrarlos al explorar</li>
-          <li>Cómo usar la máquina de restauración</li>
-          <li>Requisitos y tiempos de reanimación</li>
-      </ul>
-      <a class="sec-cta" href="feedback.html"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">¿Qué te gustaría ver aquí? Cuéntanos</a>
+    <section class="guide-alert" aria-labelledby="fossil-gen-title">
+      <div class="guide-alert-icon" aria-hidden="true">1–4</div>
+      <div>
+        <h2 id="fossil-gen-title">En Diosesmon solo se reviven fósiles de las generaciones 1 a 4</h2>
+        <p>El servidor tiene activos los Pokémon de <strong>Kanto, Johto, Hoenn y Sinnoh</strong> (#1 a #493). Puedes encontrar cualquier fósil al excavar, pero <strong>solo 7 se pueden revivir</strong>: los de Teselia, Kalos y Galar no dan Pokémon en el servidor.</p>
+      </div>
     </section>
 
-    <footer class="site-footer"><span>DIOSESMONWIKI · FÓSILES</span><span>Contenido en preparación</span></footer>
+    <section class="guide-block" aria-labelledby="fossil-how-title">
+      <h2 class="guide-title" id="fossil-how-title">Cómo revivir un fósil</h2>
+      <ol class="guide-steps" id="fossil-steps"></ol>
+    </section>
+
+    <section class="guide-block" aria-labelledby="fossil-list-title">
+      <h2 class="guide-title" id="fossil-list-title">Fósiles revivibles <span class="guide-count is-ok">7 disponibles</span></h2>
+      <p class="guide-intro">Pulsa un yacimiento para verlo abajo. <span class="guide-star">★</span> = el yacimiento siempre trae ese fósil.</p>
+      <div class="fossil-grid" id="fossil-available"></div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="fossil-locked-title">
+      <h2 class="guide-title" id="fossil-locked-title">No disponibles en el servidor <span class="guide-count is-off">Gen 5, 6 y 8</span></h2>
+      <p class="guide-intro">Aparecen al excavar, pero sus Pokémon no están activos en Diosesmon, así que no se pueden revivir.</p>
+      <div class="fossil-locked" id="fossil-locked"></div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="site-list-title">
+      <h2 class="guide-title" id="site-list-title">Yacimientos prehistóricos</h2>
+      <p class="guide-intro">Estructuras que se generan por el mundo y casi siempre se camuflan con el entorno. Cada una tiene arena o grava sospechosa con un fósil garantizado y más botín.</p>
+      <div class="guide-filters" role="toolbar" aria-label="Filtrar yacimientos">
+        <div class="guide-chips" id="site-layer-filter"></div>
+        <label class="guide-select"><span>Fósil</span><select id="site-fossil-filter"></select></label>
+      </div>
+      <div class="site-grid" id="site-grid"></div>
+      <p class="guide-empty" id="site-empty" hidden>Ningún yacimiento coincide con el filtro.</p>
+      <dialog class="site-viewer" id="site-viewer" aria-labelledby="site-viewer-title">
+        <button class="site-viewer-close" type="button" data-close aria-label="Cerrar">×</button>
+        <img alt="" width="480" height="480">
+        <h3 id="site-viewer-title"></h3>
+        <p></p>
+      </dialog>
+    </section>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · FÓSILES</span><span>Datos de Cobblemon 1.7.3 · Imágenes de estructuras: <a href="https://wiki.cobblemon.com/index.php/Fossil_Dig_Sites" target="_blank" rel="noreferrer">Wiki de Cobblemon</a> (CC BY)</span></footer>
   </main>
 </body>
 </html>

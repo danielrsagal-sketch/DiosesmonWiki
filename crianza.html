@@ -4,19 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0d14">
-  <meta name="description" content="Cómo criar Pokémon en el servidor: herencia, objetos útiles y pasos de eclosión.">
+  <meta name="description" content="Crianza en Diosesmon: reglas de la guardería y planificador de cadena de crianza con pesas y brazales para conseguir Pokémon de 4, 5 o 6 IVs.">
   <title>Crianza | DiosesmonWiki</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/topbar.css?v=11">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=13">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <script src="assets/js/site-nav.js?v=7" defer></script>
+  <link rel="stylesheet" href="assets/css/guides.css?v=6">
+  <link rel="stylesheet" href="assets/css/crianza.css?v=4">
+  <script src="assets/js/site-nav.js?v=11" defer></script>
+  <script src="data/crianza-data.js?v=1" defer></script>
+  <script src="assets/js/type-colors.js?v=1" defer></script>
+  <script src="assets/js/iv-shop.js?v=2" defer></script>
+  <script src="assets/js/crianza.js?v=4" defer></script>
 </head>
-<body>
+<body style="--section-color: #ff6fb1">
   <header class="dex-topbar">
     <div class="dex-header-inner">
       <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
@@ -28,37 +34,107 @@
         <a href="pokedex.html">Pokédex</a>
         <a href="feedback.html">Feedback</a>
       </nav>
-      <span class="server-status"><i></i> DIOSESMON NETWORK · COBBLEMON</span>
+      <a class="feedback-cta" href="feedback.html" title="Envíanos ideas, errores o datos que falten"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" width="44" height="44"><span><i aria-hidden="true"></i><b>¿Ideas o errores?</b> <em>Cuéntanos</em></span></a>
     </div>
   </header>
 
-  <main class="sec-shell">
+  <main class="sec-shell br-shell">
     <section class="sec-hero">
       <div>
-        <p class="eyebrow">GUARDERÍA Y HUEVOS</p>
+        <p class="eyebrow">GUARDERÍA Y CADENAS</p>
         <h1>Crianza</h1>
-        <p class="sec-lead">Cómo criar Pokémon en el servidor: herencia, objetos útiles y pasos de eclosión.</p>
+        <p class="sec-lead">El mejor método del servidor para sacar Pokémon con IVs perfectos es la <strong>cadena de crianza</strong> con pesas y brazales. Elige tu Pokémon y te armamos la cadena completa: qué breeders atrapar, qué lleva cada uno y cuánto cuesta.</p>
+        <ul class="hero-tips">
+          <li><img src="assets/img/items/cobblemon/power_weight.png" alt="">Pesas y brazales · $500</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/oval-charm.png" alt="">Elegir sexo · $500</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/safari-ball.png" alt="">Safari: 1 IV a 31</li>
+        </ul>
       </div>
-      <div class="sec-art" aria-hidden="true">
-        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png" alt="">
-        <img class="sec-item" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/oval-charm.png" alt="">
+      <div class="sec-art br-hero-art" aria-hidden="true">
+        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/468.png" alt="">
+        <img class="br-hero-egg" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/175.png" alt="">
+        <img class="sec-item" src="assets/img/items/cobblemon/power_bracer.png" alt="">
       </div>
     </section>
 
-    <section class="sec-card" aria-labelledby="sec-wip-title">
-      <h2 id="sec-wip-title">Sección en construcción <span class="sec-badge">Próximamente</span></h2>
-      <p>Estamos preparando esta página con la información del servidor. Se irá llenando poco a poco.</p>
-      <h3>Ideas para esta sección</h3>
-      <ul class="sec-ideas">
-          <li>Cómo funciona la crianza en Cobblemon</li>
-          <li>Herencia de IVs, naturaleza (Piedra Eterna) y movimientos huevo</li>
-          <li>En Diosesmon todos los huevos eclosionan en 3.000 pasos</li>
-          <li>Atajo a los grupos huevo de la Pokédex</li>
-      </ul>
-      <a class="sec-cta" href="feedback.html"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">¿Qué te gustaría ver aquí? Cuéntanos</a>
+    <section class="guide-block" aria-labelledby="br-rules-title">
+      <h2 class="guide-title" id="br-rules-title">Reglas de la guardería en Diosesmon</h2>
+      <div class="br-rules">
+        <article class="br-rule is-key"><span class="br-rule-icon is-female">♀</span><div><h3>La hembra decide la especie</h3><p>La cría siempre sale de la especie de la <strong>hembra</strong> (o del macho si cruzas con Ditto). Tu Pokémon objetivo debe ir como hembra.</p></div></article>
+        <article class="br-rule is-bad"><span class="br-rule-icon">✖</span><div><h3>Los padres se pierden</h3><p>Al recoger el huevo, <strong>los dos progenitores desaparecen</strong>, y con ellos las pesas y brazales que llevaban.</p></div></article>
+        <article class="br-rule"><span class="br-rule-icon">⚥</span><div><h3>Elegir sexo: $500</h3><p>Pagando 500 Pokédólares eliges el sexo de la cría. En <strong>Volbeat e Illumise</strong> no se puede: siempre 50/50.</p></div></article>
+        <article class="br-rule"><img class="br-rule-img" src="assets/img/items/cobblemon/power_bracer.png" alt=""><div><h3>Pesas y brazales: $500</h3><p>Cada pieza recia que lleva un padre <strong>asegura que pase su IV</strong> de esa stat. Cuestan 500 y se pierden con el padre.</p></div></article>
+        <article class="br-rule is-bad"><img class="br-rule-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/destiny-knot.png" alt=""><div><h3>Nunca uses Lazo Destino</h3><p>En el servidor solo pasa <strong>5 IVs al azar entre los dos padres</strong> (5 y 0, 4 y 1, 3 y 2…) y el 6.º sale aleatorio: un 31 puede acabar en 0.</p></div></article>
+        <article class="br-rule"><img class="br-rule-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/172.png" alt=""><div><h3>Los bebés no crían</h3><p>Pichu, Togepi, Riolu… no pueden criar: <strong>evoluciónalos</strong> primero. Del huevo sí saldrá el bebé.</p></div></article>
+        <article class="br-rule"><img class="br-rule-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png" alt=""><div><h3>Ditto cambia el sexo</h3><p>¿Tu Pokémon es macho? Crúzalo con un <strong>Ditto</strong> y paga 500 para que la cría salga hembra. También sirve para los sin género.</p></div></article>
+        <article class="br-rule"><img class="br-rule-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/safari-ball.png" alt=""><div><h3>Safari: 1 IV a 31</h3><p>Lo que atrapas en el <a href="safari.html">Safari</a> trae <strong>al menos un IV a 31</strong>: la base perfecta para la cadena.</p></div></article>
+        <article class="br-rule is-bad"><img class="br-rule-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/29.png" alt=""><div><h3>Nidoran: no criar</h3><p>La crianza de <strong>Nidoran♂ y Nidoran♀ está bugeada</strong>. Te recomendamos no hacerla.</p></div></article>
+        <article class="br-rule"><img class="br-rule-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/oval-charm.png" alt=""><div><h3>Tiempo según tu rango</h3><p>Cada crianza tarda <strong>25 minutos</strong> y baja con el rango: AS 20, Líder 15 y Maestro 10 (con <strong>4 slots</strong> en vez de 2). Los huevos eclosionan a los 3.000 pasos.</p></div></article>
+      </div>
     </section>
 
-    <footer class="site-footer"><span>DIOSESMONWIKI · CRIANZA</span><span>Contenido en preparación</span></footer>
+    <section class="guide-block" aria-labelledby="br-plan-title">
+      <h2 class="guide-title" id="br-plan-title">Planificador de cadena</h2>
+      <div class="br-panel">
+        <div class="br-step-head"><span>1</span><h3>¿Qué Pokémon quieres criar?</h3></div>
+        <div class="br-browser-bar">
+          <label class="guide-search br-search"><span class="sr-only">Buscar Pokémon</span><input id="br-search" type="search" placeholder="Busca por nombre o número (ej. Togekiss)…" autocomplete="off"></label>
+          <div class="guide-chips" id="br-browse-tabs" role="group" aria-label="Lista">
+            <button class="guide-chip" type="button" data-browse="competitive" aria-pressed="true">Competitivos</button>
+            <button class="guide-chip" type="button" data-browse="all" aria-pressed="false">Todos (gen 1–4)</button>
+          </div>
+        </div>
+        <div class="br-types" id="br-types" role="group" aria-label="Filtrar por tipo"></div>
+        <div class="br-picks" id="br-picks"></div>
+        <div id="br-target"></div>
+      </div>
+
+      <div id="br-planner">
+        <div class="br-panel">
+          <div class="br-step-head"><span>2</span><h3>Objetivo de IVs</h3></div>
+          <div class="guide-chips" id="br-objectives"></div>
+          <div class="br-custom" id="br-custom"></div>
+        </div>
+
+        <div class="br-panel">
+          <div class="br-step-head"><span>3</span><h3>Breeder del mismo grupo huevo</h3></div>
+          <p class="br-note">El breeder por defecto de la cadena: Pokémon fáciles de atrapar, ordenados por lo fácil que es encontrarlos. Después puedes cambiar cualquier Pokémon del árbol por otro del mismo grupo huevo.</p>
+          <div class="br-breeders" id="br-breeders"></div>
+          <label class="guide-select br-breeder-pick"><span>Otro breeder</span><select id="br-breeder-select"></select></label>
+        </div>
+
+        <div class="br-panel">
+          <div class="br-step-head"><span>4</span><h3>Tu cadena de crianza</h3></div>
+          <div class="br-legend">
+            <span><i class="is-male"></i>macho</span><span><i class="is-female"></i>hembra</span>
+            <span><img src="assets/img/items/cobblemon/power_weight.png" alt="" width="20" height="20">pieza recia que lleva</span>
+            <span><i class="is-path"></i>rama de tu especie objetivo</span>
+          </div>
+          <p class="br-note">Se cruza de izquierda a derecha hasta llegar al objetivo. <strong>Toca un Pokémon</strong> para cambiar su especie (puedes mezclar breeders distintos del mismo grupo huevo) o marcar que <strong>ya lo tienes</strong> y empezar la cadena desde ahí. Todo se guarda en este navegador.</p>
+          <div class="br-zoom"><button type="button" id="br-zoom-out" aria-label="Alejar">−</button><button type="button" id="br-zoom-fit">Ajustar</button><button type="button" id="br-zoom-in" aria-label="Acercar">+</button></div>
+          <div class="br-tree-wrap" id="br-tree-wrap"><div class="br-tree-scale"><div class="br-tree" id="br-tree"></div></div></div>
+          <div class="br-editor" id="br-editor" aria-live="polite"></div>
+        </div>
+
+        <div class="br-panel">
+          <div class="br-step-head"><span>5</span><h3>Lista de compra y costes</h3></div>
+          <div id="br-summary"></div>
+        </div>
+
+        <div class="br-panel">
+          <div class="br-step-head"><span>6</span><h3>Paso a paso</h3></div>
+          <ol class="br-steps" id="br-steps"></ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="br-shop-title">
+      <h2 class="guide-title" id="br-shop-title">Remata con la Tienda de IVs</h2>
+      <p class="guide-intro">Si a tu cría le falta un IV, o quieres bajar la Velocidad a 0 para Espacio Raro, el NPC Tienda de IVs lo ajusta por Pokédólares. Más detalles en <a href="entrenamiento-ev.html#ev-iv-title">Entrenamiento EV</a>.</p>
+      <div class="iv-shop" id="iv-shop"></div>
+    </section>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · CRIANZA</span><span>Reglas de la guardería de Diosesmon · Datos de Cobblemon 1.7.3</span></footer>
   </main>
 </body>
 </html>

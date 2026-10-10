@@ -42,18 +42,21 @@ L.tileLayer("assets/img/safari/{z}/{x}_{y}.webp", {
   errorTileUrl: "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
 }).addTo(map);
 map.fitBounds(L.latLngBounds([-1600, -1600], [1600, 1600]));
+// Las etiquetas de zona van en su propia capa (su altura respecto a los pines depende del zoom).
+map.createPane("zones");
 const mapElement = document.querySelector("#sf-map");
 const scalePins = () => {
   mapElement.style.setProperty("--pin-scale", Math.min(1, Math.max(0.5, 0.5 + (map.getZoom() - 1) * 0.25)).toFixed(2));
   // De cerca las etiquetas de zona se atenúan para no tapar el mapa.
-  mapElement.classList.toggle("is-close", map.getZoom() >= 3);
+  const close = map.getZoom() >= 3;
+  mapElement.classList.toggle("is-close", close);
+  // De lejos las etiquetas van encima de los pines (para leer las zonas); de cerca, debajo.
+  map.getPane("zones").style.zIndex = close ? 450 : 650;
 };
 map.on("zoom", scalePins);
 scalePins();
 
 // ---- Zonas ----
-// Las etiquetas van en su propia capa, por debajo de los marcadores.
-map.createPane("zones").style.zIndex = 450;
 const zoneLayer = L.layerGroup().addTo(map);
 for (const zone of SAFARI.zones) {
   L.marker(toLatLng(zone), {

@@ -74,14 +74,17 @@ body.modal-open { overflow: hidden; }
 .gym-stage h3 span { width: 30px; height: 30px; display: grid; place-items: center; flex: none; color: #08101f; background: var(--section-color, #ffd442); border-radius: 50%; font: 700 14px "DM Mono", monospace; }
 .gym-stage.is-main h3 span { background: #ffd442; }
 .gym-mon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-.gym-mon { position: relative; display: grid; justify-items: center; gap: 6px; padding: 10px 8px 12px; color: #fff; background: #0d1f36; border: 1px solid #22405f; border-radius: 10px; text-align: center; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+.gym-mon { position: relative; display: grid; justify-items: center; align-content: start; gap: 6px; padding: 10px 8px 12px; color: #fff; background: #0d1f36; border: 1px solid #22405f; border-radius: 10px; text-align: center; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
 .gym-mon:hover { border-color: var(--section-color, #4bb6ff); transform: translateY(-2px); }
 .gym-mon img { width: 96px; height: 96px; filter: drop-shadow(0 6px 5px #0008); }
 .gym-mon strong { font-size: 16px; }
-.gym-mon-types { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+.gym-mon-types { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 4px; }
 .gym-mon small { color: #ffd442; font: 13px "DM Mono", monospace; }
-.gym-mon.is-shiny { background: radial-gradient(circle at 50% 35%, #4a3a12, #0d1f36 70%); border-color: #ffd44299; }
-.gym-mon-shiny { position: absolute; top: 6px; left: 6px; padding: 2px 8px; color: #08101f; background: #ffd442; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.gym-mon.is-mega { background: radial-gradient(circle at 50% 35%, #3b2357, #0d1f36 70%); border-color: #b38cff99; }
+.gym-mon-tag { position: absolute; top: 6px; left: 6px; padding: 2px 8px; color: #08101f; background: #ffd442; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.gym-mon.is-mega .gym-mon-tag { color: #fff; background: #8a5cf0; }
+.gym-mon-note { color: #c9a6ff !important; font: 600 12px "Space Grotesk", sans-serif !important; }
+.gym-shiny-note { margin: 16px 0 0; padding: 9px 14px; color: #ffe9a6; background: #3a3215; border: 1px solid #ffd44255; border-radius: 9px; font-size: 14px; }
 
 @media (max-width: 1100px) {
   .gym-grid { grid-template-columns: 1fr; }
