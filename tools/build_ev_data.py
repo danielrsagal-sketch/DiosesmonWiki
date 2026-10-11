@@ -23,7 +23,7 @@ ITEMS = [
     "health_feather", "muscle_feather", "resist_feather", "genius_feather", "clever_feather", "swift_feather",
     "pomeg_berry", "kelpsy_berry", "qualot_berry", "hondew_berry", "grepa_berry", "tamato_berry",
     "white_mint_leaf", "red_mint_leaf", "blue_mint_leaf", "cyan_mint_leaf", "pink_mint_leaf", "green_mint_leaf",
-    "exp_share", "pp_up", "hearty_grains", "exp_candy_l", "poke_rod", "poke_snack",
+    "exp_share", "pp_up", "hearty_grains", "exp_candy_l", "poke_rod",
 ]
 
 

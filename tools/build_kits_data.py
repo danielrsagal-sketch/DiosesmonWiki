@@ -17,6 +17,10 @@ from build_fosiles_monturas import ROOT, download_icons
 SOURCE = ROOT / "extra" / "PaginaDioses" / "DiosesmonKits"
 KITS_IMG = ROOT / "assets" / "img" / "kits"
 ITEMS_IMG = ROOT / "assets" / "img" / "items" / "kits"
+# Iconos corregidos a mano (recortes del juego): tienen prioridad sobre los recortes automáticos.
+MANUAL_ICONS = ROOT / "tools" / "source" / "kit-icons"
+# Objetos que el JSON pone en otra categoría.
+CATEGORY_FIXES = {"cobblemon:heavy_duty_boots": "Objetos equipables", "cobblemon:rocky_helmet": "Objetos equipables"}
 
 # Kits de rango: carpeta de capturas y ventajas del rango (copiadas del tooltip del juego).
 RANKS = [
@@ -209,6 +213,7 @@ def load_kit(group, folder, catalog):
     for item in merged:
         if item["name"].startswith("Arco") or item["id"].endswith("_bow"):
             item["category"] = "Armas"
+        item["category"] = CATEGORY_FIXES.get(item["id"], item["category"])
     return details, merged, capture_dir
 
 
@@ -242,6 +247,10 @@ def main():
             icon = icons.get(item["id"])
             if not icon:
                 target = ITEMS_IMG / f"{item['id'].replace(':', '_')}.png"
+                manual = MANUAL_ICONS / target.name
+                if manual.exists():
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(manual.read_bytes())
                 if not target.exists():
                     position = by_file.get(item["capture"].name)
                     if position is None or not icon_from_captures(captures, position, target):

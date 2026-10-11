@@ -17,10 +17,10 @@ const SITE_SECTIONS = [
   { href: "entrenamiento-ev.html", label: "Entrenamiento EV", ready: true, icon: "items/power-bracer", color: "#ff8a3d", description: "Piezas recias, vitaminas, combates 3v3, los mejores Pokémon para cada stat y los EVs de todos." },
   { href: "crianza.html", label: "Crianza", ready: true, icon: "items/oval-charm", color: "#ff6fb1", description: "Planificador de cadena de crianza: 4, 5 o 6 IVs con breeders fáciles y costes." },
   { href: "monturas.html", label: "Monturas", ready: true, icon: "items/air-balloon", color: "#4bb6ff", description: "54 Pokémon montables por tierra, agua y aire, con las mejores recomendaciones." },
-  { href: "tesoros.html", label: "Tesoros", icon: "items/big-nugget", color: "#ffd442", description: "Tesoros escondidos, dónde buscarlos y qué guardan." },
-  { href: "trabajo.html", label: "Trabajos", icon: "items/amulet-coin", color: "#ffa64d", description: "Oficios, pagos por acción y niveles de cada trabajo." },
+  { href: "tesoros.html", label: "Tesoros", ready: true, icon: "items/big-nugget", color: "#ffd442", description: "Los 8 gachapones del servidor con sus premios, skins y probabilidades." },
+  { href: "trabajo.html", label: "Trabajos", ready: true, icon: "items/amulet-coin", color: "#ffa64d", description: "Los 7 trabajos del servidor, cómo se progresa en cada uno y cuántos puedes tener según tu rango." },
   { href: "torre-batalla.html", label: "Torre Batalla", icon: "items/muscle-band", color: "#b38cff", description: "Formato, rangos y premios de la Torre Batalla." },
-  { href: "pesca.html", label: "Pesca", icon: "items/super-rod", color: "#4bb6ff", description: "Cañas, cebos y qué se pesca en cada agua." },
+  { href: "pesca.html", label: "Pesca", ready: true, icon: "items/super-rod", color: "#4bb6ff", description: "Poké Cañas, encantamientos, el efecto de cada cebo y los 88 Pokémon que se pescan." },
   { href: "feedback.html", label: "Feedback", nav: false, ready: true, icon: "items/poke-ball", color: "#ffd442", description: "Envía ideas, errores o datos que falten en la wiki." },
 ];
 

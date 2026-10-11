@@ -1,0 +1,48 @@
+/* Pesca: encantamientos, cebos, Pokémon que se pescan, tesoros y cañas. */
+.ench-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ench-card { padding: 16px; background: linear-gradient(160deg, #241a3a, #121d32 55%); border: 1px solid #6a4fb066; border-top: 4px solid #b38cff; border-radius: 14px; }
+.ench-card.is-lure { border-top-color: #4bb6ff; background: linear-gradient(160deg, #13304f, #121d32 55%); }
+.ench-card.is-luck { border-top-color: #6cf0b2; background: linear-gradient(160deg, #14382c, #121d32 55%); }
+.ench-card h3 { display: flex; align-items: baseline; gap: 8px; margin: 0 0 6px; color: #fff; font-size: 19px; }
+.ench-card h3 small { color: #9fb0cc; font: 600 12px "DM Mono", monospace; }
+.ench-card p { margin: 0; color: #c2cee2; font-size: 14px; line-height: 1.5; }
+
+.bait-icon { width: 52px; height: 52px; display: grid; place-items: center; flex: none; background: #2f77a8; border: 3px solid #74b4e1; border-radius: 6px; box-shadow: inset 0 0 0 2px #2b6d9c; }
+.bait-icon img { width: 36px; height: 36px; image-rendering: pixelated; }
+.bait-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+.bait-card { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px 12px 10px 10px; background: var(--dex-panel); border: 1px solid var(--dex-line); border-radius: 11px; }
+.bait-card.is-fruit { border-color: #ffd44255; }
+.bait-card strong { color: #fff; font-size: 15px; }
+.bait-card ul { display: grid; gap: 4px; margin: 5px 0 0; padding: 0; list-style: none; }
+.bait-card li { color: #c2cee2; font-size: 13px; line-height: 1.4; }
+.bait-card li b, .bait-chip[aria-pressed="false"] { --chip-color: #9fb0cc; }
+.bait-card li b { display: inline-block; margin-right: 6px; padding: 0 6px; color: #08101f; background: var(--chip-color); border-radius: 4px; font: 700 10px "DM Mono", monospace; text-transform: uppercase; }
+.guide-chip.bait-chip[aria-pressed="true"] { color: #08101f; background: var(--chip-color); border-color: var(--chip-color); }
+
+.fish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 8px; }
+.fish-card { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 8px; align-items: start; padding: 8px 12px 10px 6px; color: inherit; background: var(--dex-panel); border: 1px solid var(--dex-line); border-radius: 11px; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+.fish-card:hover { border-color: var(--section-color); transform: translateY(-2px); }
+.fish-card img { width: 72px; height: 72px; }
+.fish-body { display: grid; gap: 4px; min-width: 0; }
+.fish-body strong { color: #fff; font-size: 16px; }
+.fish-body strong small { color: #8f9fba; font: 11px "DM Mono", monospace; }
+.fish-types { display: flex; gap: 4px; }
+.fish-rarity { color: #c2cee2; font-size: 13px; }
+.fish-rarity em { color: #86cfff; font-style: normal; font-weight: 600; }
+.fish-lure { padding: 1px 6px; color: #cfe6ff; background: #13304f; border: 1px solid #4bb6ff66; border-radius: 999px; font-size: 12px; }
+
+.fish-extra { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+.fish-treasure { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.fish-treasure li { display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px 4px 4px; color: #fff; background: var(--dex-panel); border: 1px solid var(--dex-line); border-radius: 10px; font-size: 14px; font-weight: 600; }
+.fish-special { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.fish-special li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 10px; align-items: center; padding: 6px 12px 6px 4px; background: var(--dex-panel); border: 1px solid var(--dex-line); border-radius: 10px; }
+.fish-special span { display: grid; gap: 2px; color: #c2cee2; font-size: 13px; }
+.fish-special strong { color: #fff; font-size: 15px; }
+
+.fish-rods { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.fish-rods li { display: grid; justify-items: center; gap: 4px; padding: 8px 4px; color: #d8e3f6; background: var(--dex-panel); border: 1px solid var(--dex-line); border-radius: 9px; font-size: 12px; text-align: center; }
+.fish-rods img { width: 40px; height: 40px; image-rendering: pixelated; }
+
+@media (max-width: 900px) {
+  .ench-grid, .fish-extra { grid-template-columns: 1fr; }
+}

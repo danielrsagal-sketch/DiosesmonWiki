@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0d14">
-  <meta name="description" content="Cañas, cebos y qué Pokémon salen en cada tipo de agua del servidor.">
+  <meta name="description" content="Pesca en Diosesmon: Poké Cañas, encantamientos Atracción y Suerte marina, cebos de bayas con sus efectos, Pokémon que se pescan y tesoros.">
   <title>Pesca | DiosesmonWiki</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
@@ -14,9 +14,14 @@
   <link rel="stylesheet" href="assets/css/topbar.css?v=13">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <script src="assets/js/site-nav.js?v=11" defer></script>
+  <link rel="stylesheet" href="assets/css/guides.css?v=6">
+  <link rel="stylesheet" href="assets/css/pesca.css?v=1">
+  <script src="assets/js/site-nav.js?v=14" defer></script>
+  <script src="data/pesca-data.js?v=2" defer></script>
+  <script src="assets/js/type-colors.js?v=1" defer></script>
+  <script src="assets/js/pesca.js?v=1" defer></script>
 </head>
-<body>
+<body style="--section-color: #4bb6ff">
   <header class="dex-topbar">
     <div class="dex-header-inner">
       <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
@@ -35,30 +40,115 @@
   <main class="sec-shell">
     <section class="sec-hero">
       <div>
-        <p class="eyebrow">AGUA Y CEBOS</p>
+        <p class="eyebrow">POKÉ CAÑA Y CEBOS</p>
         <h1>Pesca</h1>
-        <p class="sec-lead">Cañas, cebos y qué Pokémon salen en cada tipo de agua del servidor.</p>
+        <p class="sec-lead">Con la <strong>Poké Caña</strong> sacas Pokémon del agua. Los encantamientos deciden qué puede picar y con qué rareza, y los <strong>cebos de bayas</strong> te ayudan a conseguir justo lo que buscas: naturaleza, IVs, tipo, shiny…</p>
+        <ul class="hero-tips">
+          <li><img src="assets/img/items/cobblemon/poke_rod.png" alt="">Poké Caña</li>
+          <li><img src="assets/img/items/minecraft/enchanted_book.png" alt="">Atracción y Suerte marina</li>
+          <li><img src="assets/img/items/cobblemon/oran_berry.png" alt="">76 cebos</li>
+        </ul>
       </div>
       <div class="sec-art" aria-hidden="true">
-        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png" alt="">
-        <img class="sec-item" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/super-rod.png" alt="">
+        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png" alt="">
+        <img class="sec-item" src="assets/img/items/cobblemon/poke_rod.png" alt="">
       </div>
     </section>
 
-    <section class="sec-card" aria-labelledby="sec-wip-title">
-      <h2 id="sec-wip-title">Sección en construcción <span class="sec-badge">Próximamente</span></h2>
-      <p>Estamos preparando esta página con la información del servidor. Se irá llenando poco a poco.</p>
-      <h3>Ideas para esta sección</h3>
-      <ul class="sec-ideas">
-          <li>Cañas disponibles y cómo conseguirlas</li>
-          <li>Cebos y Poké Bait: qué atrae cada uno</li>
-          <li>Qué se pesca en cada bioma</li>
-          <li>Niveles de señuelo y Pokémon raros</li>
-      </ul>
-      <a class="sec-cta" href="feedback.html"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">¿Qué te gustaría ver aquí? Cuéntanos</a>
+    <section class="guide-block" aria-labelledby="fish-how-title">
+      <h2 class="guide-title" id="fish-how-title">Cómo pescar</h2>
+      <ol class="guide-steps">
+        <li class="guide-step">
+          <span class="guide-step-num">1</span>
+          <img class="guide-step-icon" src="assets/img/items/cobblemon/pokerod_smithing_template.png" alt="" width="48" height="48">
+          <h3>Consigue una Poké Caña</h3>
+          <p>En la <strong>mesa de herrería</strong>: Molde de herrería + caña de pescar + cualquier Poké Ball. La Ball solo cambia el aspecto del flotador.</p>
+        </li>
+        <li class="guide-step">
+          <span class="guide-step-num">2</span>
+          <img class="guide-step-icon" src="assets/img/items/cobblemon/oran_berry.png" alt="" width="48" height="48">
+          <h3>Pon un cebo</h3>
+          <p>Arrastra la baya sobre la caña en el inventario (como con los sacos) o llévala en la otra mano. Se gasta cuando sacas un Pokémon.</p>
+        </li>
+        <li class="guide-step">
+          <span class="guide-step-num">3</span>
+          <img class="guide-step-icon" src="assets/img/items/minecraft/fishing_rod.png" alt="" width="48" height="48">
+          <h3>Lanza y recoge</h3>
+          <p>Lanza al agua y recoge cuando el flotador se hunda. Puede salir un Pokémon, un objeto o «Ni siquiera un mordisco…».</p>
+        </li>
+        <li class="guide-step">
+          <span class="guide-step-num">4</span>
+          <img class="guide-step-icon" src="assets/img/items/cobblemon/poke_ball.png" alt="" width="48" height="48">
+          <h3>Captúralo</h3>
+          <p>El Pokémon sale del agua listo para combatir. Para el trabajo de <a href="trabajo.html#pescador">Pescador</a> tienes que pescarlo <strong>y</strong> capturarlo.</p>
+        </li>
+      </ol>
     </section>
 
-    <footer class="site-footer"><span>DIOSESMONWIKI · PESCA</span><span>Contenido en preparación</span></footer>
+    <section class="guide-block" aria-labelledby="fish-ench-title">
+      <h2 class="guide-title" id="fish-ench-title">Encantamientos de la Poké Caña</h2>
+      <div class="ench-grid">
+        <article class="ench-card is-lure">
+          <h3>Atracción <small>I · II · III</small></h3>
+          <p>Decide <strong>qué Pokémon pueden picar</strong>: algunos solo aparecen con Atracción y otros pasan a ser más comunes con ella (por ejemplo Staryu, Lapras, Wailmer o Relicanth). Además, pican antes.</p>
+        </article>
+        <article class="ench-card is-luck">
+          <h3>Suerte marina <small>I · II · III</small></h3>
+          <p>Sube la probabilidad de que salga un Pokémon de <strong>rareza más alta</strong>. Desde el nivel I también puedes pescar <strong>tesoros</strong>, y cada nivel suma +2,5% a los patrones raros de Magikarp.</p>
+        </article>
+        <article class="ench-card">
+          <h3>Irrompibilidad y Reparación</h3>
+          <p>Hacen que la caña dure mucho más. La caña ideal: <strong>Atracción III + Suerte marina III + Irrompibilidad III + Reparación</strong>.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="bait-title">
+      <h2 class="guide-title" id="bait-title">Cebos: el efecto de cada baya <span class="guide-count is-ok" id="bait-count"></span></h2>
+      <p class="guide-intro">Cada baya o fruta puesta en la Poké Caña tiene su efecto. Filtra por lo que buscas: naturaleza, IVs, EVs, tipo, grupo huevo, shiny… En Diosesmon los <strong>Poké Snacks están desactivados</strong>: los cebos solo funcionan en la caña.</p>
+      <div class="guide-filters">
+        <div class="guide-chips" id="bait-filter"></div>
+        <label class="guide-search"><span class="sr-only">Buscar cebo</span><input id="bait-search" type="search" placeholder="Buscar baya o efecto…" autocomplete="off"></label>
+      </div>
+      <div class="bait-grid" id="bait-grid"></div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="fish-list-title">
+      <h2 class="guide-title" id="fish-list-title">Pokémon que se pescan <span class="guide-count is-ok" id="fish-count"></span></h2>
+      <p class="guide-intro">Pokémon de las generaciones 1 a 4 que pican con la Poké Caña, con su rareza (sin encantamiento y con Atracción) y dónde pescarlos.</p>
+      <div class="guide-filters">
+        <div class="guide-chips" id="fish-filter"></div>
+        <div class="guide-chips">
+          <label class="guide-search"><span class="sr-only">Buscar Pokémon o bioma</span><input id="fish-search" type="search" placeholder="Pokémon o bioma…" autocomplete="off"></label>
+          <label class="guide-toggle"><input type="checkbox" id="fish-lure"> Mejoran con Atracción</label>
+        </div>
+      </div>
+      <div class="fish-grid" id="fish-grid"></div>
+    </section>
+
+    <section class="guide-block fish-extra" aria-labelledby="fish-treasure-title">
+      <div>
+        <h2 class="guide-title" id="fish-treasure-title">Tesoros</h2>
+        <p class="guide-intro">Con <strong>Suerte marina I o más</strong>, en aguas abiertas, la caña también puede sacar estos objetos de evolución:</p>
+        <ul class="fish-treasure" id="fish-treasure"></ul>
+      </div>
+      <div>
+        <h2 class="guide-title">Formas especiales</h2>
+        <ul class="fish-special">
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png" alt="" width="56" height="56"><span><strong>Patrones de Magikarp</strong>5% con cualquier caña, +2,5% por cada nivel de Suerte marina (hasta 12,5%).</span></li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/340.png" alt="" width="56" height="56"><span><strong>Whiscash Nero</strong>Solo pica con la Poké Caña hecha con una Master Ball.</span></li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/194.png" alt="" width="56" height="56"><span><strong>Wooper Corazón</strong>Necesita la Poké Caña con Amor Ball y Confite Corazón como cebo.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="fish-rods-title">
+      <h2 class="guide-title" id="fish-rods-title">Todas las Poké Cañas</h2>
+      <p class="guide-intro">Hay una por cada tipo de Poké Ball. Todas pescan igual: solo cambia el flotador y el color del sedal. Para cambiarla, vuelve a pasarla por la mesa de herrería con otra Ball.</p>
+      <ul class="fish-rods" id="fish-rods"></ul>
+    </section>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · PESCA</span><span>Datos de Cobblemon 1.7.3</span></footer>
   </main>
 </body>
 </html>

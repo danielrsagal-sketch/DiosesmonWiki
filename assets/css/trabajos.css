@@ -1,0 +1,30 @@
+/* Trabajos: tarjetas de cada oficio y trabajos activos por rango. */
+.job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+.job-card { display: grid; align-content: start; gap: 10px; padding: 16px; background: linear-gradient(160deg, color-mix(in srgb, var(--job-color) 18%, #121d32), #121d32 45%); border: 1px solid color-mix(in srgb, var(--job-color) 40%, #2b3d5c); border-top: 4px solid var(--job-color); border-radius: 14px; scroll-margin-top: 90px; }
+.job-card header { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: center; }
+.job-icon { width: 64px; height: 64px; display: grid; place-items: center; background: #2f77a8; border: 3px solid #74b4e1; border-radius: 6px; box-shadow: inset 0 0 0 2px #2b6d9c; }
+.job-icon img { width: 44px; height: 44px; object-fit: contain; image-rendering: pixelated; }
+.job-card h3 { margin: 0; color: var(--job-color); font: 700 22px "DM Mono", monospace; text-transform: uppercase; }
+.job-action { margin: 2px 0 0; color: #fff; font-size: 15px; font-weight: 600; }
+.job-details { display: grid; gap: 4px; margin: 0; padding: 0 0 0 18px; color: #c2cee2; font-size: 14px; line-height: 1.45; }
+.job-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.job-meta span { display: grid; gap: 1px; padding: 7px 10px; background: #0d1729; border: 1px solid #253753; border-radius: 9px; }
+.job-meta small { color: #9fb0cc; font: 600 11px "DM Mono", monospace; letter-spacing: .04em; text-transform: uppercase; }
+.job-meta strong { color: #fff; font: 700 20px "DM Mono", monospace; }
+.job-tip { margin: 0; padding: 9px 12px; color: #ffe9a6; background: #3a3215; border: 1px solid #ffd44244; border-radius: 9px; font-size: 14px; line-height: 1.45; }
+
+.sec-lead code { padding: 1px 7px; color: #ffe9a6; background: #2a2412; border-radius: 5px; font: 15px "DM Mono", monospace; }
+.job-calc { margin-top: 0; }
+.job-calc select { width: 170px; min-height: 38px; padding: 0 10px; color: #fff; background: #102a47; border: 1px solid #2b5f8c; border-radius: 9px; font: 600 14px "Space Grotesk", sans-serif; }
+.job-calc .ev-calc-result.is-best strong { color: #ffa64d; }
+.job-ranks { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.job-ranks li { display: grid; justify-items: center; gap: 4px; padding: 14px 10px; background: var(--dex-panel); border: 1px solid var(--dex-line); border-top: 4px solid var(--rank-color); border-radius: 12px; text-align: center; }
+.job-ranks strong { color: var(--rank-color); font: 700 16px "DM Mono", monospace; text-transform: uppercase; }
+.job-ranks span { color: #ffa64d; font-size: 22px; letter-spacing: 4px; }
+.job-ranks i { color: #2b3d5c; font-style: normal; }
+.job-ranks small { color: #c2cee2; font-size: 13px; }
+
+@media (max-width: 760px) {
+  .job-grid { grid-template-columns: 1fr; }
+  .job-ranks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

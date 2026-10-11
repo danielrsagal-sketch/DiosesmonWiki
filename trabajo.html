@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0d14">
-  <meta name="description" content="Trabajos disponibles en el servidor: cómo unirte, qué hace cada uno y cuánto paga.">
+  <meta name="description" content="Trabajos de Diosesmon: Cosechador, Minero, Excavador, Coleccionista, Combatiente, Pescador y Criador. Cómo se progresa en cada uno y cuántos puedes tener según tu rango.">
   <title>Trabajos | DiosesmonWiki</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
@@ -14,9 +14,12 @@
   <link rel="stylesheet" href="assets/css/topbar.css?v=13">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <script src="assets/js/site-nav.js?v=11" defer></script>
+  <link rel="stylesheet" href="assets/css/guides.css?v=6">
+  <link rel="stylesheet" href="assets/css/trabajos.css?v=3">
+  <script src="assets/js/site-nav.js?v=14" defer></script>
+  <script src="assets/js/trabajos.js?v=4" defer></script>
 </head>
-<body>
+<body style="--section-color: #ffa64d">
   <header class="dex-topbar">
     <div class="dex-header-inner">
       <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
@@ -37,28 +40,57 @@
       <div>
         <p class="eyebrow">OFICIOS DEL SERVIDOR</p>
         <h1>Trabajos</h1>
-        <p class="sec-lead">Trabajos disponibles en el servidor: cómo unirte, qué hace cada uno y cuánto paga.</p>
+        <p class="sec-lead">Escribe <code>/trabajos</code> o <code>/jobs</code> para abrir el menú en tu PokePad, elige un trabajo y sube de nivel haciendo lo que ya haces al jugar: minar, capturar, pescar, combatir o criar. Cada trabajo llega hasta el <strong>nivel 125</strong>.</p>
+        <ul class="hero-tips" id="job-tips"></ul>
       </div>
       <div class="sec-art" aria-hidden="true">
-        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/532.png" alt="">
-        <img class="sec-item" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/amulet-coin.png" alt="">
+        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/67.png" alt="">
+        <img class="sec-item" src="assets/img/items/minecraft/diamond_pickaxe.png" alt="">
       </div>
     </section>
 
-    <section class="sec-card" aria-labelledby="sec-wip-title">
-      <h2 id="sec-wip-title">Sección en construcción <span class="sec-badge">Próximamente</span></h2>
-      <p>Estamos preparando esta página con la información del servidor. Se irá llenando poco a poco.</p>
-      <h3>Ideas para esta sección</h3>
-      <ul class="sec-ideas">
-          <li>Lista de trabajos y qué acciones dan dinero o experiencia</li>
-          <li>Cómo unirte, salir o cambiar de trabajo</li>
-          <li>Pagos y experiencia por cada acción</li>
-          <li>Niveles del trabajo y sus recompensas</li>
-      </ul>
-      <a class="sec-cta" href="feedback.html"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">¿Qué te gustaría ver aquí? Cuéntanos</a>
+    <section class="guide-block" aria-labelledby="job-how-title">
+      <h2 class="guide-title" id="job-how-title">Cómo funcionan</h2>
+      <ol class="guide-steps is-three">
+        <li class="guide-step">
+          <span class="guide-step-num">1</span>
+          <img class="guide-step-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/town-map.png" alt="" width="48" height="48">
+          <h3>Usa /trabajos o /jobs</h3>
+          <p>Se abre el menú de Trabajos en el PokePad. Verás los 7 trabajos con tu nivel y tu experiencia en cada uno. Pasa el ratón por encima para ver cómo se progresa.</p>
+        </li>
+        <li class="guide-step">
+          <span class="guide-step-num">2</span>
+          <img class="guide-step-icon" src="assets/img/items/minecraft/golden_hoe.png" alt="" width="48" height="48">
+          <h3>Selecciona uno</h3>
+          <p>Haz clic en el trabajo para activarlo. Solo ganas experiencia en los trabajos que tengas <strong>activos</strong>.</p>
+        </li>
+        <li class="guide-step">
+          <span class="guide-step-num">3</span>
+          <img class="guide-step-icon" src="assets/img/items/cobblemon/exp_candy_l.png" alt="" width="48" height="48">
+          <h3>Sube hasta el nivel 125</h3>
+          <p>Cada acción de tu trabajo suma experiencia. Cada nivel pide <strong>la XP base del trabajo × tu nivel</strong>. Además, cada acción te paga, y el pago sube a medida que subes de nivel.</p>
+        </li>
+      </ol>
     </section>
 
-    <footer class="site-footer"><span>DIOSESMONWIKI · TRABAJOS</span><span>Contenido en preparación</span></footer>
+    <section class="guide-block" aria-labelledby="job-list-title">
+      <h2 class="guide-title" id="job-list-title">Los 7 trabajos</h2>
+      <div class="job-grid" id="job-grid"></div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="job-xp-title">
+      <h2 class="guide-title" id="job-xp-title">Calculadora de experiencia</h2>
+      <p class="guide-intro">La XP para pasar al siguiente nivel es <strong>XP base × nivel actual</strong>: por ejemplo, un Cosechador de nivel 40 necesita 13 × 40 = <strong>520</strong>. Pon tu nivel y tu XP para saber cuánto te falta.</p>
+      <div class="ev-calc job-calc" id="job-calc"></div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="job-rank-title">
+      <h2 class="guide-title" id="job-rank-title">¿Cuántos trabajos puedo tener?</h2>
+      <p class="guide-intro">Depende de tu rango. Con más trabajos activos subes varios a la vez mientras juegas. Más ventajas de cada rango en <a href="kits.html">Kits</a>.</p>
+      <ul class="job-ranks" id="job-ranks"></ul>
+    </section>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · TRABAJOS</span><span>Datos del menú de Trabajos del servidor</span></footer>
   </main>
 </body>
 </html>

@@ -64,6 +64,7 @@ python tools/build_fosiles_monturas.py # fósiles, yacimientos y monturas (Cobbl
 python tools/build_ev_data.py          # EVs y spawns para Entrenamiento EV
 python tools/build_crianza_data.py     # grupos huevo y géneros para Crianza (después de build_ev_data)
 python tools/build_kits_data.py        # kits desde las capturas de extra/PaginaDioses/DiosesmonKits
+python tools/build_drop_overrides.py   # drops desactivados en Diosesmon desde tools/source/drops-diosesmon.xlsx (--crear para rehacer el Excel)
 ```
 
 Al cambiar un archivo de `assets/` o `data/`, sube su número de versión (`?v=N`) en las páginas que lo cargan para que los navegadores no usen la copia antigua.

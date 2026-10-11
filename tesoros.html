@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0d14">
-  <meta name="description" content="Tesoros escondidos del servidor: dónde buscarlos y qué recompensas guardan.">
+  <meta name="description" content="Tesoros de Diosesmon: todos los gachapones (Gacha Diario, Legendarios, Rocket, Habilidad Oculta, Gachapon, Safari y Friki) con sus premios, skins y probabilidades.">
   <title>Tesoros | DiosesmonWiki</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
@@ -13,8 +13,15 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/topbar.css?v=13">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/pokepad.css?v=1">
+  <link rel="stylesheet" href="assets/css/guides.css?v=6">
+  <link rel="stylesheet" href="assets/css/kits.css?v=2">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <script src="assets/js/site-nav.js?v=11" defer></script>
+  <link rel="stylesheet" href="assets/css/tesoros.css?v=3">
+  <script src="assets/js/site-nav.js?v=14" defer></script>
+  <script src="data/tesoros-data.js?v=3" defer></script>
+  <script src="assets/js/rewards.js?v=1" defer></script>
+  <script src="assets/js/tesoros.js?v=3" defer></script>
 </head>
 <body>
   <header class="dex-topbar">
@@ -32,33 +39,54 @@
     </div>
   </header>
 
-  <main class="sec-shell">
-    <section class="sec-hero">
+  <main class="dr-shell">
+    <section class="dr-heading">
       <div>
-        <p class="eyebrow">EXPLORACIÓN</p>
+        <p class="eyebrow">/TESOROS</p>
         <h1>Tesoros</h1>
-        <p class="sec-lead">Tesoros escondidos del servidor: dónde buscarlos y qué recompensas guardan.</p>
+        <p class="dr-lead">Los tesoros son los <strong>gachapones</strong> del servidor: abre uno con su llave y te toca un premio al azar, desde objetos y DTs hasta <strong>Pokémon legendarios</strong> y <strong>skins</strong>. Ábrelos en el menú de <strong>Tesoros</strong> de tu PokePad.</p>
+        <ul class="hero-tips">
+          <li><img src="assets/img/tesoros/gacha-diario.png" alt="">1 llave gratis al día</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/nugget.png" alt="">Llaves con DiosesCoins</li>
+          <li><img src="assets/img/tesoros/safari.png" alt="">Skins del Safari</li>
+        </ul>
       </div>
-      <div class="sec-art" aria-hidden="true">
-        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/302.png" alt="">
-        <img class="sec-item" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/big-nugget.png" alt="">
+      <div class="tr-hero" aria-hidden="true">
+        <img src="assets/img/tesoros/legendario-shiny.png" alt="" style="--i:0">
+        <img src="assets/img/tesoros/gachapon.png" alt="" style="--i:1">
+        <img src="assets/img/tesoros/friki.png" alt="" style="--i:2">
       </div>
     </section>
 
-    <section class="sec-card" aria-labelledby="sec-wip-title">
-      <h2 id="sec-wip-title">Sección en construcción <span class="sec-badge">Próximamente</span></h2>
-      <p>Estamos preparando esta página con la información del servidor. Se irá llenando poco a poco.</p>
-      <h3>Ideas para esta sección</h3>
-      <ul class="sec-ideas">
-          <li>Tipos de tesoros y su rareza</li>
-          <li>Dónde aparecen y cómo encontrarlos</li>
-          <li>Recompensas posibles de cada tesoro</li>
-          <li>Consejos para la búsqueda</li>
-      </ul>
-      <a class="sec-cta" href="feedback.html"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">¿Qué te gustaría ver aquí? Cuéntanos</a>
+    <div class="tr-search-bar">
+      <label class="guide-search"><span class="sr-only">Buscar premio</span><input id="tr-search" type="search" placeholder="¿En qué tesoro sale…? (ej. Master Ball, Rayquaza, Gengar)" autocomplete="off"></label>
+      <div class="tr-results" id="tr-results" aria-live="polite"></div>
+    </div>
+
+    <section class="pokepad" aria-label="Tesoros del servidor">
+      <div class="pokepad-top"><span>POKEPAD</span></div>
+      <div class="pokepad-screen">
+        <div class="pokepad-bar">
+          <h2>Tesoros</h2>
+          <span class="pokepad-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="pokepad-body">
+          <nav class="dr-list" id="tr-list" aria-label="Tesoros"></nav>
+          <article class="dr-detail" id="tr-detail" aria-live="polite"></article>
+        </div>
+      </div>
     </section>
 
-    <footer class="site-footer"><span>DIOSESMONWIKI · TESOROS</span><span>Contenido en preparación</span></footer>
+    <div class="tr-sim" id="tr-sim" hidden role="dialog" aria-modal="true" aria-label="Simulador de tesoros">
+      <div class="tr-sim-backdrop"></div>
+      <div class="tr-sim-panel">
+        <button class="tr-sim-close" type="button" data-close aria-label="Cerrar">×</button>
+        <p class="tr-sim-disclaimer">Simulación solo por diversión: usa las probabilidades reales, pero no te da nada en el servidor.</p>
+        <div class="tr-sim-body"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · TESOROS</span><span>Datos sacados del menú de Tesoros del servidor</span></footer>
   </main>
 </body>
 </html>
