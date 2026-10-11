@@ -120,16 +120,28 @@ document.querySelector("#sf-zones").addEventListener("click", (event) => {
   if (zone) map.flyTo(toLatLng(zone), 3, { duration: 0.8 });
 });
 
-// Puntos agrupados por tipo: muchos comparten nombre, así que cada uno muestra sus coordenadas.
+// Puntos agrupados por tipo y, dentro, por zona; ordenados del más cercano al centro (0, 0) al más lejano.
+const distance = (point) => Math.round(Math.hypot(point.x, point.z));
+const zoneOf = Object.fromEntries(SAFARI.zones.map((zone) => [zone.id, zone]));
+const pointButton = ({ point, index }, color) => `<button type="button" class="sf-point-btn" data-point="${index}" style="--pin-color:${color}">
+    <span><strong>${escapeHtml(point.name)}</strong><small>X ${point.x} · Z ${point.z} · a ${distance(point)} bloques</small></span>
+  </button>`;
 document.querySelector("#sf-points").innerHTML = markers.length
   ? Object.entries(SAFARI.categories).map(([type, category]) => {
-    const items = markers.map((entry, index) => ({ ...entry, index })).filter(({ point }) => point.type === type);
+    const items = markers.map((entry, index) => ({ ...entry, index })).filter(({ point }) => point.type === type)
+      .sort((a, b) => distance(a.point) - distance(b.point));
     if (!items.length) return "";
+    const zoned = SAFARI.zones.map((zone) => ({ zone, list: items.filter(({ point }) => point.zone === zone.id) })).filter(({ list }) => list.length);
+    const loose = items.filter(({ point }) => !zoneOf[point.zone]);
+    const body = zoned.length
+      ? zoned.map(({ zone, list }) => `<div class="sf-zone-group" style="--zone-color:${zone.color}">
+          <p class="sf-zone-title">${escapeHtml(zone.name)}<small>${list.length}</small></p>
+          ${list.map((item) => pointButton(item, category.color)).join("")}
+        </div>`).join("") + loose.map((item) => pointButton(item, category.color)).join("")
+      : items.map((item) => pointButton(item, category.color)).join("");
     return `<details class="sf-point-group" style="--pin-color:${category.color}"${items.length <= 3 ? " open" : ""}>
         <summary><img src="${iconUrl(category.icon)}" alt="">${escapeHtml(category.label)}<small>${items.length}</small></summary>
-        <div class="sf-point-items">${items.map(({ point, index }) => `<button type="button" class="sf-point-btn" data-point="${index}" style="--pin-color:${category.color}">
-            <span><strong>${escapeHtml(point.name)}</strong><small>X ${point.x} · Z ${point.z}</small></span>
-          </button>`).join("")}</div>
+        <div class="sf-point-items">${body}</div>
       </details>`;
   }).join("")
   : '<p class="sf-empty">Aún no hay puntos.</p>';
@@ -138,6 +150,47 @@ document.querySelector("#sf-points").addEventListener("click", (event) => {
   if (!entry) return;
   map.flyTo(entry.marker.getLatLng(), 4, { duration: 0.8 });
   map.once("moveend", () => entry.marker.openPopup());
+});
+
+// ---- Descarga en formato de Xaero's Minimap ----
+// waypoint:nombre:inicial:x:y:z:color:disabled:type:set:rotate_on_tp:tp_yaw:visibility_type:destination
+const XAERO = {
+  pokeparada: { name: "Pokeparada", initial: "P", color: 11 },
+  taxi: { name: "Taxi", initial: "T", color: 6 },
+  entrenador: { name: "Entrenador", initial: "E", color: 13 },
+  spawn: { name: "Spawn Safari", initial: "S", color: 14 },
+};
+const plain = (text) => text.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9 ]/g, "");
+function xaeroText(types) {
+  const lines = ["#", "#waypoint:name:initials:x:y:z:color:disabled:type:set:rotate_on_tp:tp_yaw:visibility_type:destination", "#"];
+  for (const type of types) {
+    const style = XAERO[type];
+    if (!style) continue;
+    const counters = {};
+    SAFARI.waypoints.filter((point) => point.type === type)
+      .sort((a, b) => Math.hypot(a.x, a.z) - Math.hypot(b.x, b.z))
+      .forEach((point) => {
+        const zone = SAFARI.zones.find((entry) => entry.id === point.zone);
+        const zoneName = { selva: "Selva", articos: "Articos", cumbres: "Cumbres", valle: "Valle", jardin: "Jardin", igneas: "Igneas" }[point.zone] ?? (zone ? plain(zone.name) : "");
+        counters[zoneName] = (counters[zoneName] ?? 0) + 1;
+        const name = type === "spawn" ? style.name : `${style.name} ${zoneName} ${counters[zoneName]}`.replace(/\s+/g, " ").trim();
+        lines.push(`waypoint:${name}:${style.initial}:${point.x}:${point.y ?? 70}:${point.z}:${style.color}:false:0:gui.xaero_default:false:0:0:false`);
+      });
+  }
+  return `${lines.join("\n")}\n`;
+}
+document.querySelector(".sf-download")?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-download]");
+  if (!button) return;
+  const types = button.dataset.download === "all" ? ["spawn", "taxi", "pokeparada", "entrenador"] : [button.dataset.download];
+  const blob = new Blob([xaeroText(types)], { type: "text/plain;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = button.dataset.download === "all" ? "safari-diosesmon-todos.txt" : "safari-diosesmon-pokeparadas.txt";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 });
 
 // ---- Coordenadas ----

@@ -62,7 +62,10 @@
 .sf-point-group summary::-webkit-details-marker { display: none; }
 .sf-point-group summary img { width: 34px; height: 34px; object-fit: contain; }
 .sf-point-group summary small { color: #08101f; background: var(--pin-color); padding: 1px 8px; border-radius: 999px; font: 700 12px "DM Mono", monospace; }
-.sf-point-items { display: grid; gap: 4px; max-height: 260px; overflow-y: auto; padding: 0 8px 8px; }
+.sf-zone-group { display: grid; gap: 4px; }
+.sf-zone-title { display: flex; align-items: center; justify-content: space-between; margin: 6px 0 0; padding: 3px 8px; color: var(--zone-color); border-left: 3px solid var(--zone-color); font: 700 12px "DM Mono", monospace; letter-spacing: .04em; text-transform: uppercase; }
+.sf-zone-title small { color: #9fb0cc; }
+.sf-point-items { display: grid; gap: 4px; max-height: 360px; overflow-y: auto; padding: 0 8px 8px; }
 .sf-point-btn { --pin-color: #ffd442; display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: 8px; padding: 6px 10px; color: #fff; background: #102a47; border: 1px solid #22405f; border-left: 4px solid var(--pin-color); border-radius: 8px; text-align: left; cursor: pointer; }
 .sf-point-btn:hover { border-color: var(--pin-color); }
 .sf-point-btn strong { display: block; font-size: 14px; }
@@ -81,3 +84,12 @@
   .sf-fullscreen span { display: none; }
   .pokepad-bar { flex-wrap: wrap; }
 }
+
+/* Descarga para Xaero */
+.sf-download { display: grid; gap: 6px; margin-top: 10px; padding: 10px; background: #0d1f36; border: 1px solid #22405f; border-radius: 10px; }
+.sf-download p { margin: 0; color: #d8e3f6; font-size: 14px; }
+.sf-download-btn { min-height: 38px; padding: 0 14px; color: #08101f; background: #26c6f9; border: 0; border-radius: 999px; font: 700 14px "Space Grotesk", sans-serif; cursor: pointer; }
+.sf-download-btn:hover { filter: brightness(1.08); }
+.sf-download-btn.is-ghost { color: #86cfff; background: #102a47; border: 1px solid #2b5f8c; }
+.sf-download small { color: #9fb0cc; font-size: 12px; line-height: 1.45; }
+.sf-download code { color: #ffe9a6; font: 11px "DM Mono", monospace; }
