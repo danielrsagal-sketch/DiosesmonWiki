@@ -476,7 +476,7 @@ def main():
         })
 
     def parse_moves(raw_moves):
-        moves = {"level": [], "tm": [], "egg": [], "tutor": []}
+        moves = {"level": [], "tm": [], "egg": [], "tutor": [], "legacy": []}
         seen_moves = set()
         for raw in raw_moves:
             method, _, move_id = raw.partition(":")
@@ -492,7 +492,10 @@ def main():
                 continue
             seen_moves.add(key)
         moves["level"].sort(key=lambda move: move[0])
-        for method in ("tm", "egg", "tutor"):
+        # Legacy: movimientos de generaciones anteriores que ya no aprende por ningún otro método.
+        learnable = {move[1] for move in moves["level"]} | set(moves["tm"]) | set(moves["egg"]) | set(moves["tutor"])
+        moves["legacy"] = [move for move in moves["legacy"] if move not in learnable]
+        for method in ("tm", "egg", "tutor", "legacy"):
             moves[method].sort(key=lambda index: move_list[index])
         return moves
 

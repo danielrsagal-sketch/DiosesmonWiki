@@ -313,7 +313,7 @@ function renderCatalog() {
 const detailModal = document.querySelector("#detail-modal");
 const dropOverrides = window.DIOSESMON_DROP_OVERRIDES ?? {};
 const speciesById = new Map(species.map((pokemon) => [pokemon.id, pokemon]));
-const moveTabLabels = { level: "Por nivel", tm: "Por MT", egg: "Huevo", tutor: "Tutor" };
+const moveTabLabels = { level: "Por nivel", tm: "Por MT", egg: "Huevo", tutor: "Tutor", legacy: "Legacy" };
 const SERVER_EGG_STEPS = 3000;
 // Colores de hábitat por familia de bioma (la primera coincidencia gana).
 const biomeTones = [
@@ -364,7 +364,7 @@ function loadDetails() {
   if (window.POKEDEX_DETAILS) return Promise.resolve();
   detailsPromise ??= new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = "data/pokemon-details.js?v=4";
+    script.src = "data/pokemon-details.js?v=5";
     script.onload = resolve;
     script.onerror = () => {
       detailsPromise = null;
@@ -431,15 +431,30 @@ function moveTabs(tabs) {
   currentMoveTabs = tabs;
   const keys = Object.keys(tabs);
   const first = keys.find((key) => tabs[key].length) ?? keys[0];
-  return `<div class="move-tabs" role="tablist">${keys.map((key) => `<button class="move-tab${key === first ? " is-active" : ""}" type="button" role="tab" aria-selected="${key === first}" data-move-tab="${key}">${moveTabLabels[key]} <span>${tabs[key].length}</span></button>`).join("")}</div>
+  return `<label class="move-search"><span class="sr-only">Buscar movimiento</span><input type="search" data-move-search placeholder="¿Aprende…? Busca un movimiento (ej. Terremoto)" autocomplete="off"></label>
+    <div class="move-tabs" role="tablist">${keys.map((key) => `<button class="move-tab${key === first ? " is-active" : ""}${key === "legacy" ? " is-legacy" : ""}" type="button" role="tab" aria-selected="${key === first}" data-move-tab="${key}">${moveTabLabels[key]} <span>${tabs[key].length}</span></button>`).join("")}</div>
     <div class="detail-moves" data-moves>${renderMoves(first)}</div>`;
 }
 
+const LEGACY_NOTE = `<p class="move-legacy-note"><strong>¿Qué son los movimientos Legacy?</strong> Son movimientos que este Pokémon podía aprender en juegos anteriores pero que ya no puede aprender en Cobblemon: ni por nivel, ni con MT, ni por huevo, ni con tutor. Solo los tendrá un Pokémon al que se los hayan puesto con comandos de administración, así que no se pueden conseguir jugando.</p>`;
+
 function renderMoves(key) {
   const moves = currentMoveTabs[key] ?? [];
-  return moves.length
-    ? moves.map((move) => `<span class="detail-move"><small>${escapeHtml(move.tag)}</small>${escapeHtml(move.name)}</span>`).join("")
+  const list = moves.length
+    ? moves.map((move) => `<span class="detail-move${key === "legacy" ? " is-legacy" : ""}"><small>${escapeHtml(move.tag)}</small>${escapeHtml(move.name)}</span>`).join("")
     : '<span class="detail-empty">No aprende movimientos por este método.</span>';
+  return key === "legacy" ? LEGACY_NOTE + list : list;
+}
+
+// Búsqueda en todos los métodos a la vez.
+function searchMoves(query) {
+  const normalized = (text) => text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const target = normalized(query.trim());
+  const hits = Object.entries(currentMoveTabs).flatMap(([key, moves]) => moves.filter((move) => normalized(move.name).includes(target)).map((move) => ({ ...move, key })));
+  if (!hits.length) return `<span class="detail-empty">No aprende ningún movimiento que contenga «${escapeHtml(query.trim())}».</span>`;
+  const learnable = hits.some((hit) => hit.key !== "legacy");
+  return `<p class="move-search-summary${learnable ? "" : " is-legacy"}">${learnable ? "✔ Lo aprende" : "Solo como movimiento Legacy (no se puede conseguir jugando)"}</p>`
+    + hits.map((hit) => `<span class="detail-move${hit.key === "legacy" ? " is-legacy" : ""}"><small>${escapeHtml(hit.key === "legacy" ? "Legacy" : hit.tag)}</small>${escapeHtml(hit.name)}</span>`).join("");
 }
 
 function biomeTone(key) {
@@ -753,6 +768,7 @@ async function renderPokemonDetail(pokemon, requestId, formKey = "") {
     tm: data.moves.tm.map((index) => ({ tag: "MT", name: named(index) })),
     egg: data.moves.egg.map((index) => ({ tag: "Huevo", name: named(index) })),
     tutor: data.moves.tutor.map((index) => ({ tag: "Tutor", name: named(index) })),
+    legacy: (data.moves.legacy ?? []).map((index) => ({ tag: "Legacy", name: named(index) })),
   });
   const abilities = data.abilities.map((ability) => `<span class="ability-chip">${escapeHtml(ability.name)}${ability.hidden ? " · oculta" : ""}</span>`).join("");
   detail.innerHTML = `${detailHeader(pokemon, {
@@ -934,6 +950,8 @@ detail.addEventListener("click", (event) => {
       button.classList.toggle("is-active", button === tab);
       button.setAttribute("aria-selected", String(button === tab));
     });
+    const search = detail.querySelector("[data-move-search]");
+    if (search) search.value = "";
     detail.querySelector("[data-moves]").innerHTML = renderMoves(tab.dataset.moveTab);
     return;
   }
@@ -941,6 +959,14 @@ detail.addEventListener("click", (event) => {
   if (action !== "seen" && action !== "caught") return;
   const record = recordByKey.get(detail.dataset.key);
   if (record) setRecordState(record, action);
+});
+detail.addEventListener("input", (event) => {
+  const search = event.target.closest("[data-move-search]");
+  if (!search) return;
+  const tabs = detail.querySelectorAll("[data-move-tab]");
+  const active = detail.querySelector("[data-move-tab].is-active")?.dataset.moveTab;
+  tabs.forEach((tab) => tab.classList.toggle("is-dim", Boolean(search.value.trim())));
+  detail.querySelector("[data-moves]").innerHTML = search.value.trim() ? searchMoves(search.value) : renderMoves(active);
 });
 detailModal.querySelector(".detail-backdrop").addEventListener("click", requestClose);
 detail.addEventListener("input", (event) => {
