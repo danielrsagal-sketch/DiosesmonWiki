@@ -74,6 +74,13 @@
   const firstBreedable = (id) => lineOf(id).find(canBreed);
   const spawnScore = (entry) => (entry.spawn ? RARITY_RANK[entry.spawn.rarity] * 100 + Number.parseInt(entry.spawn.level, 10) + entry.spawn.notes.length * 12 - entry.spawn.places.length * 3 : 1000);
 
+  // --- Zona Safari (data/safari-pokemon.js): lo que se atrapa allí trae al menos un IV a 31 ---
+  const safariOf = {};
+  (window.SAFARI_POKEMON ?? []).forEach((zone) => zone.pokemon.forEach(({ id, rare }) => (safariOf[id] ??= []).push({ zone, rare })));
+  // Los breeders del Safari van primero (los raros, detrás de los normales del Safari).
+  const safariBonus = (entry) => (!safariOf[entry.id] ? 0 : safariOf[entry.id].some((place) => !place.rare) ? -1000 : -400);
+  const safariLine = (entry) => (safariOf[entry.id] ? `<small class="br-safari">Safari: ${safariOf[entry.id].map(({ zone, rare }) => `${escapeHtml(zone.name)}${rare ? " (raro)" : ""}`).join(" · ")}</small>` : "");
+
   // --- Estado y guardado ---
   const state = { target: null, objective: null, custom: null, breeder: null, start: null, browse: "competitive", type: null, query: "", selected: null };
   const loadStore = () => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; } };
@@ -112,8 +119,8 @@
   function breedersFor(info) {
     if (!info.parent) return [];
     return compatibleWith(info)
-      .filter((entry) => entry.id !== DITTO && entry.male > 0 && entry.male < 1 && entry.spawn)
-      .sort((a, b) => spawnScore(a) + (canBreed(rootOf(a.id)) ? 0 : 80) - spawnScore(b) - (canBreed(rootOf(b.id)) ? 0 : 80))
+      .filter((entry) => entry.id !== DITTO && entry.male > 0 && entry.male < 1 && (entry.spawn || safariOf[entry.id]))
+      .sort((a, b) => spawnScore(a) + (canBreed(rootOf(a.id)) ? 0 : 80) + safariBonus(a) - spawnScore(b) - (canBreed(rootOf(b.id)) ? 0 : 80) - safariBonus(b))
       .slice(0, 12);
   }
 
@@ -300,10 +307,15 @@
       <button class="br-breeder${entry.id === state.breeder ? " is-active" : ""}" type="button" data-breeder="${entry.id}">
         <img src="${SPRITES}/${entry.id}.png" alt="" width="64" height="64" loading="lazy">
         <span><strong>${escapeHtml(entry.name)}</strong>
-          <small><b class="rarity-${entry.spawn.rarity}">${RARITY[entry.spawn.rarity]}</b> · Nv. ${entry.spawn.level}</small>
-          <small>${entry.spawn.places.slice(0, 3).map(escapeHtml).join(" · ")}</small>
+          ${safariLine(entry)}
+          ${entry.spawn ? `<small><b class="rarity-${entry.spawn.rarity}">${RARITY[entry.spawn.rarity]}</b> · Nv. ${entry.spawn.level}</small>
+          <small>${entry.spawn.places.slice(0, 3).map(escapeHtml).join(" · ")}</small>` : ""}
           <em>${entry.egg.join(" · ")}</em></span>
       </button>`).join("") || '<p class="br-note">No hay breeders compatibles con spawn salvaje.</p>';
+    const fromSafari = compatible.filter((entry) => safariOf[entry.id]);
+    els.breeders.insertAdjacentHTML("beforeend", fromSafari.length
+      ? `<p class="br-safari-note"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/safari-ball.png" alt="" width="28" height="28"><span><strong>${fromSafari.length} breeders compatibles salen en la Zona Safari</strong>, con al menos un IV a 31: ${info.parent.egg.map((group) => `<a href="safari.html?huevo=${encodeURIComponent(group)}#sp-title">ver grupo ${escapeHtml(group)}</a>`).join(" · ")}</span></p>`
+      : "");
   }
 
   // --- Árbol ---

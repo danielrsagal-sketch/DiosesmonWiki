@@ -7,6 +7,28 @@
 //   links: botones al final [["Texto", "pagina.html"], …] (opcional)
 window.DIOSESMON_NOVEDADES = [
   {
+    date: "2026-10-15",
+    tag: "nuevo",
+    title: "Pokémon de la Zona Safari",
+    items: [
+      "Nueva sección <strong>Pokémon por zona</strong> en el Safari: qué sale en cada una de las 7 zonas (incluidos Río y Océano), con su familia evolutiva completa y los raros marcados. Se puede filtrar por grupo huevo.",
+      "En la <strong>Pokédex</strong>, la ficha de cada Pokémon dice en qué zonas del Safari aparece, y el filtro de bioma incluye las zonas del Safari.",
+      "En <strong>Crianza</strong>, los breeders que salen en el Safari aparecen primero, porque traen al menos un IV a 31.",
+    ],
+    links: [["Ver en el Safari", "safari.html#sp-title"], ["Crianza", "crianza.html"]],
+  },
+  {
+    date: "2026-10-15",
+    tag: "mejora",
+    title: "Pokédex: filtro por bioma",
+    items: [
+      "Nuevo filtro <strong>Bioma</strong> en la Pokédex, con buscador: escribe «Cerezal» o «Bosque oscuro» y verás qué Pokémon aparecen ahí.",
+      "Los Pokémon que salen en cualquier bioma de la superficie (muchos solo en cuevas) se pueden incluir aparte con una casilla.",
+      "Enlace directo para compartir: <a href=\"pokedex.html?bioma=Cerezal\">pokedex.html?bioma=Cerezal</a>.",
+    ],
+    links: [["Probar el filtro", "pokedex.html?bioma=Cerezal"]],
+  },
+  {
     date: "2026-10-14",
     tag: "nuevo",
     title: "Información del servidor en Inicio",

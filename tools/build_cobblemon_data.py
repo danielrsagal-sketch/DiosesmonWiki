@@ -27,6 +27,8 @@ ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / "tools" / "build-cache"
 OUTPUT = ROOT / "data" / "pokemon-details.js"
 CATALOG_OUTPUT = ROOT / "data" / "pokemon-catalog-extra.js"
+BIOME_INDEX_OUTPUT = ROOT / "data" / "pokemon-biomes.js"
+ANYWHERE_TAG = "cobblemon:is_overworld"
 AVAILABLE_THROUGH = 493
 MAX_NATIONAL_ID = 1025
 SPANISH_LANGUAGE_ID = "7"
@@ -772,6 +774,35 @@ def main():
         "// Generado por build_cobblemon_data.py desde Cobblemon 1.7.3. No editar a mano.\n"
         f"window.POKEDEX_EGG_GROUPS = {dump(egg_groups)};\n"
         f"window.POKEDEX_REGIONAL_FORMS = {dump(regional_records)};\n",
+        encoding="utf-8",
+    )
+    # Índice para el filtro por bioma de la Pokédex: en qué biomas aparece cada especie en estado salvaje.
+    # Solo cuenta los spawns de la especie base: los de las formas regionales no ocurren en Diosesmon.
+    # Los spawns de «Superficie» (cualquier bioma, a menudo solo en cuevas) van aparte para no llenar cada bioma.
+    biome_ids = sorted(biome_table, key=lambda biome: (biome_table[biome]["name"], biome))
+    biome_position = {biome: index for index, biome in enumerate(biome_ids)}
+    species_biomes = {}
+    anywhere = {}
+    for national_id, entry in details.items():
+        found = set()
+        for spawn in entry["spawns"]:
+            excluded = {biome for key in spawn["excluded"] for biome in used_tags[key]["biomes"]}
+            if ANYWHERE_TAG in spawn["biomes"]:
+                anywhere[national_id] = sorted(biome_position[biome] for biome in excluded if biome in biome_position)
+            included = {biome for key in spawn["biomes"] if key != ANYWHERE_TAG for biome in used_tags[key]["biomes"]}
+            found |= included - excluded
+        if found:
+            species_biomes[national_id] = sorted(biome_position[biome] for biome in found)
+    biome_index = {
+        "biomes": [[biome, biome_table[biome]["name"], biome_table[biome]["source"]] for biome in biome_ids],
+        "species": species_biomes,
+        "anywhere": anywhere,
+    }
+    BIOME_INDEX_OUTPUT.write_text(
+        "// Generado por build_cobblemon_data.py desde Cobblemon 1.7.3. No editar a mano.\n"
+        "// biomes: [id, nombre, origen]; species: número de Pokédex -> posiciones en biomes;\n"
+        "// anywhere: especies que salen en cualquier bioma de la superficie -> biomas excluidos.\n"
+        f"window.POKEDEX_BIOME_INDEX = {dump(biome_index)};\n",
         encoding="utf-8",
     )
     for record in regional_records:

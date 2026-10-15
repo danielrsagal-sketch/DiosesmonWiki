@@ -71,6 +71,13 @@ a { color: inherit; }
 .multi-summary { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .multi-count { padding: 1px 7px; color: #08101f; background: var(--dex-yellow); border-radius: 999px; font: 700 11px "DM Mono", monospace; font-style: normal; }
 .multi-panel { position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 30; min-width: 200px; max-height: 300px; overflow-y: auto; padding: 6px; background: #121d32; border: 1px solid #344766; border-radius: 8px; box-shadow: 0 14px 30px #000a; }
+.multi-search { width: 100%; margin-bottom: 4px; padding: 8px 10px; color: #fff; background: #0d1729; border: 1px solid #2b5f8c; border-radius: 6px; font: 500 14px "Space Grotesk", sans-serif; outline: 0; }
+.multi-search:focus { border-color: var(--dex-yellow); }
+.multi-option[hidden], .multi-empty[hidden] { display: none; }
+.multi-empty { margin: 6px 8px; color: #9aa9c4; font-size: 13px; }
+.biome-anywhere { display: flex; align-items: flex-start; gap: 8px; margin-top: 8px; color: #b6c3d9; font-size: 13px; line-height: 1.35; cursor: pointer; }
+.biome-anywhere[hidden] { display: none; }
+.biome-anywhere input { flex: 0 0 auto; width: 15px; height: 15px; margin: 1px 0 0; accent-color: var(--dex-yellow); }
 .multi-clear { width: 100%; margin-bottom: 4px; padding: 7px 8px; color: #ff9aaa; background: none; border: 0; border-bottom: 1px solid #253753; font-size: 13px; text-align: left; }
 .multi-clear:hover { color: #fff; }
 .multi-option { display: flex; align-items: center; gap: 9px; padding: 7px 8px; color: #d8e3f6; border-radius: 5px; font-size: 14px; cursor: pointer; }
@@ -312,6 +319,7 @@ body.modal-open { overflow: hidden; }
   .progress-strip .progress-meter { min-height: 53px; grid-column: 1 / -1; }
   .catalog-layout { display: block; }
   .filter-rail { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; padding: 9px; }
+  .filter-field.is-biome { grid-column: 1 / -1; }
   .global-search { grid-column: 1 / -1; }
   .kind-filters { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
   .kind-filters legend { grid-column: 1 / -1; }
@@ -355,3 +363,13 @@ body.modal-open { overflow: hidden; }
 
 .form-obtain.is-treasure { color: #ffe9a6; }
 .form-obtain.is-treasure a { color: #ffd442; }
+
+/* Zona Safari en la ficha (Hábitat) */
+.safari-spawn { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; margin-bottom: 12px; padding: 10px 12px; background: linear-gradient(135deg, #10261f, #0d1729 70%); border: 1px solid #2f7a58; border-radius: 10px; }
+.safari-spawn strong { color: #9ff0c8; font-size: 15px; }
+.safari-spawn p { margin: 2px 0 6px; color: #c9d5ea; font-size: 13.5px; }
+.safari-spawn b { color: #fff; }
+.safari-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.safari-chip { --zone-color: #43db95; display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; color: #08101f; background: var(--zone-color); border-radius: 999px; font-size: 12.5px; font-weight: 700; text-decoration: none; }
+.safari-chip small { padding: 0 5px; color: #ffd442; background: #08101f; border-radius: 999px; font: 700 10px "DM Mono", monospace; text-transform: uppercase; }
+.safari-chip:hover { filter: brightness(1.1); }

@@ -187,3 +187,9 @@
   .br-facts { text-align: left; }
   .br-panel { padding: 14px 12px; }
 }
+
+/* Breeders de la Zona Safari */
+.br-breeder small.br-safari { color: #9ff0c8; font-weight: 700; }
+.br-safari-note { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; margin: 4px 0 0; padding: 8px 10px; color: #c9d5ea; background: #10261f; border: 1px solid #2f7a58; border-radius: 10px; font-size: 13.5px; line-height: 1.4; }
+.br-safari-note strong { color: #9ff0c8; }
+.br-safari-note a { color: #8fd8ff; }

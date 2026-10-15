@@ -17,12 +17,14 @@ data/                 Datos que usan las páginas
   gimnasios-data.js     Líderes, recompensas, equipos y level caps ← editar a mano
   drop-overrides.js     Drops desactivados en el servidor         ← editar a mano
   safari-data.js        Zonas y puntos del mapa de la Zona Safari ← editar a mano
+  safari-pokemon.js     Generado por tools/build_safari_pokemon.py desde tools/source/safari-pokemon.txt ← editar el .txt
   novedades-data.js     Cambios de la página Novedades           ← editar a mano
   faq-data.js           Preguntas frecuentes                      ← editar a mano
   informacion-data.js   Eventos y novedades de Inicio (con cuenta atrás) ← editar a mano
   pokemon-data.js       Generado por tools/build_pokemon_data.py
   pokemon-details.js    Generado por tools/build_cobblemon_data.py
   pokemon-catalog-extra.js  Generado por tools/build_cobblemon_data.py
+  pokemon-biomes.js     Generado por tools/build_cobblemon_data.py (filtro por bioma)
   fusion-data.js        Generado por tools/build_fusion_data.py
   fosiles-data.js, monturas-data.js  Generados por tools/build_fosiles_monturas.py
   entrenamiento-data.js Generado por tools/build_ev_data.py
@@ -67,6 +69,7 @@ python tools/build_fosiles_monturas.py # fósiles, yacimientos y monturas (Cobbl
 python tools/build_ev_data.py          # EVs y spawns para Entrenamiento EV
 python tools/build_crianza_data.py     # grupos huevo y géneros para Crianza (después de build_ev_data)
 python tools/build_kits_data.py        # kits desde las capturas de extra/PaginaDioses/DiosesmonKits
+python tools/build_safari_pokemon.py   # Pokémon de cada zona del Safari desde tools/source/safari-pokemon.txt
 python tools/build_drop_overrides.py   # drops desactivados en Diosesmon desde tools/source/drops-diosesmon.xlsx (--crear para rehacer el Excel)
 ```
 

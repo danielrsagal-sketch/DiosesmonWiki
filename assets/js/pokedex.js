@@ -7,7 +7,7 @@ class MultiFilter {
     this.selected = new Set();
     this.options = [];
     element.innerHTML = `<button class="multi-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-labelledby="${element.getAttribute("aria-labelledby")} ${element.id}-summary"><span class="multi-summary" id="${element.id}-summary"></span><i class="multi-count" hidden></i></button>
-      <div class="multi-panel" hidden><button class="multi-clear" type="button">Quitar selección</button><div class="multi-options"></div></div>`;
+      <div class="multi-panel" hidden>${element.dataset.search ? `<input class="multi-search" type="search" placeholder="${escapeHtml(element.dataset.search)}" autocomplete="off" aria-label="${escapeHtml(element.dataset.search)}">` : ""}<button class="multi-clear" type="button">Quitar selección</button><div class="multi-options"></div><p class="multi-empty" hidden>Sin resultados</p></div>`;
     this.toggle = element.querySelector(".multi-toggle");
     this.panel = element.querySelector(".multi-panel");
     this.toggle.addEventListener("click", () => this.setOpen(this.panel.hidden));
@@ -15,6 +15,8 @@ class MultiFilter {
       this.clear();
       this.emit();
     });
+    this.search = this.panel.querySelector(".multi-search");
+    this.search?.addEventListener("input", () => this.filterOptions());
     this.panel.addEventListener("change", (event) => {
       const input = event.target.closest("input[type=checkbox]");
       if (!input) return;
@@ -31,11 +33,24 @@ class MultiFilter {
     this.panel.querySelector(".multi-options").innerHTML = options.map(({ value, label }) => `<label class="multi-option"><input type="checkbox" value="${escapeHtml(value)}"${this.selected.has(value) ? " checked" : ""}><span>${escapeHtml(label)}</span></label>`).join("");
   }
 
+  // Con buscador: oculta las opciones que no contienen lo escrito (sin tener en cuenta tildes).
+  filterOptions() {
+    const query = foldText(this.search.value.trim());
+    let shown = 0;
+    this.panel.querySelectorAll(".multi-option").forEach((option) => {
+      const match = !query || foldText(option.textContent).includes(query);
+      option.hidden = !match;
+      if (match) shown += 1;
+    });
+    this.panel.querySelector(".multi-empty").hidden = shown > 0;
+  }
+
   setOpen(open) {
     if (open) document.querySelectorAll(".multi-filter").forEach((other) => other !== this.element && other.multiFilter?.setOpen(false));
     this.panel.hidden = !open;
     this.toggle.setAttribute("aria-expanded", String(open));
     this.element.classList.toggle("is-open", open);
+    if (open && this.search && matchMedia("(hover: hover)").matches) this.search.focus();
   }
 
   select(values) {
@@ -67,6 +82,10 @@ class MultiFilter {
   emit() {
     this.element.dispatchEvent(new Event("change"));
   }
+}
+
+function foldText(text) {
+  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
 function createMultiFilter(selector) {
@@ -104,6 +123,14 @@ for (const form of window.POKEDEX_REGIONAL_FORMS ?? []) {
 }
 const obtainMethods = { "evolución": "Se consigue por evolución" };
 const regionFilter = createMultiFilter("#region-filter");
+const biomeFilter = createMultiFilter("#biome-filter");
+const biomeIndex = window.POKEDEX_BIOME_INDEX ?? { biomes: [], species: {}, anywhere: {} };
+const biomeAnywhereInput = document.querySelector("#biome-anywhere");
+const safariZones = window.SAFARI_POKEMON ?? [];
+const safariZonesById = new Map();
+for (const zone of safariZones) {
+  for (const { id, rare } of zone.pokemon) safariZonesById.set(id, [...(safariZonesById.get(id) ?? []), { zone, rare }]);
+}
 const statusFilter = createMultiFilter("#status-filter");
 const searchInput = document.querySelector("#search-input");
 const catalog = document.querySelector("#catalog");
@@ -245,10 +272,22 @@ function visibleRecords({ ignoreStatus = false } = {}) {
     if (!typeFilter.hasAny(record.types)) return false;
     if (!eggFilter.hasAny(record.eggGroups)) return false;
     if (!formFilter.has(record.regionBadge)) return false;
+    if (!biomeFilter.isEmpty && !spawnsInSelectedBiome(record)) return false;
     if (query && !record.searchTerms.includes(query)) return false;
     if (!ignoreStatus && !statusFilter.hasAny(recordStatuses(record))) return false;
     return true;
   });
+}
+
+// Filtro por bioma: solo especies base (los spawns de las formas regionales no ocurren en Diosesmon).
+// Las que salen en cualquier bioma de la superficie solo cuentan si se marca «Incluir los de Superficie».
+function spawnsInSelectedBiome(record) {
+  if (record.recordKind !== "pokemon" || record.form) return false;
+  if ((biomeIndex.species[record.id] ?? []).some((index) => biomeFilter.selected.has(String(index)))) return true;
+  if ((safariZonesById.get(record.id) ?? []).some(({ zone }) => biomeFilter.selected.has(`safari:${zone.id}`))) return true;
+  const excluded = biomeIndex.anywhere[record.id];
+  if (!excluded || !biomeAnywhereInput.checked) return false;
+  return [...biomeFilter.selected].some((index) => !index.startsWith("safari:") && !excluded.includes(Number(index)));
 }
 
 function renderCard(record) {
@@ -621,6 +660,14 @@ function renderDrops(pokemon, drops) {
   return `<ul class="drop-list">${rows}</ul><p class="detail-footnote">${rolls} al derrotarlo; los porcentajes son por tirada.${override.note ? ` ${escapeHtml(override.note)}` : ""}</p>`;
 }
 
+// Zonas del Safari donde aparece (data/safari-pokemon.js): allí sale con al menos un IV a 31.
+function renderSafari(id) {
+  const zones = safariZonesById.get(id) ?? [];
+  if (!zones.length) return "";
+  const chips = zones.map(({ zone, rare }) => `<a class="safari-chip" href="safari.html#pokemon-${zone.id}" style="--zone-color:${zone.color}">${escapeHtml(zone.name)}${rare ? "<small>raro</small>" : ""}</a>`).join("");
+  return `<div class="safari-spawn"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/safari-ball.png" alt="" width="32" height="32"><div><strong>Zona Safari</strong><p>Sale con <b>al menos un IV a 31</b>, ideal para criar.</p><div class="safari-chips">${chips}</div></div></div>`;
+}
+
 function renderSpawns(spawns) {
   if (!spawns?.length) return '<p class="detail-empty">No aparece en estado salvaje; se obtiene por evolución u otros métodos.</p>';
   const entries = spawns.map((spawn) => `<article class="spawn-entry">
@@ -799,7 +846,7 @@ async function renderPokemonDetail(pokemon, requestId, formKey = "") {
       ${detailSection("Drops", renderDrops(pokemon, data.drops))}
     </div>
     ${renderFamily(pokemon, nodeKey(pokemon.id, form ? formKey : ""))}
-    ${detailSection("Hábitat", pokemon.form && !pokemon.obtainable ? `<p class="detail-empty">Aún no aparece en el servidor; sus spawns se activarán cuando llegue ${escapeHtml(pokemon.regionBadge)}.</p>` : pokemon.form ? '<p class="detail-empty">No aparece salvaje en el servidor; se consigue evolucionando su forma normal.</p>' : pokemon.treasure ? '<p class="detail-empty">No aparece salvaje en el servidor: se consigue abriendo los Tesoros de Pokémon Legendario (1,89%).</p>' : renderSpawns(data.spawns))}
+    ${detailSection("Hábitat", pokemon.form && !pokemon.obtainable ? `<p class="detail-empty">Aún no aparece en el servidor; sus spawns se activarán cuando llegue ${escapeHtml(pokemon.regionBadge)}.</p>` : pokemon.form ? '<p class="detail-empty">No aparece salvaje en el servidor; se consigue evolucionando su forma normal.</p>' : pokemon.treasure ? '<p class="detail-empty">No aparece salvaje en el servidor: se consigue abriendo los Tesoros de Pokémon Legendario (1,89%).</p>' : renderSafari(pokemon.id) + renderSpawns(data.spawns))}
     ${detailSection("Movimientos", tabs)}
     ${detailSection("Captura", renderCatch(data, data.spawns))}
     <p class="detail-source">Datos de Diosesmon</p>`;
@@ -903,6 +950,12 @@ typeFilter.setOptions([...new Set(records.flatMap((record) => record.types))]
   .map((type) => ({ value: type, label: type })));
 formFilter.setOptions([...new Set(records.map((record) => record.regionBadge).filter(Boolean))]
   .map((region) => ({ value: region, label: `Formas de ${region}` })));
+biomeFilter.setOptions([
+  ...safariZones.map((zone) => ({ value: `safari:${zone.id}`, label: `Zona Safari · ${zone.name}` })),
+  ...biomeIndex.biomes
+    .map(([, name, source], index) => ({ value: String(index), label: source === "terralith" ? `${name} (Terralith)` : name }))
+    .sort((first, second) => first.label.localeCompare(second.label, "es")),
+]);
 eggFilter.setOptions([...new Set(records.flatMap((record) => record.eggGroups))]
   .sort((first, second) => first.localeCompare(second, "es", { numeric: true }))
   .map((group) => ({ value: group, label: group })));
@@ -915,6 +968,16 @@ function initializeFilters() {
   const requestedKind = params.get("kind");
   if (requestedKind === "pokemon" || requestedKind === "fusion") activeKind = requestedKind;
   // ?region=Kanto,Johto abre la Pokédex filtrada (lo usa DexRewards).
+  // ?bioma=Cerezal (nombre o id del bioma, varios separados por comas) abre la Pokédex filtrada por bioma.
+  const biomes = (params.get("bioma") ?? "").split(",").map((name) => foldText(name.trim())).filter(Boolean);
+  if (biomes.length) {
+    biomeFilter.select([
+      ...biomeIndex.biomes.flatMap(([id, name], index) => biomes.includes(foldText(name)) || biomes.includes(id) ? [String(index)] : []),
+      ...safariZones.flatMap((zone) => biomes.includes(foldText(zone.name)) || biomes.includes(zone.id) || biomes.includes("safari") ? [`safari:${zone.id}`] : []),
+    ]);
+    if (!biomeFilter.isEmpty) activeKind = "pokemon";
+    document.querySelector("#biome-anywhere-row").hidden = biomeFilter.isEmpty;
+  }
   const regions = (params.get("region") ?? "").split(",").filter(Boolean);
   if (regions.length) {
     regionFilter.select(regions);
@@ -991,10 +1054,21 @@ eggFilter.element.addEventListener("change", () => {
   renderCatalog();
 });
 statusFilter.element.addEventListener("change", renderCatalog);
+const updateBiomeOptions = () => {
+  document.querySelector("#biome-anywhere-row").hidden = biomeFilter.isEmpty;
+};
+biomeFilter.element.addEventListener("change", () => {
+  if (!biomeFilter.isEmpty && activeKind === "fusion") activeKind = "pokemon";
+  updateBiomeOptions();
+  renderCatalog();
+});
+biomeAnywhereInput.addEventListener("change", renderCatalog);
 document.querySelector("#clear-filters").addEventListener("click", () => {
   searchInput.value = "";
   activeKind = "all";
-  [regionFilter, typeFilter, eggFilter, formFilter, statusFilter].forEach((filter) => filter.clear());
+  [regionFilter, typeFilter, eggFilter, formFilter, statusFilter, biomeFilter].forEach((filter) => filter.clear());
+  biomeAnywhereInput.checked = false;
+  updateBiomeOptions();
   renderCatalog();
 });
 document.addEventListener("keydown", (event) => {
