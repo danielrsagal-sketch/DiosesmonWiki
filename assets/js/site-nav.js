@@ -8,6 +8,7 @@
 const SITE_SECTIONS = [
   { href: "safari.html", label: "Safari", badge: "NUEVO", ready: true, icon: "items/safari-ball", color: "#43db95", description: "Mapa interactivo con zoom: zonas, spawn, taxis, Poképaradas y entrenadores." },
   { href: "index.html", label: "Inicio" },
+  { href: "guia.html", label: "Guía", ready: true, icon: "items/explorer-kit", color: "#43db95", description: "¿Eres nuevo? Cómo entrar al servidor, tus primeros pasos y cómo progresar." },
   { href: "pokedex.html", label: "Pokédex", ready: true, icon: "items/poke-ball", color: "#ff5a5a", description: "Pokémon, formas regionales y fusiones con stats, hábitat, movimientos y captura." },
   { href: "dexrewards.html", label: "DexRewards", ready: true, icon: "items/coupon-1", color: "#5ee1ff", description: "Premios por completar la Pokédex general y la de cada generación." },
   { href: "gimnasios.html", label: "Gimnasios", ready: true, icon: "badges/1", color: "#ffd442", description: "Líderes, Alto Mando, Campeones y level caps de cada región." },
@@ -21,6 +22,8 @@ const SITE_SECTIONS = [
   { href: "trabajo.html", label: "Trabajos", ready: true, icon: "items/amulet-coin", color: "#ffa64d", description: "Los 7 trabajos del servidor, cómo se progresa en cada uno y cuántos puedes tener según tu rango." },
   { href: "torre-batalla.html", label: "Torre Batalla", icon: "items/muscle-band", color: "#b38cff", description: "Formato, rangos y premios de la Torre Batalla." },
   { href: "pesca.html", label: "Pesca", ready: true, icon: "items/super-rod", color: "#4bb6ff", description: "Poké Cañas, encantamientos, el efecto de cada cebo y los 88 Pokémon que se pescan." },
+  { href: "preguntas-frecuentes.html", label: "Preguntas frecuentes", ready: true, icon: "pokemon/201", color: "#5ee1ff", description: "Problemas y dudas frecuentes del servidor y de la wiki, con buscador." },
+  { href: "novedades.html", label: "Novedades", ready: true, icon: "items/journal", color: "#43db95", description: "Lo último que se ha añadido, mejorado o arreglado en la wiki." },
   { href: "feedback.html", label: "Feedback", nav: false, ready: true, icon: "items/poke-ball", color: "#ffd442", description: "Envía ideas, errores o datos que falten en la wiki." },
 ];
 
@@ -96,4 +99,11 @@ const SITE_SECTIONS = [
     window.addEventListener("resize", layout);
     document.fonts?.ready.then(layout);
   });
+})();
+
+// Sonidos de la wiki (assets/js/sfx.js), cargados aquí para que estén en todas las páginas.
+(function loadSfx() {
+  const script = document.createElement("script");
+  script.src = "assets/js/sfx.js?v=2";
+  document.head.append(script);
 })();

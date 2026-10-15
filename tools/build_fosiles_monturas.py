@@ -13,6 +13,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from diosesmon_config import is_available
+
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / "tools" / "build-cache"
 MAX_NATIONAL_ID = 493  # Generaciones activas en el servidor: 1 a 4.
@@ -235,7 +237,7 @@ def main():
             riding = source_data.get("riding") or (data.get("riding") if form_key is None else None)
             if not riding or not riding.get("behaviours"):
                 continue
-            if form_key is None and national > MAX_NATIONAL_ID:
+            if form_key is None and not is_available(national):
                 continue
             if form_key is not None and (national, form_key) not in AVAILABLE_FORMS:
                 continue

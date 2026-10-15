@@ -352,3 +352,6 @@ body.modal-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+.form-obtain.is-treasure { color: #ffe9a6; }
+.form-obtain.is-treasure a { color: #ffd442; }

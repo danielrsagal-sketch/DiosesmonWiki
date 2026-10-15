@@ -20,6 +20,8 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
+from diosesmon_config import is_available
+
 
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / "tools" / "build-cache"
@@ -422,7 +424,7 @@ def main():
             continue
         tokens = entry["pokemon"].split()
         national_id = national_by_stem.get(tokens[0])
-        if not national_id or national_id > AVAILABLE_THROUGH:
+        if not national_id or not is_available(national_id):
             continue
         condition = dict(entry.get("condition", {}))
         anticondition = dict(entry.get("anticondition", {}))
@@ -707,7 +709,7 @@ def main():
         for form in regional_forms(data):
             key = form["name"].lower()
             nodes[f"{national_id}-{key}"] = {"id": national_id, "form": key, "label": FORM_LABELS.get(key, form["name"]), "sprite": form_sprite(national_id, key)}
-        if national_id > AVAILABLE_THROUGH:
+        if not is_available(national_id):
             continue
         entry = build_entry(data)
         entry["spawns"] = spawns_by_node.get(str(national_id), [])
@@ -745,7 +747,7 @@ def main():
     # sus spawns salvajes no ocurren. Solo se consiguen las formas que salen al evolucionar
     # un Pokémon normal disponible (p. ej. Exeggcute -> Exeggutor de Alola).
     obtainable = {str(national_id): "base" for national_id in details}
-    in_range = lambda node: int(node.split("-")[0]) <= AVAILABLE_THROUGH
+    in_range = lambda node: is_available(int(node.split("-")[0]))
     changed = True
     while changed:
         changed = False

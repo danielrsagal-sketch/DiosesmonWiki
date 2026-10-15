@@ -11,14 +11,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/topbar.css?v=13">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=17">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <link rel="stylesheet" href="assets/css/guides.css?v=6">
-  <script src="assets/js/site-nav.js?v=14" defer></script>
-  <script src="data/monturas-data.js?v=1" defer></script>
+  <link rel="stylesheet" href="assets/css/guides.css?v=7">
+  <script src="assets/js/site-nav.js?v=17" defer></script>
+  <script src="data/monturas-data.js?v=2" defer></script>
   <script src="assets/js/type-colors.js?v=1" defer></script>
-  <script src="assets/js/monturas.js?v=1" defer></script>
+  <script src="assets/js/monturas.js?v=2" defer></script>
 </head>
 <body style="--section-color: #4bb6ff">
   <header class="dex-topbar">
@@ -69,7 +69,7 @@
           <span class="guide-step-num">3</span>
           <img class="guide-step-icon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/rare-candy.png" alt="" width="48" height="48">
           <h3>Mejóralo con Bongurchatas</h3>
-          <p>Cada estadística de montura tiene un <strong>valor base</strong> y un <strong>máximo</strong>. Dale <strong>Bongurchatas</strong> de distintos sabores para subirlas hasta el máximo.</p>
+          <p>Cada estadística de montura tiene un <strong>valor base</strong> y un <strong>máximo</strong>. Dale <strong>Bongurchatas</strong> para subirlas hasta el máximo (<a href="#aprijuice-title">ver cuál sube cada stat</a>).</p>
         </li>
       </ol>
     </section>
@@ -84,6 +84,26 @@
       <h2 class="guide-title" id="mount-styles-title">Estilos y estadísticas</h2>
       <div class="style-grid" id="mount-styles"></div>
       <div class="stat-defs" id="mount-stats"></div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="aprijuice-title">
+      <h2 class="guide-title" id="aprijuice-title">Bongurchatas (Aprijuice)</h2>
+      <p class="guide-intro">Las Bongurchatas son zumos que suben las <strong>estadísticas de montura</strong> de tu Pokémon. Se cocinan en la <strong>Cacerola para hogueras</strong> con <strong>1 Bonguri</strong> del color que quieras + <strong>Flor Éter</strong> + <strong>Raíz Energía</strong>. El color decide qué stat sube (y cuál baja un poco); dáselas a tu Pokémon hasta llevar cada stat a su máximo.</p>
+      <div class="aj-grid" id="aj-grid"></div>
+      <div class="aj-tips">
+        <p><strong>Más sabor, más puntos:</strong> si añades <strong>bayas como condimento</strong> en la cacerola, el zumo gana puntos de sabor y sube más la stat: desde 15 puntos de sabor suma +1 extra y llega hasta +6 extra con 105 o más. Según la calidad del cocinado sale <em>Soso</em>, <em>Sabroso</em> o <em>Delicioso</em>.</p>
+        <p><strong>Ojo con el orden:</strong> cada zumo de color baja un poco otra stat, así que alterna colores. La <strong>Bongurchata blanca</strong> baja todas las stats −2: úsala solo si te pasaste y quieres rehacerlo.</p>
+      </div>
+    </section>
+
+    <section class="guide-block" aria-labelledby="tier-title">
+      <h2 class="guide-title" id="tier-title">Tier list de monturas</h2>
+      <p class="guide-intro">Puntuación según sus estadísticas de montura (velocidad 45%, aceleración 20%, resistencia 20%, destreza 10% y salto 5%). Compara cómo quedan <strong>de base</strong> y con las <strong>Bongurchatas al máximo</strong>: algunas monturas mejoran muchísimo.</p>
+      <div class="guide-filters">
+        <div class="guide-chips" id="tier-env"></div>
+        <div class="guide-chips" id="tier-mode"></div>
+      </div>
+      <div class="tier-list" id="tier-list"></div>
     </section>
 
     <section class="guide-block" aria-labelledby="mount-all-title">

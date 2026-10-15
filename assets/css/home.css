@@ -148,3 +148,48 @@ main { overflow-x: clip; }
   .home-footer-inner { grid-template-columns: 1fr; }
   .home-footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* Botón de Preguntas frecuentes, centrado bajo los dos principales */
+.home-actions.is-help { margin-top: 12px; }
+.home-btn.is-faq { color: #08101f; background: #5ee1ff; }
+.home-btn.is-faq img { width: 44px; height: 44px; margin: -8px -6px -8px -10px; transform: scale(1.35); }
+
+/* Información del servidor: eventos y novedades con cuenta atrás */
+.info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; }
+.info-event { --accent: #ffd442; display: grid; grid-template-rows: auto 1fr; overflow: hidden; background: var(--dex-panel); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--dex-line)); border-radius: 16px; box-shadow: 0 16px 36px #0006; }
+.info-event.is-live { --accent: #43db95; }
+.info-event.is-new { --accent: #ff6fb1; }
+.info-event-img { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: #0d1729; }
+.info-event-bg { position: absolute; inset: -20px; background-position: center; background-size: cover; filter: blur(18px) brightness(.55); }
+.info-event-img img { position: relative; display: block; width: 100%; height: 100%; object-fit: contain; transition: transform .3s ease; }
+.info-event-img:hover img { transform: scale(1.03); }
+.info-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.info-badge { padding: 3px 10px; color: #08101f; background: #ffd442; border-radius: 999px; font: 700 12px "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; box-shadow: 0 4px 14px #0008; }
+.info-badge.is-live { background: #43db95; }
+.info-badge.is-new { color: #fff; background: #ff3d8b; animation: info-pulse 1.6s ease-in-out infinite; }
+@keyframes info-pulse { 50% { transform: scale(1.08); } }
+.info-event-body { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px 14px; }
+.info-tag { padding: 2px 9px; color: #c9d5ea; background: #0d1729; border: 1px solid #2b3d5c; border-radius: 999px; font: 700 11px "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.info-tag.is-evento { color: #ffe3b0; border-color: #6b5420; }
+.info-tag.is-novedad { color: #b8e9ff; border-color: #24577a; }
+.info-event h3 { margin: 0; color: #fff; font-size: 18px; }
+.info-text { margin: 0; color: #c9d5ea; font-size: 14px; line-height: 1.45; }
+.info-text strong { color: #fff; }
+.info-times { display: grid; gap: 6px; }
+.info-time { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; margin: 0; padding: 6px 9px; background: #0d1729; border: 1px solid #1f2e4a; border-radius: 10px; font-size: 13px; }
+.info-time span { min-width: 58px; color: #9fb0cc; font: 700 11px "DM Mono", monospace; letter-spacing: .05em; text-transform: uppercase; }
+.info-time strong { color: #fff; }
+.info-time em { flex-basis: 100%; color: var(--accent); font-style: normal; font-size: 12px; }
+.info-time small { flex-basis: 100%; color: #7f90ad; font-size: 12px; }
+.info-count { margin-top: auto; padding: 8px 10px; background: color-mix(in srgb, var(--accent) 12%, #0d1729); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 12px; }
+.info-count p { display: flex; align-items: center; gap: 7px; margin: 0 0 6px; color: var(--accent); font: 700 12px "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.info-count.is-done p { margin: 0; }
+.info-count p i { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: home-news-ping 1.8s ease-out infinite; }
+.info-count div { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.info-count div span { display: grid; justify-items: center; padding: 4px 0; background: #08101f; border-radius: 8px; }
+.info-count b { color: #fff; font: 700 20px "DM Mono", monospace; line-height: 1.1; }
+.info-count small { color: #9fb0cc; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+.info-event-link { align-self: flex-start; color: var(--accent); font-weight: 700; text-decoration: none; }
+.info-event-link:hover { text-decoration: underline; }
+@keyframes home-news-ping { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
+

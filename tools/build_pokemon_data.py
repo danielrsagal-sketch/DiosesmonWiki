@@ -4,6 +4,8 @@ import json
 import urllib.request
 from pathlib import Path
 
+from diosesmon_config import TREASURE_LEGENDARIES, is_available
+
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "data" / "pokemon-data.js"
@@ -126,7 +128,8 @@ def main():
                 "identifier": pokemon["identifier"],
                 "genus": spanish_species.get(str(species_id), {}).get("genus") or "Pokémon",
                 "generation": int(species_info["generation_id"]),
-                "available": national_id <= AVAILABLE_THROUGH,
+                "available": is_available(national_id),
+                **({"treasure": True} if national_id in TREASURE_LEGENDARIES else {}),
                 "height": int(pokemon["height"]),
                 "weight": int(pokemon["weight"]),
                 "types": types,

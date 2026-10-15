@@ -60,3 +60,40 @@ body { margin: 0; }
   .dex-nav a, .nav-more-btn { padding: 7px 12px; font-size: 12px; }
   .nav-more-menu { position: fixed; top: auto; right: 12px; left: 12px; margin-top: 8px; min-width: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* Sonidos (assets/js/sfx.js): botón, panel de volumen y aviso */
+.sfx { position: relative; flex: 0 0 auto; margin-left: 8px; }
+.sfx-toggle { width: 38px; height: 38px; display: grid; place-items: center; padding: 0; color: #ffd442; background: #101a2e; border: 1px solid #3a4c6e; border-radius: 50%; cursor: pointer; transition: border-color .15s ease, color .15s ease; }
+.sfx-toggle:hover, .sfx-toggle[aria-expanded="true"] { border-color: #ffd442; }
+.sfx-toggle svg { width: 20px; height: 20px; }
+.sfx-toggle.is-muted { color: #7f90ad; }
+.sfx-panel, .sfx-tip { position: absolute; top: calc(100% + 12px); right: -8px; z-index: 60; width: 290px; background: #121d32; border: 2px solid #ffd442; border-radius: 14px; box-shadow: 0 16px 40px #000a; }
+.sfx-panel[hidden], .sfx-tip[hidden] { display: none; }
+.sfx-panel::before, .sfx-tip::before { content: ""; position: absolute; top: -8px; right: 20px; width: 12px; height: 12px; background: #121d32; border-top: 2px solid #ffd442; border-left: 2px solid #ffd442; transform: rotate(45deg); }
+.sfx-panel { padding: 12px 14px 14px; }
+.sfx-talk, .sfx-tip { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: center; }
+.sfx-talk img, .sfx-tip img { width: 52px; height: 52px; scale: 1.7; image-rendering: pixelated; animation: sfx-bob 1.2s ease-in-out infinite; }
+.sfx-talk p, .sfx-tip p { position: relative; margin: 0; padding: 8px 10px; color: #0a0d14; background: #f6f8fc; border-radius: 10px; font-size: 14px; line-height: 1.35; }
+.sfx-talk p::before, .sfx-tip p::before { content: ""; position: absolute; top: 50%; left: -6px; width: 10px; height: 10px; background: #f6f8fc; transform: translateY(-50%) rotate(45deg); }
+.sfx-talk b, .sfx-tip b { color: #c2185b; }
+.sfx-row { display: grid; grid-template-columns: auto minmax(0, 1fr) 30px; gap: 10px; align-items: center; margin-top: 12px; }
+.sfx-mute { min-height: 32px; padding: 0 10px; color: #08101f; background: #ffd442; border: 0; border-radius: 999px; font: 700 12px "Space Grotesk", sans-serif; cursor: pointer; }
+.sfx-mute[aria-pressed="true"] { background: #43db95; }
+.sfx-range { --fill: 50%; width: 100%; height: 8px; margin: 0; background: linear-gradient(90deg, #ffd442 var(--fill), #2b3d5c var(--fill)); border-radius: 999px; outline: 0; appearance: none; cursor: pointer; }
+.sfx-range::-webkit-slider-thumb { width: 20px; height: 20px; background: linear-gradient(180deg, #e90a2d 0 45%, #0a0d14 45% 55%, #f6f8fc 55%); border: 2px solid #0a0d14; border-radius: 50%; appearance: none; box-shadow: 0 0 0 2px #ffd442; }
+.sfx-range::-moz-range-thumb { width: 18px; height: 18px; background: linear-gradient(180deg, #e90a2d 0 45%, #0a0d14 45% 55%, #f6f8fc 55%); border: 2px solid #0a0d14; border-radius: 50%; box-shadow: 0 0 0 2px #ffd442; }
+.sfx-range:focus-visible { box-shadow: 0 0 0 3px #ffd44255; }
+.sfx-value { color: #fff; font: 700 14px "DM Mono", monospace; text-align: right; }
+.sfx-tip { padding: 10px 30px 10px 10px; cursor: pointer; animation: sfx-pop .35s cubic-bezier(.2, 1.4, .4, 1); }
+.sfx-tip button { position: absolute; top: 4px; right: 6px; width: 22px; height: 22px; padding: 0; color: #9fb0cc; background: none; border: 0; font-size: 18px; line-height: 1; cursor: pointer; }
+.sfx-tip button:hover { color: #fff; }
+@keyframes sfx-bob { 50% { transform: translateY(-3px); } }
+@keyframes sfx-pop { from { opacity: 0; transform: translateY(-8px) scale(.9); } }
+@media (max-width: 760px) {
+  .sfx { margin-left: auto; }
+  .sfx + .feedback-cta { margin-left: 6px; }
+  .sfx-toggle { width: 34px; height: 34px; }
+  .sfx-toggle svg { width: 18px; height: 18px; }
+  .sfx-panel, .sfx-tip { position: fixed; top: 58px; right: 12px; left: 12px; width: auto; }
+  .sfx-panel::before, .sfx-tip::before { display: none; }
+}

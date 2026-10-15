@@ -364,7 +364,7 @@ function loadDetails() {
   if (window.POKEDEX_DETAILS) return Promise.resolve();
   detailsPromise ??= new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = "data/pokemon-details.js?v=5";
+    script.src = "data/pokemon-details.js?v=6";
     script.onload = resolve;
     script.onerror = () => {
       detailsPromise = null;
@@ -777,7 +777,7 @@ async function renderPokemonDetail(pokemon, requestId, formKey = "") {
       sprite: form?.sprite ?? pokemon.sprite,
       types: data.types,
       intro: data.description,
-      extra: renderFormTabs(pokemon, baseData, form ? formKey : "") + (pokemon.form ? (pokemon.obtainable
+      extra: (pokemon.treasure ? '<p class="form-obtain is-treasure">✦ Se consigue en los <a href="tesoros.html#legendario">Tesoros</a> (Pokémon Legendario y Legendario Shiny) y se puede intercambiar</p>' : "") + renderFormTabs(pokemon, baseData, form ? formKey : "") + (pokemon.form ? (pokemon.obtainable
         ? `<p class="form-obtain">${escapeHtml(obtainMethods[pokemon.obtainable] ?? "")} en el servidor</p>`
         : `<p class="form-obtain is-unavailable">No disponible aún: se activará cuando llegue ${escapeHtml(pokemon.regionBadge)} al servidor</p>`) : ""),
       measures: [
@@ -799,7 +799,7 @@ async function renderPokemonDetail(pokemon, requestId, formKey = "") {
       ${detailSection("Drops", renderDrops(pokemon, data.drops))}
     </div>
     ${renderFamily(pokemon, nodeKey(pokemon.id, form ? formKey : ""))}
-    ${detailSection("Hábitat", pokemon.form && !pokemon.obtainable ? `<p class="detail-empty">Aún no aparece en el servidor; sus spawns se activarán cuando llegue ${escapeHtml(pokemon.regionBadge)}.</p>` : pokemon.form ? '<p class="detail-empty">No aparece salvaje en el servidor; se consigue evolucionando su forma normal.</p>' : renderSpawns(data.spawns))}
+    ${detailSection("Hábitat", pokemon.form && !pokemon.obtainable ? `<p class="detail-empty">Aún no aparece en el servidor; sus spawns se activarán cuando llegue ${escapeHtml(pokemon.regionBadge)}.</p>` : pokemon.form ? '<p class="detail-empty">No aparece salvaje en el servidor; se consigue evolucionando su forma normal.</p>' : pokemon.treasure ? '<p class="detail-empty">No aparece salvaje en el servidor: se consigue abriendo los Tesoros de Pokémon Legendario (1,89%).</p>' : renderSpawns(data.spawns))}
     ${detailSection("Movimientos", tabs)}
     ${detailSection("Captura", renderCatch(data, data.spawns))}
     <p class="detail-source">Datos de Diosesmon</p>`;
@@ -851,6 +851,7 @@ function openRecord(record) {
   lastFocused = document.activeElement;
   history.pushState({ fromCatalog: true }, "", `#${record.recordKind}/${record.id}${record.form ? `/${record.form}` : ""}`);
   showRecord(record, record.form);
+  if (record.recordKind === "pokemon") window.DiosesSfx?.cry(record.id);
 }
 
 function handleHashChange() {
@@ -877,6 +878,7 @@ function setRecordState(record, action) {
   if (action === "caught") {
     current.caught = !current.caught;
     if (current.caught) current.seen = true;
+    if (current.caught) window.DiosesSfx?.play("catch");
   } else if (action === "seen") {
     current.seen = !current.seen;
     if (!current.seen) current.caught = false;

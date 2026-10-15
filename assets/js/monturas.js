@@ -122,6 +122,67 @@
     </div>`).join("");
   document.getElementById("mount-stats").innerHTML = STATS.map(([, name, text]) => `<div><strong>${name}</strong><span>${text}</span></div>`).join("");
 
+
+  // --- Bongurchatas: efecto de cada color (cobblemon/mechanics/aprijuices.json) ---
+  const AJ = "assets/img/items/cobblemon";
+  const STAT_NAMES = Object.fromEntries(STATS.map(([key, name]) => [key, name]));
+  const APRIJUICES = [
+    { color: "red", name: "Roja", tint: "#ff5a5a", up: { acceleration: 2 }, down: { stamina: -1 } },
+    { color: "pink", name: "Rosa", tint: "#ff9fd6", up: { speed: 2 }, down: { acceleration: -1 } },
+    { color: "yellow", name: "Amarilla", tint: "#ffd442", up: { stamina: 2 }, down: { skill: -1 } },
+    { color: "blue", name: "Azul", tint: "#4bb6ff", up: { skill: 2 }, down: { jump: -1 } },
+    { color: "green", name: "Verde", tint: "#6cf0b2", up: { jump: 2 }, down: { speed: -1 } },
+    { color: "black", name: "Negra", tint: "#8f9fba", up: {}, down: {} },
+    { color: "white", name: "Blanca", tint: "#e8ecf4", up: {}, down: { speed: -2, acceleration: -2, stamina: -2, skill: -2, jump: -2 } },
+  ];
+  const effect = (map, sign) => Object.entries(map).map(([key, value]) => `<span class="aj-${sign}">${sign === "up" ? "+" : ""}${value} ${STAT_NAMES[key]}</span>`).join("");
+  document.getElementById("aj-grid").innerHTML = APRIJUICES.map((juice) => `
+    <article class="aj-card" style="--aj-color:${juice.tint}">
+      <span class="kit-slot"><img src="${AJ}/aprijuice_${juice.color}.png" alt="" width="40" height="40"></span>
+      <div>
+        <strong>Bongurchata ${juice.name}</strong>
+        <small><img src="${AJ}/${juice.color}_apricorn.png" alt="" width="18" height="18"> Bonguri ${juice.name.replace(/a$/, "o")}</small>
+        <p>${effect(juice.up, "up")}${effect(juice.down, "down")}${juice.color === "black" ? '<span class="aj-none">No cambia stats por su color</span>' : ""}</p>
+      </div>
+    </article>`).join("");
+
+  // --- Tier list: puntuación con stats base y con Bongurchatas al máximo ---
+  const WEIGHTS = { speed: 0.45, acceleration: 0.2, stamina: 0.2, skill: 0.1, jump: 0.05 };
+  const score = (mode, side) => Object.entries(WEIGHTS).reduce((sum, [key, weight]) => sum + weight * (mode.stats[key]?.[side] ?? 0), 0);
+  const TIERS = [["S", 0.1, "#ff6f8a"], ["A", 0.3, "#ffa64d"], ["B", 0.55, "#ffd442"], ["C", 0.8, "#6cf0b2"], ["D", 1, "#86cfff"]];
+  const tierState = { env: "aire", side: 1 };
+  const tierEnv = document.getElementById("tier-env");
+  const tierMode = document.getElementById("tier-mode");
+  tierEnv.innerHTML = Object.entries(ENVIRONMENTS).map(([env, info]) => `<button class="guide-chip" type="button" data-tier-env="${env}"><img src="${info.icon}" alt="" width="20" height="20">${info.label}</button>`).join("");
+  tierMode.innerHTML = '<button class="guide-chip" type="button" data-tier-side="0">De base</button><button class="guide-chip" type="button" data-tier-side="1">Bongurchatas al máximo</button>';
+  function renderTiers() {
+    const entries = mounts.flatMap((mount) => mount.modes.filter((mode) => mode.env === tierState.env).map((mode) => ({ mount, mode, base: score(mode, 0), max: score(mode, 1) })))
+      .sort((a, b) => (tierState.side ? b.max - a.max : b.base - a.base));
+    const ranks = Object.fromEntries([...entries].sort((a, b) => b.base - a.base).map((entry, index) => [`${entry.mount.id}-${entry.mode.style}`, index + 1]));
+    let start = 0;
+    document.getElementById("tier-list").innerHTML = TIERS.map(([tier, cut, color]) => {
+      const end = Math.max(start + 1, Math.round(entries.length * cut));
+      const slice = entries.slice(start, end);
+      start = end;
+      if (!slice.length) return "";
+      return `<div class="tier-row" style="--tier-color:${color}"><span class="tier-label">${tier}</span><div class="tier-items">${slice.map((entry, index) => {
+        const position = entries.indexOf(entry) + 1;
+        const before = ranks[`${entry.mount.id}-${entry.mode.style}`];
+        const delta = tierState.side ? before - position : 0;
+        return `<a class="tier-mon${entry.mount.legendary ? " is-legend" : ""}" href="#montura-${entry.mount.id}" title="${escapeHtml(entry.mount.name)} · ${STYLES[entry.mode.style]?.name ?? entry.mode.style}">
+          <img src="${entry.mount.sprite}" alt="" width="56" height="56" loading="lazy">
+          <strong>${escapeHtml(entry.mount.name)}</strong>
+          <small>${Math.round(tierState.side ? entry.max : entry.base)} pts${delta > 0 ? ` <b class="tier-up">▲${delta}</b>` : delta < 0 ? ` <b class="tier-down">▼${-delta}</b>` : ""}</small>
+        </a>`;
+      }).join("")}</div></div>`;
+    }).join("");
+    tierEnv.querySelectorAll("[data-tier-env]").forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.tierEnv === tierState.env)));
+    tierMode.querySelectorAll("[data-tier-side]").forEach((chip) => chip.setAttribute("aria-pressed", String(Number(chip.dataset.tierSide) === tierState.side)));
+  }
+  tierEnv.addEventListener("click", (event) => { const chip = event.target.closest("[data-tier-env]"); if (chip) { tierState.env = chip.dataset.tierEnv; renderTiers(); } });
+  tierMode.addEventListener("click", (event) => { const chip = event.target.closest("[data-tier-side]"); if (chip) { tierState.side = Number(chip.dataset.tierSide); renderTiers(); } });
+  renderTiers();
+
   // Catálogo
   const state = { env: "all", sort: "speed", hideLegendary: false };
   const envFilter = document.getElementById("mount-env-filter");

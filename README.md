@@ -17,6 +17,9 @@ data/                 Datos que usan las páginas
   gimnasios-data.js     Líderes, recompensas, equipos y level caps ← editar a mano
   drop-overrides.js     Drops desactivados en el servidor         ← editar a mano
   safari-data.js        Zonas y puntos del mapa de la Zona Safari ← editar a mano
+  novedades-data.js     Cambios de la página Novedades           ← editar a mano
+  faq-data.js           Preguntas frecuentes                      ← editar a mano
+  informacion-data.js   Eventos y novedades de Inicio (con cuenta atrás) ← editar a mano
   pokemon-data.js       Generado por tools/build_pokemon_data.py
   pokemon-details.js    Generado por tools/build_cobblemon_data.py
   pokemon-catalog-extra.js  Generado por tools/build_cobblemon_data.py
