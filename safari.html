@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="assets/css/topbar.css?v=17">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/pokepad.css?v=1">
-  <link rel="stylesheet" href="assets/css/safari.css?v=15">
+  <link rel="stylesheet" href="assets/css/safari.css?v=16">
   <script src="assets/js/site-nav.js?v=17" defer></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
   <script src="data/safari-data.js?v=9" defer></script>
@@ -140,6 +140,34 @@
         </div>
       </div>
 
+      <div class="sf-moods">
+        <h3 id="sf-moods-title">Comportamientos y Safari Points <span>cada Pokémon reacciona distinto</span></h3>
+        <p class="sf-trainers-intro">Cada Pokémon que capturas da <strong>Safari Points (SP)</strong>: de <strong>3 a 7 de base</strong> (<strong>10</strong> si es shiny), más un extra según cómo se comporta. Cuanto más difícil de atrapar, más puntos.</p>
+        <div class="sf-mood-grid">
+          <article class="sf-mood is-muy-timido">
+            <header><span class="sf-mood-icon" aria-hidden="true">💨</span><div><h4>Muy tímido</h4><p>Sale corriendo muy rápido en cuanto te acercas.</p></div><span class="sf-mood-extra">+5 SP</span></header>
+            <p class="sf-mood-points">Da <b>8–12 SP</b> · shiny <b>15 SP</b></p>
+            <p class="sf-mood-tip">Acércate con una <b>bomba de humo</b> para que tarde en detectarte, o déjalo quieto con una <b>bola pegajosa</b> antes de lanzar la Safari Ball.</p>
+          </article>
+          <article class="sf-mood is-agresivo">
+            <header><span class="sf-mood-icon" aria-hidden="true">💢</span><div><h4>Agresivo</h4><p>Te ataca directamente.</p></div><span class="sf-mood-extra">+3 SP</span></header>
+            <p class="sf-mood-points">Da <b>6–10 SP</b> · shiny <b>13 SP</b></p>
+            <p class="sf-mood-tip">Aturdirlo con una <b>bola de fango</b> o una <b>bola pegajosa</b> te da tiempo para capturarlo.</p>
+          </article>
+          <article class="sf-mood is-timido">
+            <header><span class="sf-mood-icon" aria-hidden="true">🐾</span><div><h4>Tímido</h4><p>Se aleja de ti poco a poco.</p></div><span class="sf-mood-extra">+2 SP</span></header>
+            <p class="sf-mood-points">Da <b>5–9 SP</b> · shiny <b>12 SP</b></p>
+            <p class="sf-mood-tip">Ve detrás de él sin prisa; una <b>bola de fango</b> puede frenarlo.</p>
+          </article>
+          <article class="sf-mood is-neutral">
+            <header><span class="sf-mood-icon" aria-hidden="true">😐</span><div><h4>Neutral</h4><p>No reacciona: puedes acercarte sin problema.</p></div><span class="sf-mood-extra">+0 SP</span></header>
+            <p class="sf-mood-points">Da <b>3–7 SP</b> · shiny <b>10 SP</b></p>
+            <p class="sf-mood-tip">El más fácil de capturar, pero el que menos puntos da.</p>
+          </article>
+        </div>
+        <p class="sf-mood-foot">Ejemplo: un shiny muy tímido da el máximo, <b>15 SP</b> (10 + 5). Los SP se gastan en la <a href="#sf-shop-title">tienda del Safari</a> y en la Llave Safari.</p>
+      </div>
+
       <div class="sf-trainers">
         <h3 id="sf-trainers-title">Entrenadores del Safari <span>recompensas al ganar</span></h3>
         <p class="sf-trainers-intro">Todos los entrenadores del Safari tienen las mismas tres dificultades. Al hablar con uno eliges contra cuál combatir; si ganas, ese reto tiene <strong>6 horas de espera</strong> antes de poder repetirlo. Sus posiciones están en el mapa (filtro «Entrenadores»).</p>
@@ -178,7 +206,7 @@
       </div>
 
       <div class="sf-shop">
-        <h3>Tienda del Safari <span>se paga con Safari Points (SP)</span></h3>
+        <h3 id="sf-shop-title">Tienda del Safari <span>se paga con Safari Points (SP)</span></h3>
         <div class="sf-shop-grid">
           <article><img src="assets/img/safari-tienda/safari-ball.png" alt="" width="64" height="64"><div><strong>Safari Ball</strong><p>Ratio de captura ×1,5 fuera de combate.</p></div><span class="sf-sp">3 SP</span></article>
           <article><img src="assets/img/safari-tienda/jet-ball.png" alt="" width="64" height="64"><div><strong>Jet Ball</strong><p>Ratio de captura ×2 y vuela más lejos.</p></div><span class="sf-sp">6 SP</span></article>

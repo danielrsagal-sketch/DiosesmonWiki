@@ -9,6 +9,16 @@ window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-16",
     tag: "mejora",
+    title: "Safari: comportamientos de los Pokémon y Safari Points",
+    items: [
+      "Cada Pokémon del Safari tiene un comportamiento: <strong>muy tímido</strong> (huye muy rápido), <strong>tímido</strong> (se aleja despacio), <strong>agresivo</strong> (te ataca) o <strong>neutral</strong> (no reacciona).",
+      "Cuántos <strong>Safari Points</strong> da cada uno: 3–7 de base (10 si es shiny) más +5, +3, +2 o +0 según su comportamiento, y qué objeto de la tienda usar con cada uno.",
+    ],
+    links: [["Ver en el Safari", "safari.html#sf-moods-title"]],
+  },
+  {
+    date: "2026-10-16",
+    tag: "mejora",
     title: "Safari: entrenadores y packs de Llave Safari",
     items: [
       "Las recompensas de los <strong>entrenadores del Safari</strong>: Fácil (Nv. 30) 20 SP y 200 $, Medio (Nv. 60) 25 SP y 350 $, Difícil (Nv. 100) 30 SP y 500 $, más 10 Safari Balls, 5 bolas pegajosas, 7 de fango y 1 bomba de humo.",

@@ -223,3 +223,28 @@
 .sf-key-packs b { color: #fff; }
 .sf-key-packs em { color: #8ce35a; font-style: normal; font-weight: 700; }
 .sf-calc-result .sf-calc-percent { color: #fff; font: 700 16px "DM Mono", monospace; }
+
+/* Comportamientos y Safari Points */
+.sf-moods { margin-bottom: 14px; }
+.sf-moods h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin: 0 0 6px; color: #fff; font-size: 19px; scroll-margin-top: 90px; }
+.sf-moods h3 span, .sf-shop h3 span { color: #9fb0cc; font-size: 13px; font-weight: 500; }
+.sf-shop h3 { scroll-margin-top: 90px; }
+.sf-mood-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.sf-mood { --m: #b8c4d8; display: grid; align-content: start; gap: 6px; padding: 12px 14px; background: linear-gradient(160deg, color-mix(in srgb, var(--m) 14%, #0d1f36), #0d1f36 55%); border: 1px solid color-mix(in srgb, var(--m) 50%, #1d4a73); border-radius: 14px; }
+.sf-mood.is-muy-timido { --m: #b38cff; }
+.sf-mood.is-agresivo { --m: #ff5a5a; }
+.sf-mood.is-timido { --m: #4bb6ff; }
+.sf-mood header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: start; }
+.sf-mood-icon { font-size: 26px; line-height: 1; }
+.sf-mood h4 { margin: 0; color: var(--m); font-size: 17px; }
+.sf-mood header p { margin: 2px 0 0; color: #c9d5ea; font-size: 13.5px; line-height: 1.4; }
+.sf-mood-extra { padding: 2px 9px; color: #08101f; background: var(--m); border-radius: 999px; font: 700 12px "DM Mono", monospace; white-space: nowrap; }
+.sf-mood-points { margin: 0; color: #d8e3f6; font-size: 13.5px; }
+.sf-mood-points b { color: #4bb6ff; font-family: "DM Mono", monospace; }
+.sf-mood-tip { margin: 0; padding: 7px 9px; color: #b6c3d9; background: #08101f99; border-radius: 8px; font-size: 13px; line-height: 1.4; }
+.sf-mood-tip b { color: #fff; }
+.sf-mood-foot { margin: 8px 0 0; color: #b6c3d9; font-size: 14px; }
+.sf-mood-foot b { color: #fff; }
+.sf-mood-foot a { color: #8fd8ff; }
+@media (max-width: 1000px) { .sf-mood-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .sf-mood-grid { grid-template-columns: 1fr; } }
