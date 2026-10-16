@@ -83,6 +83,7 @@
   const BASE = 8192;
   const odds = document.getElementById("sf-calc-odds");
   const detail = document.getElementById("sf-calc-detail");
+  const percentBox = document.getElementById("sf-calc-percent");
   const inputs = [...root.querySelectorAll("[data-boost]")];
   // El evento viene marcado mientras está activo.
   const now = Date.now();
@@ -90,7 +91,9 @@
   const draw = () => {
     const bonus = inputs.filter((input) => input.checked).reduce((sum, input) => sum + Number(input.dataset.boost), 0);
     odds.textContent = `1/${Math.round(BASE / (1 + bonus / 100)).toLocaleString("es")}`;
-    detail.textContent = bonus ? `+${bonus} % en total` : "Sin bonus";
+    const percent = ((1 + bonus / 100) / BASE * 100).toLocaleString("es", { minimumFractionDigits: 4, maximumFractionDigits: 4 });
+    percentBox.textContent = `${percent} % por Pokémon`;
+    detail.textContent = bonus ? `+${bonus} % de bonus en total` : "Sin bonus";
   };
   inputs.forEach((input) => input.addEventListener("change", draw));
   draw();

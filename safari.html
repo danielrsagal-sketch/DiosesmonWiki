@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="assets/css/topbar.css?v=17">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/pokepad.css?v=1">
-  <link rel="stylesheet" href="assets/css/safari.css?v=14">
+  <link rel="stylesheet" href="assets/css/safari.css?v=15">
   <script src="assets/js/site-nav.js?v=17" defer></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
   <script src="data/safari-data.js?v=9" defer></script>
@@ -23,7 +23,7 @@
   <script src="data/crianza-data.js?v=1" defer></script>
   <script src="data/safari-pokemon.js?v=2" defer></script>
   <script src="assets/js/type-colors.js?v=1" defer></script>
-  <script src="assets/js/safari-pokemon.js?v=2" defer></script>
+  <script src="assets/js/safari-pokemon.js?v=3" defer></script>
 </head>
 <body>
   <header class="dex-topbar">
@@ -136,7 +136,7 @@
             <label><input type="checkbox" data-boost="30"><span>Ticket premium <b>+30 %</b></span></label>
             <label><input type="checkbox" data-boost="17"><span>Armadura con bonus shiny (kit Ho-Oh) <b>+17 %</b></span></label>
           </div>
-          <div class="sf-calc-result" aria-live="polite"><small>Tu probabilidad</small><strong id="sf-calc-odds">1/8192</strong><span id="sf-calc-detail">Sin bonus</span></div>
+          <div class="sf-calc-result" aria-live="polite"><small>Tu probabilidad</small><strong id="sf-calc-odds">1/8192</strong><b class="sf-calc-percent" id="sf-calc-percent">0,0122 % por Pokémon</b><span id="sf-calc-detail">Sin bonus</span></div>
         </div>
       </div>
 
@@ -184,7 +184,7 @@
           <article><img src="assets/img/safari-tienda/jet-ball.png" alt="" width="64" height="64"><div><strong>Jet Ball</strong><p>Ratio de captura ×2 y vuela más lejos.</p></div><span class="sf-sp">6 SP</span></article>
           <article><img src="assets/img/safari-tienda/bola-fango.png" alt="" width="64" height="64"><div><strong>Bola de fango</strong><p>Lánzala a un Pokémon: puede dejarlo aturdido.</p></div><span class="sf-sp">4 SP</span></article>
           <article><img src="assets/img/safari-tienda/bola-pegajosa.png" alt="" width="64" height="64"><div><strong>Bola pegajosa</strong><p>Lánzala a un Pokémon: siempre lo deja aturdido.</p></div><span class="sf-sp">10 SP</span></article>
-          <article class="is-key"><img src="assets/img/safari-tienda/llave-safari.png" alt="" width="64" height="64"><div><strong>Llave Safari</strong><p>Abre el <a href="tesoros.html#safari">Tesoro Safari</a> (skins de Pokémon). Más baratas en pack:</p><ul class="sf-key-packs"><li><b>×1</b> 1.000 SP</li><li><b>×3</b> 2.700 SP <em>−10%</em></li><li><b>×5</b> 4.200 SP <em>−16%</em></li></ul></div><span class="sf-sp">desde 840 SP</span></article>
+          <article class="is-key"><img src="assets/img/safari-tienda/llave-safari.png" alt="" width="64" height="64"><div><strong>Llave Safari</strong><p>Abre el <a href="tesoros.html#safari">Tesoro Safari</a> (skins de Pokémon). Más baratas en pack:</p><ul class="sf-key-packs"><li><b>×1</b> 1.000 SP</li><li><b>×3</b> 2.700 SP <em>−10%</em></li><li><b>×5</b> 4.200 SP <em>−16%</em></li></ul></div></article>
           <article><img src="assets/img/safari-tienda/bomba-humo.png" alt="" width="64" height="64"><div><strong>Bomba de humo</strong><p>Lánzala al suelo: los Pokémon cercanos tardan más en detectarte.</p></div><span class="sf-sp">15 SP</span></article>
         </div>
       </div>

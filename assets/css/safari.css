@@ -222,3 +222,4 @@
 .sf-key-packs li { padding: 2px 7px; color: #d8e3f6; background: #08101f; border: 1px solid #3a4c6e; border-radius: 7px; font: 500 12px "DM Mono", monospace; }
 .sf-key-packs b { color: #fff; }
 .sf-key-packs em { color: #8ce35a; font-style: normal; font-weight: 700; }
+.sf-calc-result .sf-calc-percent { color: #fff; font: 700 16px "DM Mono", monospace; }
