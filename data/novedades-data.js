@@ -8,6 +8,16 @@
 window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-16",
+    tag: "mejora",
+    title: "Crianza: Pokémon de un solo sexo o sin género",
+    items: [
+      "Nueva lista en Crianza con los Pokémon <strong>solo hembra</strong> (Kangaskhan, Chansey, Miltank…), <strong>solo macho</strong> (Tauros, Hitmonlee, Gallade…) y <strong>sin género</strong> (Magnemite, Beldum, Porygon…).",
+      "Cada grupo explica cómo se cría (con un macho de su grupo huevo, o siempre con Ditto) y marca los que no pueden criar. Pulsa uno para armar su cadena.",
+    ],
+    links: [["Ver en Crianza", "crianza.html#br-genders-title"]],
+  },
+  {
+    date: "2026-10-16",
     tag: "nuevo",
     title: "Cazas actuales en Inicio",
     items: [
