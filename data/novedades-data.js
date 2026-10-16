@@ -7,6 +7,20 @@
 //   links: botones al final [["Texto", "pagina.html"], …] (opcional)
 window.DIOSESMON_NOVEDADES = [
   {
+    date: "2026-10-16",
+    tag: "nuevo",
+    title: "Safari: tickets, tienda y calculadora de shiny",
+    items: [
+      "Nueva sección <strong>Cómo funciona el Safari</strong>: ticket normal (4.000 $, 20 min) y premium (100 DC, 45 min, con +20 % de Safari Points, +30 % shiny y +50 % de captura).",
+      "Las normas: solo Safari Ball y Jet Ball, sin combates, y <strong>si sales pierdes el tiempo del ticket</strong>.",
+      "<strong>Calculadora de shiny</strong>: parte de 1/8192 y suma el evento, el ticket premium y la armadura.",
+      "La <strong>tienda del Safari</strong> con sus precios en Safari Points.",
+      "El rango <strong>Maestro</strong> tiene <strong>1 ticket premium gratis cada 24 horas</strong> (añadido también en Kits → Comparar rangos).",
+      "¡El evento <strong>Más shiny en el Safari</strong> ya está activo! Cartel nuevo en Inicio.",
+    ],
+    links: [["Ver en el Safari", "safari.html#sf-info-title"]],
+  },
+  {
     date: "2026-10-15",
     tag: "nuevo",
     title: "Pokémon de la Zona Safari",

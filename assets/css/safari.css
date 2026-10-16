@@ -139,3 +139,53 @@
   .sp-count { margin-left: 0; }
   .sp-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
 }
+
+/* Cómo funciona el Safari: tickets, normas, calculadora y tienda */
+.sf-tickets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+.sf-ticket { padding: 14px 16px; background: #0d1f36; border: 1px solid #2f7a58; border-radius: 14px; }
+.sf-ticket.is-premium { background: linear-gradient(135deg, #2a2412, #0d1f36 70%); border-color: #ffd44299; }
+.sf-ticket header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.sf-ticket-icon { font-size: 30px; }
+.sf-ticket h3 { margin: 0; color: #fff; font-size: 18px; }
+.sf-price { margin: 2px 0 0; color: #9ff0c8; font: 700 16px "DM Mono", monospace; }
+.sf-ticket.is-premium .sf-price { color: #ffd442; }
+.sf-price small { color: #9fb0cc; font: 500 12px "Space Grotesk", sans-serif; }
+.sf-time { padding: 4px 11px; color: #08101f; background: #43db95; border-radius: 999px; font: 700 13px "DM Mono", monospace; }
+.sf-ticket.is-premium .sf-time { background: #ffd442; }
+.sf-ticket > p { margin: 10px 0 0; color: #b6c3d9; font-size: 14.5px; }
+.sf-bonus { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+.sf-bonus li { padding: 4px 10px; color: #d8e3f6; background: #0d1729; border: 1px solid #3a4c6e; border-radius: 999px; font-size: 13.5px; }
+.sf-bonus b { color: #43db95; }
+.sf-rules { display: grid; gap: 6px; margin: 0 0 14px; padding: 0; list-style: none; }
+.sf-rules li { display: flex; align-items: center; gap: 10px; padding: 9px 12px; color: #d8e3f6; background: #0d1729; border: 1px solid #253753; border-radius: 10px; font-size: 15px; }
+.sf-rules img { width: 30px; height: 30px; }
+.sf-rules strong { color: #fff; }
+.sf-rules li.is-warn { background: #2a1520; border-color: #ff5a6e88; }
+.sf-rule-alert { flex: 0 0 auto; width: 28px; height: 28px; display: grid; place-items: center; color: #fff; background: #e90a2d; border-radius: 50%; font: 700 16px "DM Mono", monospace; }
+.sf-calc { margin-bottom: 14px; padding: 14px 16px; background: linear-gradient(135deg, #2a2412, #0d1f36 60%); border: 1px solid #ffd44266; border-radius: 14px; }
+.sf-calc-head h3, .sf-shop h3 { margin: 0; color: #fff; font-size: 19px; }
+.sf-calc-head p { margin: 4px 0 10px; color: #b6c3d9; font-size: 14.5px; }
+.sf-calc-head strong { color: #ffd442; }
+.sf-calc-body { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 12px; align-items: center; }
+.sf-calc-options { display: grid; gap: 6px; }
+.sf-calc-options label { display: flex; align-items: center; gap: 9px; padding: 8px 10px; color: #d8e3f6; background: #0d1729; border: 1px solid #253753; border-radius: 9px; font-size: 14.5px; cursor: pointer; }
+.sf-calc-options input { width: 18px; height: 18px; margin: 0; accent-color: #ffd442; }
+.sf-calc-options b { color: #ffd442; }
+.sf-calc-result { display: grid; justify-items: center; gap: 2px; padding: 14px; background: #08101f; border: 2px solid #ffd442; border-radius: 12px; text-align: center; }
+.sf-calc-result small { color: #9fb0cc; font: 700 11px "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.sf-calc-result strong { color: #ffd442; font: 700 32px "DM Mono", monospace; }
+.sf-calc-result span { color: #d8e3f6; font-size: 13px; }
+.sf-shop h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+.sf-shop h3 span { color: #9fb0cc; font-size: 13px; font-weight: 500; }
+.sf-shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+.sf-shop-grid article { display: grid; grid-template-columns: 56px minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 4px 10px; align-items: start; padding: 8px 10px; background: #0d1729; border: 1px solid #253753; border-radius: 12px; }
+.sf-shop-grid img { grid-row: 1 / 3; width: 56px; height: 56px; image-rendering: pixelated; border-radius: 10px; }
+.sf-shop-grid strong { color: #fff; font-size: 15px; }
+.sf-shop-grid p { margin: 2px 0 0; color: #b6c3d9; font-size: 13px; line-height: 1.35; }
+.sf-sp { grid-column: 2; justify-self: start; padding: 3px 9px; color: #08101f; background: #4bb6ff; border-radius: 999px; font: 700 12px "DM Mono", monospace; white-space: nowrap; }
+@media (max-width: 760px) {
+  .sf-tickets, .sf-calc-body { grid-template-columns: 1fr; }
+}
+.sf-free { margin: 10px 0 0; padding: 7px 10px; color: #ffe3b0; background: #08101f99; border: 1px dashed #ffd44288; border-radius: 9px; font-size: 13.5px; }
+.sf-free strong { color: #ffd442; }
+.sf-free a { color: #8fd8ff; }

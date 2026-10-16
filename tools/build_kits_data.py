@@ -36,7 +36,7 @@ RANKS = [
      "perks": ["Kit Líder cada 9 días", "/recompensa única del rango", "Acceso sin cola al servidor", "Nuevo cosmético",
                "Prefijo del rango en Tab, Scoreboard y Chat", "Rango VIP en Discord con categoría privada"]},
     {"key": "maestro", "name": "Maestro", "folder": "Kit_06", "color": "#b67bff", "coins": 300, "store": "https://tienda.diosesmon.net/package/7390795",
-     "perks": ["Kit Maestro cada 9 días", "/recompensa única del rango", "No pierdes la experiencia al morir", "Acceso sin cola al servidor",
+     "perks": ["Kit Maestro cada 9 días", "/recompensa única del rango", "1 ticket premium del Safari gratis cada 24 horas", "No pierdes la experiencia al morir", "Acceso sin cola al servidor",
                "Nuevo cosmético", "Prefijo del rango en Tab, Scoreboard y Chat", "Rango VIP en Discord con categoría privada"]},
 ]
 # Límites y comandos por rango (tienda.diosesmon.net). Columnas: sin rango, Entrenador, AS, Líder, Maestro.
@@ -50,6 +50,7 @@ RANK_LIMITS = [
     ["Mochila virtual", ["9 espacios", "27 espacios", "36 espacios", "45 espacios", "54 espacios"]],
     ["Trabajos a la vez", ["1", "1", "1", "2", "3"]],
     ["Tasa de la GTS", ["10%", "10%", "8%", "6%", "4%"]],
+    ["Ticket premium del Safari gratis", ["—", "—", "—", "—", "1 cada 24 h"]],
 ]
 # Primer rango (índice de RANK_COLUMNS) que desbloquea cada comando.
 RANK_COMMANDS = [

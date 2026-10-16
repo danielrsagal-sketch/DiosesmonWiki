@@ -75,3 +75,23 @@
   draw();
   if (fromHash || params.get("huevo")) document.getElementById("sp-title")?.scrollIntoView({ block: "start" });
 })();
+
+// Calculadora de shiny del Safari: 1/8192 base y bonus que se suman (evento, ticket premium, armadura).
+(function shinyCalculator() {
+  const root = document.getElementById("sf-calc");
+  if (!root) return;
+  const BASE = 8192;
+  const odds = document.getElementById("sf-calc-odds");
+  const detail = document.getElementById("sf-calc-detail");
+  const inputs = [...root.querySelectorAll("[data-boost]")];
+  // El evento viene marcado mientras está activo.
+  const now = Date.now();
+  if (now >= Date.parse(root.dataset.eventFrom) && now < Date.parse(root.dataset.eventTo)) inputs[0].checked = true;
+  const draw = () => {
+    const bonus = inputs.filter((input) => input.checked).reduce((sum, input) => sum + Number(input.dataset.boost), 0);
+    odds.textContent = `1/${Math.round(BASE / (1 + bonus / 100)).toLocaleString("es")}`;
+    detail.textContent = bonus ? `+${bonus} % en total` : "Sin bonus";
+  };
+  inputs.forEach((input) => input.addEventListener("change", draw));
+  draw();
+})();

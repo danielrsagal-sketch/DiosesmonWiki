@@ -15,15 +15,15 @@
   <link rel="stylesheet" href="assets/css/topbar.css?v=17">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/pokepad.css?v=1">
-  <link rel="stylesheet" href="assets/css/safari.css?v=9">
+  <link rel="stylesheet" href="assets/css/safari.css?v=12">
   <script src="assets/js/site-nav.js?v=17" defer></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
   <script src="data/safari-data.js?v=8" defer></script>
   <script src="assets/js/safari.js?v=10" defer></script>
   <script src="data/crianza-data.js?v=1" defer></script>
-  <script src="data/safari-pokemon.js?v=1" defer></script>
+  <script src="data/safari-pokemon.js?v=2" defer></script>
   <script src="assets/js/type-colors.js?v=1" defer></script>
-  <script src="assets/js/safari-pokemon.js?v=1" defer></script>
+  <script src="assets/js/safari-pokemon.js?v=2" defer></script>
 </head>
 <body>
   <header class="dex-topbar">
@@ -93,6 +93,61 @@
               </div>
             </section>
           </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="sp-section" aria-labelledby="sf-info-title">
+      <div class="sp-head">
+        <div>
+          <h2 id="sf-info-title">Cómo funciona el Safari</h2>
+          <p>Para entrar necesitas un <strong>ticket</strong>, que se compra en el menú del Safari. Mientras dure, puedes capturar todo lo que encuentres.</p>
+        </div>
+      </div>
+      <div class="sf-tickets">
+        <article class="sf-ticket is-normal">
+          <header><span class="sf-ticket-icon" aria-hidden="true">🎟️</span><div><h3>Ticket normal</h3><p class="sf-price">4.000 <small>Pokédólares</small></p></div><span class="sf-time">20 min</span></header>
+          <p>Entrada básica a la Zona Safari, sin bonus.</p>
+        </article>
+        <article class="sf-ticket is-premium">
+          <header><span class="sf-ticket-icon" aria-hidden="true">🎫</span><div><h3>Ticket premium</h3><p class="sf-price">100 <small>DiosesCoins</small></p></div><span class="sf-time">45 min</span></header>
+          <ul class="sf-bonus">
+            <li><b>+20 %</b> Safari Points</li>
+            <li><b>+30 %</b> probabilidad shiny</li>
+            <li><b>+50 %</b> ratio de captura</li>
+          </ul>
+          <p class="sf-free">👑 El rango <a href="kits.html">Maestro</a> tiene <strong>1 ticket premium gratis cada 24 horas</strong>.</p>
+        </article>
+      </div>
+      <ul class="sf-rules">
+        <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/safari-ball.png" alt=""><span>Solo se puede capturar con <strong>Safari Ball</strong> o <strong>Jet Ball</strong>.</span></li>
+        <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt=""><span><strong>No hay combates</strong> en el Safari: los Pokémon se capturan siempre fuera de batalla.</span></li>
+        <li class="is-warn"><span class="sf-rule-alert" aria-hidden="true">!</span><span><strong>Si sales del Safari por cualquier motivo, pierdes el tiempo que te quede</strong> y tendrás que comprar otro ticket.</span></li>
+      </ul>
+
+      <div class="sf-calc" id="sf-calc" data-event-from="2026-10-16T06:00:00-03:00" data-event-to="2026-10-17T06:00:00-03:00">
+        <div class="sf-calc-head">
+          <h3>Calculadora de shiny</h3>
+          <p>La probabilidad normal del servidor es <strong>1/8192</strong>. Los bonus se suman entre sí.</p>
+        </div>
+        <div class="sf-calc-body">
+          <div class="sf-calc-options">
+            <label><input type="checkbox" data-boost="25"><span>Evento «Más shiny en el Safari» <b>+25 %</b></span></label>
+            <label><input type="checkbox" data-boost="30"><span>Ticket premium <b>+30 %</b></span></label>
+            <label><input type="checkbox" data-boost="17"><span>Armadura con bonus shiny (kit Ho-Oh) <b>+17 %</b></span></label>
+          </div>
+          <div class="sf-calc-result" aria-live="polite"><small>Tu probabilidad</small><strong id="sf-calc-odds">1/8192</strong><span id="sf-calc-detail">Sin bonus</span></div>
+        </div>
+      </div>
+
+      <div class="sf-shop">
+        <h3>Tienda del Safari <span>se paga con Safari Points (SP)</span></h3>
+        <div class="sf-shop-grid">
+          <article><img src="assets/img/safari-tienda/safari-ball.png" alt="" width="64" height="64"><div><strong>Safari Ball</strong><p>Ratio de captura ×1,5 fuera de combate.</p></div><span class="sf-sp">3 SP</span></article>
+          <article><img src="assets/img/safari-tienda/jet-ball.png" alt="" width="64" height="64"><div><strong>Jet Ball</strong><p>Ratio de captura ×2 y vuela más lejos.</p></div><span class="sf-sp">6 SP</span></article>
+          <article><img src="assets/img/safari-tienda/bola-fango.png" alt="" width="64" height="64"><div><strong>Bola de fango</strong><p>Lánzala a un Pokémon: puede dejarlo aturdido.</p></div><span class="sf-sp">4 SP</span></article>
+          <article><img src="assets/img/safari-tienda/bola-pegajosa.png" alt="" width="64" height="64"><div><strong>Bola pegajosa</strong><p>Lánzala a un Pokémon: siempre lo deja aturdido.</p></div><span class="sf-sp">10 SP</span></article>
+          <article><img src="assets/img/safari-tienda/bomba-humo.png" alt="" width="64" height="64"><div><strong>Bomba de humo</strong><p>Lánzala al suelo: los Pokémon cercanos tardan más en detectarte.</p></div><span class="sf-sp">15 SP</span></article>
         </div>
       </div>
     </section>
