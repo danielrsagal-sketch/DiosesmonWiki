@@ -193,3 +193,36 @@ main { overflow-x: clip; }
 .info-event-link:hover { text-decoration: underline; }
 @keyframes home-news-ping { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
 
+
+/* Cazas actuales (assets/js/cazas-actuales.js) */
+.home-section-head a { color: #8fd8ff; }
+.hc-timer { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-bottom: 12px; padding: 10px 14px; background: #2a1520; border: 1px solid #ff5a5a88; border-radius: 12px; }
+.hc-timer span { display: inline-flex; align-items: center; gap: 7px; color: #ff9aaa; font: 700 12px "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.hc-timer span i { width: 8px; height: 8px; background: #ff5a5a; border-radius: 50%; animation: home-news-ping 1.8s ease-out infinite; --accent: #ff5a5a; }
+.hc-timer b { color: #fff; font: 700 22px "DM Mono", monospace; }
+.hc-timer small { color: #b6c3d9; font-size: 13px; }
+.hc-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.hc-col { --kind: #ff5a5a; padding: 12px; background: linear-gradient(160deg, color-mix(in srgb, var(--kind) 14%, #121d32), #121d32 50%); border: 1px solid color-mix(in srgb, var(--kind) 40%, #2b3d5c); border-radius: 14px; }
+.hc-col.is-crianza { --kind: #ff6fb1; }
+.hc-col h3 { margin: 0 0 8px; color: #fff; font-size: 17px; }
+.hc-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.hc-hunt { display: grid; justify-items: center; gap: 2px; padding: 8px 6px 10px; color: inherit; background: #0d1729; border: 1px solid #253753; border-radius: 11px; text-align: center; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+.hc-hunt:hover { border-color: var(--kind); transform: translateY(-2px); }
+.hc-hunt img { width: 72px; height: 72px; scale: 1.3; image-rendering: pixelated; }
+.hc-hunt-body { display: grid; justify-items: center; gap: 2px; }
+.hc-hunt strong { color: #fff; font-size: 14.5px; }
+.hc-hunt .caza-stars { color: #ffd442; font-size: 14px; letter-spacing: 1px; }
+.hc-hunt .caza-stars i { color: #3a4c6e; font-style: normal; }
+.hc-ivs { padding: 1px 8px; color: #08101f; background: var(--kind); border-radius: 999px; font: 700 10.5px "DM Mono", monospace; }
+.hc-money { color: #9ff0c8; font: 700 15px "DM Mono", monospace; }
+.hc-stale { display: grid; gap: 4px; margin: 0; padding: 14px 16px; color: #d8e3f6; background: #121d32; border: 1px dashed #3a4c6e; border-radius: 12px; font-size: 15px; }
+.hc-stale span { color: #9fb0cc; font-size: 14px; }
+.hc-stale b { color: #fff; }
+.hc-empty { grid-column: 1 / -1; margin: 0; color: #9aa9c4; font-size: 14px; }
+@media (max-width: 820px) {
+  .hc-cols { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .hc-hunt img { width: 60px; height: 60px; }
+  .hc-hunt strong { font-size: 13px; }
+}

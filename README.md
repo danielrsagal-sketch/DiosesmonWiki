@@ -46,6 +46,21 @@ docs/                 Notas del proyecto
 
 Las pestañas de la barra y las tarjetas de Inicio salen de la lista `SITE_SECTIONS` en `assets/js/site-nav.js`. Con `ready: true` la tarjeta de Inicio deja de mostrarse como «En construcción».
 
+## Cazas actuales (admin)
+
+`admin.html` (no sale en el menú) sirve para cambiar las Cazas que muestra Inicio. Las guarda el Worker de Cloudflare en un KV, con contraseña:
+
+- `wrangler.jsonc`: configuración del Worker. La web son los archivos estáticos de la raíz (menos lo que excluye `.assetsignore`) y `worker/index.js` solo responde a `/api/*`.
+- `worker/cazas.js`: `GET /api/cazas` (público) y `PUT /api/cazas` (con la contraseña).
+
+Configuración una sola vez en Cloudflare:
+
+1. **Workers & Pages → KV → Create namespace** (por ejemplo `diosesmon-cazas`) y copiar su **ID** en `kv_namespaces` de `wrangler.jsonc`.
+2. Poner en `name` de `wrangler.jsonc` el nombre exacto del Worker que publica la wiki.
+3. Tras el primer despliegue con código: en el Worker, **Settings → Variables and Secrets → Add**, tipo *Secret*, nombre `ADMIN_PASSWORD` y la contraseña de admin.
+
+Si la API no responde (por ejemplo en local con `python -m http.server`), Inicio usa el bloque `current` de `data/cazas-data.js`. El botón «Copiar como respaldo» de admin genera ese bloque.
+
 ## Probar en local
 
 Desde la carpeta del proyecto:

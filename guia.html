@@ -14,10 +14,12 @@
   <link rel="stylesheet" href="assets/css/topbar.css?v=17">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <link rel="stylesheet" href="assets/css/guides.css?v=7">
+  <link rel="stylesheet" href="assets/css/guides.css?v=8">
   <link rel="stylesheet" href="assets/css/info.css?v=3">
   <script src="assets/js/site-nav.js?v=17" defer></script>
   <script src="assets/js/guia.js?v=1" defer></script>
+  <script src="data/cazas-data.js?v=3" defer></script>
+  <script src="assets/js/cazas.js?v=1" defer></script>
 </head>
 <body style="--section-color: #43db95">
   <header class="dex-topbar">
@@ -113,7 +115,7 @@
           <ul>
             <li>Tu nivel tope lo marcan las <strong>medallas</strong>: si tus Pokémon no suben de nivel, toca ir a por el siguiente gimnasio.</li>
             <li>Captura todo lo que veas: suma para las <a href="dexrewards.html">DexRewards</a> y te da breeders para más adelante.</li>
-            <li>Dinero: un <a href="trabajo.html">trabajo</a> activo, vender bayas en <code class="info-code">/bayas</code> y objetos en la <code class="info-code">/gts</code>. <a href="preguntas-frecuentes.html#dinero">Más formas</a></li>
+            <li>Dinero: las <a href="#guide-cazas-title">Cazas</a>, un <a href="trabajo.html">trabajo</a> activo, vender bayas en <code class="info-code">/bayas</code> y objetos en la <code class="info-code">/gts</code>. <a href="preguntas-frecuentes.html#dinero">Más formas</a></li>
           </ul>
         </article>
         <article class="phase-card" style="--phase-color:#4bb6ff">
@@ -135,8 +137,14 @@
       </div>
     </section>
 
+    <section class="guide-block" aria-labelledby="guide-cazas-title">
+      <h2 class="guide-title" id="guide-cazas-title">4. Cazas: dinero cada 12 horas</h2>
+      <p class="guide-intro">Una de las mejores formas de ganar dinero al empezar. En el menú de <strong>Cazas</strong> hay misiones de <strong>captura</strong> y de <strong>crianza</strong>; cada una pide un Pokémon distinto y paga según su dificultad.</p>
+      <div data-cazas="todas"></div>
+    </section>
+
     <section class="guide-block" aria-labelledby="guide-cmd-title">
-      <h2 class="guide-title" id="guide-cmd-title">4. Comandos útiles</h2>
+      <h2 class="guide-title" id="guide-cmd-title">5. Comandos útiles</h2>
       <p class="guide-intro">Algunos comandos dependen de tu rango: con un rango mayor tienes también los de los rangos anteriores. Todos los extras de cada rango en <a href="kits.html">Kits → Comparar rangos</a>.</p>
       <table class="cmd-table">
         <thead><tr><th>Comando</th><th>Para qué sirve</th><th>Quién</th></tr></thead>

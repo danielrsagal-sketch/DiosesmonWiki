@@ -9,6 +9,27 @@ window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-16",
     tag: "nuevo",
+    title: "Cazas actuales en Inicio",
+    items: [
+      "Inicio muestra las <strong>Cazas de ahora mismo</strong>: los Pokémon de captura y de crianza, sus estrellas, los IVs que piden y lo que pagan.",
+      "Cuenta atrás hasta la siguiente rotación (cada 12 horas). Si ya rotaron y aún no están actualizadas, la wiki te avisa.",
+    ],
+    links: [["Ver en Inicio", "index.html#home-cazas-section"]],
+  },
+  {
+    date: "2026-10-16",
+    tag: "nuevo",
+    title: "Cazas: captura y crianza",
+    items: [
+      "Las <strong>Cazas</strong> ya están en la wiki: misiones que rotan cada 12 horas para ganar Pokédólares y Poké Balls.",
+      "Tabla de recompensas por estrellas de las <strong>cazas de captura</strong> (hasta 7.000 $) y de las <strong>cazas de crianza</strong>, que piden 2, 4 o 5 IVs perfectos (hasta 25.500 $).",
+      "Añadidas a la Guía, a Crianza y a «¿Cómo gano dinero?» en Preguntas frecuentes.",
+    ],
+    links: [["Ver en la Guía", "guia.html#guide-cazas-title"], ["Cazas de crianza", "crianza.html#br-cazas-title"]],
+  },
+  {
+    date: "2026-10-16",
+    tag: "nuevo",
     title: "Safari: tickets, tienda y calculadora de shiny",
     items: [
       "Nueva sección <strong>Cómo funciona el Safari</strong>: ticket normal (4.000 $, 20 min) y premium (100 DC, 45 min, con +20 % de Safari Points, +30 % shiny y +50 % de captura).",

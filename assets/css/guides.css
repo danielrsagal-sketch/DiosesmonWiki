@@ -408,3 +408,27 @@
   .tier-label { font-size: 22px; }
   .tier-mon { width: 80px; }
 }
+
+/* Cazas (assets/js/cazas.js) */
+.caza-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+.caza-kind { --kind: #ff5a5a; padding: 14px; background: linear-gradient(160deg, color-mix(in srgb, var(--kind) 16%, #121d32), #121d32 50%); border: 1px solid color-mix(in srgb, var(--kind) 45%, #2b3d5c); border-radius: 14px; }
+.caza-kind.is-crianza { --kind: #ff6fb1; }
+.caza-kind header { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; margin-bottom: 10px; }
+.caza-kind header img { width: 40px; height: 40px; }
+.caza-kind h3 { margin: 0; color: #fff; font-size: 19px; }
+.caza-kind header p { margin: 3px 0 0; color: #b6c3d9; font-size: 14px; line-height: 1.45; }
+.caza-kind header strong { color: #fff; }
+.caza-tiers { display: grid; gap: 8px; }
+.caza-tier { padding: 10px 12px; background: #0d1729; border: 1px solid #253753; border-radius: 11px; }
+.caza-tier-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
+.caza-stars { color: #ffd442; font-size: 16px; letter-spacing: 1px; }
+.caza-stars i { color: #3a4c6e; font-style: normal; }
+.caza-need { padding: 2px 9px; color: #08101f; background: var(--kind); border-radius: 999px; font: 700 11.5px "DM Mono", monospace; }
+.caza-money { margin: 6px 0; color: #9ff0c8; font: 700 20px "DM Mono", monospace; }
+.caza-balls { display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 0; padding: 0; list-style: none; }
+.caza-balls li { display: inline-flex; align-items: center; gap: 2px; color: #d8e3f6; font-size: 13px; }
+.caza-balls img { width: 30px; height: 30px; margin: -4px -2px; }
+.caza-plan { display: inline-block; margin-top: 8px; color: #ffb3d6; font-size: 13.5px; font-weight: 700; text-decoration: none; }
+.caza-plan:hover { text-decoration: underline; }
+.caza-foot { margin: 10px 0 0; color: #b6c3d9; font-size: 14px; }
+.caza-foot strong { color: #fff; }

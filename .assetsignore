@@ -1,0 +1,13 @@
+# Archivos del repositorio que no se publican en la web (ver wrangler.jsonc).
+.git
+.github
+.claude
+.gitignore
+.assetsignore
+.nojekyll
+wrangler.jsonc
+worker
+tools
+extra
+docs
+README.md
