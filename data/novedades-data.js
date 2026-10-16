@@ -9,10 +9,12 @@ window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-16",
     tag: "arreglo",
-    title: "Crianza: los sin género crían con su grupo huevo",
+    title: "Crianza: sin género con su grupo huevo y Volbeat con Illumise",
     items: [
       "En Diosesmon los Pokémon <strong>sin género</strong> (Beldum, Rotom, Magnemite, Porygon…) pueden criar con cualquier Pokémon de su grupo huevo, no solo con Ditto. El planificador ya arma su cadena con breeders normales.",
       "Su rama no paga el cambio de sexo, porque sus crías no tienen sexo, así que la cadena sale más barata.",
+      "Nuevo interruptor <strong>Priorizar Pokémon del Safari</strong> en los breeders: apágalo para ver solo los breeders de spawn normal, ordenados por lo fáciles que son de encontrar.",
+      "<strong>Volbeat</strong> ya se planifica con una Illumise madre y machos de su grupo huevo. Los demás Pokémon solo macho (Tauros, Hitmonlee…) siguen criándose siempre con Ditto.",
     ],
     links: [["Probar con Beldum", "crianza.html#374-5f"]],
   },

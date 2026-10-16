@@ -5,6 +5,7 @@
   const SPRITES = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon";
   const STORAGE_KEY = "wiki-diosesmon-crianza-v1";
   const RANK_KEY = "wiki-diosesmon-crianza-rank";
+  const SAFARI_KEY = "wiki-diosesmon-crianza-safari";
   const ITEM_PRICE = 500;
   const GENDER_PRICE = 500;
   const STATS = [
@@ -78,8 +79,11 @@
   const safariOf = {};
   (window.SAFARI_POKEMON ?? []).forEach((zone) => zone.pokemon.forEach(({ id, rare }) => (safariOf[id] ??= []).push({ zone, rare })));
   // Los breeders del Safari van primero (los raros, detrás de los normales del Safari).
-  const safariBonus = (entry) => (!safariOf[entry.id] ? 0 : safariOf[entry.id].some((place) => !place.rare) ? -1000 : -400);
-  const safariLine = (entry) => (safariOf[entry.id] ? `<small class="br-safari">Safari: ${safariOf[entry.id].map(({ zone, rare }) => `${escapeHtml(zone.name)}${rare ? " (raro)" : ""}`).join(" · ")}</small>` : "");
+  // Se puede desactivar con el interruptor «Priorizar Safari» (se recuerda en el navegador).
+  let useSafari = true;
+  try { useSafari = localStorage.getItem(SAFARI_KEY) !== "off"; } catch { /* sin almacenamiento */ }
+  const safariBonus = (entry) => (!useSafari || !safariOf[entry.id] ? 0 : safariOf[entry.id].some((place) => !place.rare) ? -1000 : -400);
+  const safariLine = (entry) => (useSafari && safariOf[entry.id] ? `<small class="br-safari">Safari: ${safariOf[entry.id].map(({ zone, rare }) => `${escapeHtml(zone.name)}${rare ? " (raro)" : ""}`).join(" · ")}</small>` : "");
 
   // --- Estado y guardado ---
   const state = { target: null, objective: null, custom: null, breeder: null, start: null, browse: "competitive", type: null, query: "", selected: null };
@@ -102,13 +106,14 @@
     const style = target.atk >= target.spa + 15 ? "physical" : target.spa >= target.atk + 15 ? "special" : "mixed";
     const ratio = (parent ?? target).male;
     // En Diosesmon los sin género crían con su grupo huevo (no solo con Ditto): hacen de madre y del huevo sale su especie.
-    const mode = !parent ? "blocked" : NIDORAN.has(target.id) ? "nidoran" : ratio === 1 ? "ditto" : ratio < 0 ? "genderless" : "normal";
+    // Solo macho: siempre con Ditto, salvo Volbeat, que se cría con una Illumise madre (la hembra decide la especie).
+    const mode = !parent ? "blocked" : NIDORAN.has(target.id) ? "nidoran" : ratio === 1 && !VOLBEAT_ILLUMISE.has(target.id) ? "ditto" : ratio < 0 ? "genderless" : "normal";
     const warnings = [];
     if (!parent) warnings.push({ tone: "bad", text: "Esta especie no puede criar (grupo huevo Desconocido): no se puede conseguir por crianza." });
     if (mode === "nidoran") warnings.push({ tone: "bad", text: "La crianza de Nidoran♂ y Nidoran♀ está bugeada en el servidor: te recomendamos no hacerla." });
     if (VOLBEAT_ILLUMISE.has(target.id)) warnings.push({ tone: "warn", text: "Volbeat e Illumise: la cría siempre sale 50/50 y no se puede elegir el sexo. Usa una Illumise como madre." });
     if (ratio < 0 && parent) warnings.push({ tone: "info", text: `${parent.name} no tiene género: en el servidor puede criar con cualquier Pokémon de su grupo huevo (${parent.egg.join(" o ")}) o con Ditto. Cruzado con un macho hace de madre y del huevo sale ${egg.name}; sus crías no tienen sexo, así que no pagas el cambio de sexo en su rama.` });
-    if (ratio === 1 && parent) warnings.push({ tone: "warn", text: `${parent.name} es siempre macho: necesitas un Ditto como pareja en cada cruce de su rama.` });
+    if (ratio === 1 && parent && !VOLBEAT_ILLUMISE.has(target.id)) warnings.push({ tone: "warn", text: `${parent.name} es siempre macho: necesitas un Ditto como pareja en cada cruce de su rama.` });
     if (egg.egg.includes("Desconocido") && parent && egg.id !== parent.id) warnings.push({ tone: "info", text: `${egg.name} es una especie bebé y no puede criar: usa ${breedable.map((entry) => entry.name).join(" o ")} y del huevo saldrá ${egg.name}.` });
     return { line, egg, parent, style, mode, warnings };
   }
@@ -120,7 +125,7 @@
   function breedersFor(info) {
     if (!info.parent) return [];
     return compatibleWith(info)
-      .filter((entry) => entry.id !== DITTO && entry.male > 0 && entry.male < 1 && (entry.spawn || safariOf[entry.id]))
+      .filter((entry) => entry.id !== DITTO && entry.male > 0 && entry.male < 1 && (entry.spawn || (useSafari && safariOf[entry.id])))
       .sort((a, b) => spawnScore(a) + (canBreed(rootOf(a.id)) ? 0 : 80) + safariBonus(a) - spawnScore(b) - (canBreed(rootOf(b.id)) ? 0 : 80) - safariBonus(b))
       .slice(0, 12);
   }
@@ -314,7 +319,7 @@
           <small>${entry.spawn.places.slice(0, 3).map(escapeHtml).join(" · ")}</small>` : ""}
           <em>${entry.egg.join(" · ")}</em></span>
       </button>`).join("") || '<p class="br-note">No hay breeders compatibles con spawn salvaje.</p>';
-    const fromSafari = compatible.filter((entry) => safariOf[entry.id]);
+    const fromSafari = useSafari ? compatible.filter((entry) => safariOf[entry.id]) : [];
     els.breeders.insertAdjacentHTML("beforeend", fromSafari.length
       ? `<p class="br-safari-note"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/safari-ball.png" alt="" width="28" height="28"><span><strong>${fromSafari.length} breeders compatibles salen en la Zona Safari</strong>, con al menos un IV a 31: ${info.parent.egg.map((group) => `<a href="safari.html?huevo=${encodeURIComponent(group)}#sp-title">ver grupo ${escapeHtml(group)}</a>`).join(" · ")}</span></p>`
       : "");
@@ -574,6 +579,17 @@
     state.selected = null;
     render();
   });
+  const safariToggle = document.getElementById("br-safari-toggle");
+  if (safariToggle) {
+    safariToggle.checked = useSafari;
+    safariToggle.addEventListener("change", () => {
+      useSafari = safariToggle.checked;
+      try { localStorage.setItem(SAFARI_KEY, useSafari ? "on" : "off"); } catch { /* nada */ }
+      state.breeder = null;
+      state.selected = null;
+      render();
+    });
+  }
   els.breederSelect.addEventListener("change", () => { state.breeder = Number(els.breederSelect.value); state.selected = null; render(); });
   els.tree.addEventListener("change", (event) => {
     const input = event.target.closest("[data-step]");

@@ -217,3 +217,4 @@
 .br-gender-mon.is-off { opacity: .55; }
 .br-gender-mon.is-off small { color: #ff9aaa; }
 .br-gender-sub { grid-column: 1 / -1; margin: 6px 0 0; color: #9fb0cc; font: 700 11px "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.br-safari-toggle { margin: 0 0 10px; }
