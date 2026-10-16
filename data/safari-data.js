@@ -4,6 +4,7 @@
 // En el mapa, haz clic en cualquier punto para ver y copiar sus coordenadas.
 //
 // categories: tipos de punto. icon = sprite de PokéAPI (items/<nombre>, pokemon/<número>), imagen propia (assets/img/…) o URL completa.
+//   description (opcional): texto que sale en todos los puntos de ese tipo que no tengan el suyo.
 // zones: nombre y posición de la etiqueta de cada zona.
 // waypoints: puntos del mapa. type = una de las categorías; zone = id de la zona (para agrupar la lista). y (altura) y description son opcionales.
 // Los de Xaero's Minimap («waypoint:Nombre:P:X:Y:Z:…») se pasan tomando X, Y y Z en ese orden.
@@ -12,7 +13,7 @@ window.SAFARI_MAP = {
     spawn: { label: "Spawn", color: "#ffd442", icon: "items/safari-ball" },
     taxi: { label: "Taxis", color: "#ffa64d", icon: "pokemon/931" },
     pokeparada: { label: "Poképaradas", color: "#26c6f9", icon: "assets/img/pokestop.png" },
-    entrenador: { label: "Entrenadores", color: "#ff6fb1", icon: "https://play.pokemonshowdown.com/sprites/trainers/acetrainer.png" },
+    entrenador: { label: "Entrenadores", color: "#ff6fb1", icon: "https://play.pokemonshowdown.com/sprites/trainers/acetrainer.png", description: "Retos Fácil (Nv. 30), Medio (Nv. 60) y Difícil (Nv. 100). Al ganar: 20, 25 o 30 SP y 200, 350 o 500 $, más Safari Balls y objetos. 6 h de espera para repetir." },
   },
   zones: [
     { id: "selva", name: "Selva Ancestral", x: -500, z: -860, color: "#46d466" },

@@ -8,6 +8,17 @@
 window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-16",
+    tag: "mejora",
+    title: "Safari: entrenadores y packs de Llave Safari",
+    items: [
+      "Las recompensas de los <strong>entrenadores del Safari</strong>: Fácil (Nv. 30) 20 SP y 200 $, Medio (Nv. 60) 25 SP y 350 $, Difícil (Nv. 100) 30 SP y 500 $, más 10 Safari Balls, 5 bolas pegajosas, 7 de fango y 1 bomba de humo.",
+      "La <strong>Llave Safari</strong> con sus packs: ×1 a 1.000 SP, ×3 a 2.700 SP (−10 %) y ×5 a 4.200 SP (−16 %), en la tienda del Safari y en Tesoros.",
+      "Cada reto tiene 6 horas de espera al ganarlo. Los entrenadores del mapa también muestran sus recompensas al pulsarlos.",
+    ],
+    links: [["Ver en el Safari", "safari.html#sf-trainers-title"]],
+  },
+  {
+    date: "2026-10-16",
     tag: "arreglo",
     title: "Crianza: sin género con su grupo huevo y Volbeat con Illumise",
     items: [

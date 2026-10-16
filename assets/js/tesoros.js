@@ -53,6 +53,7 @@
           <p class="kit-kind">Tesoro</p>
           <h3>${escapeHtml(box.name)}</h3>
           <p class="tr-keys">${priceTag(box)} ${escapeHtml(box.keys)}</p>
+          ${box.packs ? `<ul class="tr-packs">${box.packs.map(([count, cost, off]) => `<li${off ? ' class="is-deal"' : ""}>${off ? `<em>−${off}%</em>` : ""}<b>×${count}</b><span>${money(cost)} ${box.pricePoints ? "SP" : ""}</span>${count > 1 ? `<small>${money(Math.round(cost / count))} c/u</small>` : ""}</li>`).join("")}</ul>` : ""}
           ${box.note ? `<p class="tr-note">${escapeHtml(box.note)}</p>` : ""}
           <div class="tr-sim-actions">
             <button class="tr-open" type="button" data-open="1"><span aria-hidden="true">🎰</span> Simular apertura</button>

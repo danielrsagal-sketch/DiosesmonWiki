@@ -184,6 +184,8 @@ def main():
          "keys": "Llave a 491 DiosesCoins.", "rewards": items_box("gachapon", "Kit_06", GACHAPON)},
         {"key": "safari", "name": "Safari", "color": "#9ce35a", "kind": "models", "price": None, "pricePoints": 1000,
          "keys": "Llave a 1.000 SP (puntos del Safari).",
+         # Packs de llaves: [cantidad, precio en SP, % de descuento]
+         "packs": [[1, 1000, 0], [3, 2700, 10], [5, 4200, 16]],
          "note": "Son skins como objeto: haz clic derecho al Pokémon correspondiente para ponérsela. No incluye el Pokémon.", "rewards": safari},
         {"key": "friki", "name": "Friki", "color": "#5ee1ff", "kind": "models", "price": 1800,
          "keys": "Llave a 1.800 DiosesCoins.", "note": "Skins divertidas para tus Pokémon.", "rewards": friki},

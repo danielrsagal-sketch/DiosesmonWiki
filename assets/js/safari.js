@@ -89,7 +89,7 @@ for (const point of SAFARI.waypoints) {
   marker.bindPopup(`<div class="sf-popup">
       <span class="sf-popup-type" style="--pin-color:${category.color}">${escapeHtml(category.label)}</span>
       <strong>${escapeHtml(point.name)}</strong>
-      ${point.description ? `<p>${escapeHtml(point.description)}</p>` : ""}
+      ${point.description ?? category.description ? `<p>${escapeHtml(point.description ?? category.description)}</p>` : ""}
       <code>X ${point.x}${point.y !== undefined ? ` · Y ${point.y}` : ""} · Z ${point.z}</code>
     </div>`);
   marker.addTo(groups[point.type]);

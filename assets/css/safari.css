@@ -189,3 +189,36 @@
 .sf-free { margin: 10px 0 0; padding: 7px 10px; color: #ffe3b0; background: #08101f99; border: 1px dashed #ffd44288; border-radius: 9px; font-size: 13.5px; }
 .sf-free strong { color: #ffd442; }
 .sf-free a { color: #8fd8ff; }
+
+/* Entrenadores del Safari */
+.sf-trainers { margin-bottom: 14px; }
+.sf-trainers h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin: 0 0 6px; color: #fff; font-size: 19px; scroll-margin-top: 90px; }
+.sf-trainers h3 span { color: #9fb0cc; font-size: 13px; font-weight: 500; }
+.sf-trainers-intro { margin: 0 0 10px; color: #b6c3d9; font-size: 14.5px; line-height: 1.5; }
+.sf-trainers-intro strong { color: #fff; }
+.sf-trainer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.sf-trainer { --d: #8ce35a; padding: 12px 14px; background: linear-gradient(160deg, color-mix(in srgb, var(--d) 14%, #0d1f36), #0d1f36 55%); border: 1px solid color-mix(in srgb, var(--d) 50%, #1d4a73); border-radius: 14px; }
+.sf-trainer.is-medio { --d: #ffd442; }
+.sf-trainer.is-dificil { --d: #ff5a5a; }
+.sf-trainer header { display: flex; align-items: center; gap: 10px; }
+.sf-trainer header img { width: 32px; height: 32px; image-rendering: pixelated; }
+.sf-trainer h4 { margin: 0; color: var(--d); font-size: 18px; }
+.sf-trainer header p { margin: 0; color: #c9d5ea; font-size: 13.5px; }
+.sf-trainer header b { color: #fff; }
+.sf-trainer-pay { display: flex; gap: 6px; margin: 10px 0 8px; }
+.sf-money { padding: 3px 9px; color: #08101f; background: #43db95; border-radius: 999px; font: 700 12px "DM Mono", monospace; }
+.sf-trainer-loot { display: grid; gap: 3px; margin: 0; padding: 0; list-style: none; }
+.sf-trainer-loot li { display: flex; align-items: center; gap: 6px; color: #d8e3f6; font-size: 13.5px; }
+.sf-trainer-loot img { width: 24px; height: 24px; border-radius: 5px; image-rendering: pixelated; }
+.sf-rules a { color: #8fd8ff; }
+@media (max-width: 760px) {
+  .sf-trainer-grid { grid-template-columns: 1fr; }
+}
+
+/* Llave Safari en la tienda */
+.sf-shop-grid article.is-key { border-color: #8ce35a88; }
+.sf-shop-grid p a { color: #8fd8ff; }
+.sf-key-packs { display: flex; flex-wrap: wrap; gap: 4px; margin: 5px 0 0; padding: 0; list-style: none; }
+.sf-key-packs li { padding: 2px 7px; color: #d8e3f6; background: #08101f; border: 1px solid #3a4c6e; border-radius: 7px; font: 500 12px "DM Mono", monospace; }
+.sf-key-packs b { color: #fff; }
+.sf-key-packs em { color: #8ce35a; font-style: normal; font-weight: 700; }
