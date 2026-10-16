@@ -8,6 +8,16 @@
 window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-16",
+    tag: "arreglo",
+    title: "Crianza: los sin género crían con su grupo huevo",
+    items: [
+      "En Diosesmon los Pokémon <strong>sin género</strong> (Beldum, Rotom, Magnemite, Porygon…) pueden criar con cualquier Pokémon de su grupo huevo, no solo con Ditto. El planificador ya arma su cadena con breeders normales.",
+      "Su rama no paga el cambio de sexo, porque sus crías no tienen sexo, así que la cadena sale más barata.",
+    ],
+    links: [["Probar con Beldum", "crianza.html#374-5f"]],
+  },
+  {
+    date: "2026-10-16",
     tag: "mejora",
     title: "Crianza: Pokémon de un solo sexo o sin género",
     items: [

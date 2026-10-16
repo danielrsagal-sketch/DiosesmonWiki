@@ -17,7 +17,7 @@
     },
     {
       key: "none", title: "Sin género", symbol: "⚲", test: (entry) => entry.male < 0,
-      text: "Solo crían con <strong>Ditto</strong>, y Ditto no cría con otro Ditto. Muchos legendarios están en el grupo Desconocido y <strong>no pueden criar</strong>.",
+      text: "En Diosesmon crían con <strong>cualquier Pokémon de su grupo huevo</strong> (por ejemplo Beldum con el grupo Mineral o Rotom con Amorfo) o con Ditto. Con un macho hacen de madre y del huevo sale su especie. Muchos legendarios están en el grupo Desconocido y <strong>no pueden criar</strong>.",
     },
   ];
 

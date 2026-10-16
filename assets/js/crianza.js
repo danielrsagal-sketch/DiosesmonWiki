@@ -101,12 +101,13 @@
     const parent = [...breedable].sort((a, b) => spawnScore(a) - spawnScore(b))[0] ?? null;
     const style = target.atk >= target.spa + 15 ? "physical" : target.spa >= target.atk + 15 ? "special" : "mixed";
     const ratio = (parent ?? target).male;
-    const mode = !parent ? "blocked" : NIDORAN.has(target.id) ? "nidoran" : ratio < 0 || ratio === 1 ? "ditto" : "normal";
+    // En Diosesmon los sin género crían con su grupo huevo (no solo con Ditto): hacen de madre y del huevo sale su especie.
+    const mode = !parent ? "blocked" : NIDORAN.has(target.id) ? "nidoran" : ratio === 1 ? "ditto" : ratio < 0 ? "genderless" : "normal";
     const warnings = [];
     if (!parent) warnings.push({ tone: "bad", text: "Esta especie no puede criar (grupo huevo Desconocido): no se puede conseguir por crianza." });
     if (mode === "nidoran") warnings.push({ tone: "bad", text: "La crianza de Nidoran♂ y Nidoran♀ está bugeada en el servidor: te recomendamos no hacerla." });
     if (VOLBEAT_ILLUMISE.has(target.id)) warnings.push({ tone: "warn", text: "Volbeat e Illumise: la cría siempre sale 50/50 y no se puede elegir el sexo. Usa una Illumise como madre." });
-    if (ratio < 0 && parent) warnings.push({ tone: "warn", text: `${parent.name} no tiene género: solo puede criar con Ditto. La cadena se hace cruzándolo con Dittos de buenos IVs (los Dittos no crían entre sí).` });
+    if (ratio < 0 && parent) warnings.push({ tone: "info", text: `${parent.name} no tiene género: en el servidor puede criar con cualquier Pokémon de su grupo huevo (${parent.egg.join(" o ")}) o con Ditto. Cruzado con un macho hace de madre y del huevo sale ${egg.name}; sus crías no tienen sexo, así que no pagas el cambio de sexo en su rama.` });
     if (ratio === 1 && parent) warnings.push({ tone: "warn", text: `${parent.name} es siempre macho: necesitas un Ditto como pareja en cada cruce de su rama.` });
     if (egg.egg.includes("Desconocido") && parent && egg.id !== parent.id) warnings.push({ tone: "info", text: `${egg.name} es una especie bebé y no puede criar: usa ${breedable.map((entry) => entry.name).join(" o ")} y del huevo saldrá ${egg.name}.` });
     return { line, egg, parent, style, mode, warnings };
@@ -164,7 +165,7 @@
       node.custom = Boolean(plan.species[node.id]);
       return;
     }
-    const pathSex = info.mode === "ditto" ? (info.parent.male < 0 ? null : "male") : "female";
+    const pathSex = info.mode === "ditto" ? (info.parent.male < 0 ? null : "male") : info.mode === "genderless" ? null : "female";
     assignRoles(node.left, info, breeder, info.mode === "ditto" ? null : "male", plan, false);
     assignRoles(node.right, info, breeder, node.onPath ? pathSex : "female", plan, false);
     if (info.mode === "ditto" && node.onPath) node.sex = pathSex;
@@ -183,8 +184,9 @@
     if (a.id === DITTO && b.id === DITTO) issues.push("Dos Ditto no pueden criar entre sí.");
     if (a.id !== DITTO && b.id !== DITTO) {
       if (!a.egg.some((group) => b.egg.includes(group))) issues.push(`${a.name} y ${b.name} no comparten grupo huevo.`);
-      if (b.male === 1 || b.male < 0) issues.push(`${b.name} no puede ir como hembra.`);
-      if (a.male === 0 || a.male < 0) issues.push(`${a.name} no puede ir como macho.`);
+      // Los sin género pueden ir en cualquier lado (regla de Diosesmon).
+      if (b.male === 1) issues.push(`${b.name} no puede ir como hembra.`);
+      if (a.male === 0) issues.push(`${a.name} no puede ir como macho.`);
     }
     if (!canBreed(a) || !canBreed(b)) issues.push("Uno de los padres no puede criar.");
     return issues;
@@ -264,7 +266,7 @@
     const target = state.target;
     const styleText = { physical: "Atacante físico", special: "Atacante especial", mixed: "Mixto (ataca de las dos formas)" }[info.style];
     const recommendation = { physical: "5 IVs físico", special: "5 IVs especial", mixed: "6 IVs" }[info.style];
-    const femaleTarget = info.mode === "ditto" ? `${info.egg.name}${info.parent.male < 0 ? "" : " ♂"}` : `${info.egg.name} ♀`;
+    const femaleTarget = info.mode === "ditto" ? `${info.egg.name}${info.parent.male < 0 ? "" : " ♂"}` : info.mode === "genderless" ? info.egg.name : `${info.egg.name} ♀`;
     els.target.innerHTML = `
       <div class="br-target-card">
         <img class="br-target-sprite" src="${SPRITES}/${target.id}.png" alt="" width="120" height="120">
@@ -372,7 +374,7 @@
   // Elegir con qué IV a 31 empieza tu Pokémon objetivo (el de la rama dorada).
   function renderStart(info, stats, startStat) {
     const starter = VOLBEAT_ILLUMISE.has(state.target.id) ? byId[314] : info.parent;
-    const sex = info.mode === "ditto" ? (starter.male < 0 ? "" : " ♂") : " ♀";
+    const sex = info.mode === "ditto" ? (starter.male < 0 ? "" : " ♂") : info.mode === "genderless" ? "" : " ♀";
     els.start.innerHTML = `
       <img src="${SPRITES}/${starter.id}.png" alt="" width="56" height="56">
       <div>
@@ -409,7 +411,7 @@
     const root = info.mode === "ditto" ? buildDittoChain(stats) : buildTree(stats, true);
     state.root = root;
     state.planKey = planKey;
-    assignRoles(root, info, breeder, info.mode === "ditto" ? (info.parent.male < 0 ? null : "male") : "female", plan);
+    assignRoles(root, info, breeder, info.mode === "ditto" ? (info.parent.male < 0 ? null : "male") : info.mode === "genderless" ? null : "female", plan);
     const breeds = collectBreeds(root);
     els.tree.innerHTML = nodeHtml(root, plan);
     renderEditor(info, plan);
@@ -426,7 +428,8 @@
     const items = {};
     breeds.flatMap((node) => [node.left, node.right]).forEach((parent) => { if (parent.item) items[parent.item] = (items[parent.item] ?? 0) + 1; });
     const itemCount = Object.values(items).reduce((sum, value) => sum + value, 0);
-    const genderCost = VOLBEAT_ILLUMISE.has(state.target.id) || info.mode === "ditto" ? 0 : breeds.length * GENDER_PRICE;
+    // Elegir sexo solo hace falta si la cría tiene sexo: en la rama de un sin género no se paga.
+    const genderCost = VOLBEAT_ILLUMISE.has(state.target.id) || info.mode === "ditto" ? 0 : breeds.filter((node) => !(info.mode === "genderless" && node.onPath)).length * GENDER_PRICE;
     const total = itemCount * ITEM_PRICE + genderCost;
     const shopCost = stats.length * ivShopCost(0, 31);
     const doneCount = breeds.filter((node) => plan.done.includes(node.step)).length;
