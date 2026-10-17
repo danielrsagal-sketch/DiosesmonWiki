@@ -7,6 +7,39 @@
 //   links: botones al final [["Texto", "pagina.html"], …] (opcional)
 window.DIOSESMON_NOVEDADES = [
   {
+    date: "2026-10-17",
+    tag: "nuevo",
+    title: "Nueva sección: Bayas y Abonos",
+    items: [
+      "Las <strong>70 bayas de Cobblemon 1.7.3</strong> con los datos reales del mod: efecto, cosecha, tiempo de crecimiento (el juego lo alarga un 40 %), abonos favoritos, biomas, sabores y dónde salen silvestres.",
+      "<strong>Buscador de mutaciones</strong>: dinos qué baya quieres y te decimos qué dos plantar juntas; o al revés, qué puede salir de dos bayas.",
+      "Los <strong>abonos</strong> reales con su efecto exacto, una <strong>tabla</strong> ordenable para organizar tu granja (exportable a Excel) y una guía de cómo cultivar.",
+    ],
+    links: [["Ver Bayas", "bayas.html"]],
+  },
+  {
+    date: "2026-10-17",
+    tag: "nuevo",
+    title: "Nueva sección: Competitivo",
+    items: [
+      "<strong>Constructor de equipos</strong>: guarda varios equipos de 6 con especie, habilidad, objeto, naturaleza, EVs, IVs y los movimientos que de verdad se aprenden en el servidor, con las estadísticas finales calculadas.",
+      "<strong>Análisis</strong> del equipo: debilidades frente a los 18 tipos, cobertura de tus ataques, ranking de velocidad y reparto físico/especial.",
+      "<strong>Importa y exporta</strong> en formato Pokémon Showdown, comparte tus equipos con un código, repasa el <strong>checklist</strong> y consulta la guía competitiva.",
+    ],
+    links: [["Ver Competitivo", "competitivo.html"]],
+  },
+  {
+    date: "2026-10-17",
+    tag: "mejora",
+    title: "Crianza renovada: inventario de 1x31 con sexo",
+    items: [
+      "Nuevo <strong>inventario de 1x31</strong>: apunta cuántos tienes de cada stat y de qué sexo (♂, ♀ o Ditto). El planificador te sugiere el mayor objetivo que te alcanza y marca en el árbol los que ya tienes.",
+      "El árbol <strong>gira las parejas de breeders</strong> para aprovechar los machos y hembras que tengas, y te dice qué sexo te falta y cuál te sobra.",
+      "<strong>Precios</strong> editables, <strong>código y enlace</strong> para compartir el plan, <strong>imagen PNG</strong> del árbol y una <strong>Pokédex de grupos huevo</strong> con compañeros ordenados de más fácil a más difícil de encontrar.",
+    ],
+    links: [["Ver Crianza", "crianza.html#inventario"]],
+  },
+  {
     date: "2026-10-16",
     tag: "mejora",
     title: "Eventos: Shiny Safari Day ampliado, shiny en exploración y Quiz Pokémon",
@@ -60,7 +93,7 @@ window.DIOSESMON_NOVEDADES = [
       "Nueva lista en Crianza con los Pokémon <strong>solo hembra</strong> (Kangaskhan, Chansey, Miltank…), <strong>solo macho</strong> (Tauros, Hitmonlee, Gallade…) y <strong>sin género</strong> (Magnemite, Beldum, Porygon…).",
       "Cada grupo explica cómo se cría (con un macho de su grupo huevo, o siempre con Ditto) y marca los que no pueden criar. Pulsa uno para armar su cadena.",
     ],
-    links: [["Ver en Crianza", "crianza.html#br-genders-title"]],
+    links: [["Ver en Crianza", "crianza.html#sexos"]],
   },
   {
     date: "2026-10-16",

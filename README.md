@@ -6,6 +6,9 @@ Es un sitio estático (HTML, CSS y JavaScript), sin servidor ni base de datos. E
 
 ## Estructura
 
+Bayas, Competitivo y Crianza usan los componentes de `assets/css/v-components.css` (clases `v-*`).
+
+
 ```
 /                     Páginas del sitio (index.html, pokedex.html, gimnasios.html…)
 assets/
@@ -29,6 +32,9 @@ data/                 Datos que usan las páginas
   fosiles-data.js, monturas-data.js  Generados por tools/build_fosiles_monturas.py
   entrenamiento-data.js Generado por tools/build_ev_data.py
   crianza-data.js       Generado por tools/build_crianza_data.py
+  bayas-data.js         Generado por tools/build_bayas_data.py (bayas, abonos, mutaciones y sprites de Cobblemon 1.7.3)
+  competitivo-data.js   Generado por tools/build_competitivo_data.py (especies, movimientos, habilidades, objetos y naturalezas)
+  competitivo-guia.js   Guía competitiva y checklist     ← editar a mano
   kits-data.js          Generado por tools/build_kits_data.py (desde extra/, no publicado)
 tools/                Scripts que generan los datos (no forman parte de la web)
   source/               Excel de fusiones, logos originales y mapa original de la Zona Safari
@@ -83,6 +89,8 @@ python tools/build_safari_tiles.py     # teselas con zoom del mapa desde tools/s
 python tools/build_fosiles_monturas.py # fósiles, yacimientos y monturas (Cobblemon 1.7.3)
 python tools/build_ev_data.py          # EVs y spawns para Entrenamiento EV
 python tools/build_crianza_data.py     # grupos huevo y géneros para Crianza (después de build_ev_data)
+python -I tools/build_bayas_data.py    # bayas y abonos (descarga los sprites que falten)
+python -I tools/build_competitivo_data.py  # datos del constructor de equipos
 python tools/build_kits_data.py        # kits desde las capturas de extra/PaginaDioses/DiosesmonKits
 python tools/build_safari_pokemon.py   # Pokémon de cada zona del Safari desde tools/source/safari-pokemon.txt
 python tools/build_drop_overrides.py   # drops desactivados en Diosesmon desde tools/source/drops-diosesmon.xlsx (--crear para rehacer el Excel)

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="Constructor de equipos competitivos para Diosesmon: estadísticas reales, EVs, IVs, naturalezas, movimientos, análisis de tipos, checklist y guía.">
+  <title>Competitivo | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=17">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/v-components.css?v=2">
+  <link rel="stylesheet" href="assets/css/competitivo.css?v=1">
+  <script src="assets/js/site-nav.js?v=21" defer></script>
+  <script src="data/competitivo-data.js?v=2" defer></script>
+  <script src="data/competitivo-guia.js?v=2" defer></script>
+  <script src="assets/js/competitivo-core.js?v=2" defer></script>
+  <script src="assets/js/competitivo.js?v=2" defer></script>
+</head>
+<body>
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <a class="feedback-cta" href="feedback.html" title="Envíanos ideas, errores o datos que falten"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" width="44" height="44"><span><i aria-hidden="true"></i><b>¿Ideas o errores?</b> <em>Cuéntanos</em></span></a>
+    </div>
+  </header>
+
+  <main class="v-shell v-main">
+    <section class="v-page-head" aria-labelledby="c-title">
+      <div>
+        <p class="v-kicker">Diosesmon · Modo competitivo</p>
+        <h1 id="c-title">Competitivo</h1>
+        <p class="v-lead">Monta tus equipos con estadísticas reales de Cobblemon 1.7.3: EVs, IVs, naturaleza, habilidad, objeto y movimientos que sí se aprenden en el servidor. Analiza tipos y velocidad, repasa el checklist y compártelo con otros jugadores.</p>
+      </div>
+      <img class="v-page-art c-art" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png" alt="" width="120" height="120">
+    </section>
+
+    <nav class="v-tabs" role="tablist" aria-label="Secciones de Competitivo">
+      <button class="v-tab" type="button" role="tab" id="tab-equipos" aria-controls="panel-equipos" aria-selected="true">⚔️ Equipos</button>
+      <button class="v-tab" type="button" role="tab" id="tab-analisis" aria-controls="panel-analisis" aria-selected="false" tabindex="-1">📊 Análisis</button>
+      <button class="v-tab" type="button" role="tab" id="tab-checklist" aria-controls="panel-checklist" aria-selected="false" tabindex="-1">📋 Checklist</button>
+      <button class="v-tab" type="button" role="tab" id="tab-guia" aria-controls="panel-guia" aria-selected="false" tabindex="-1">📚 Guía</button>
+    </nav>
+
+    <div class="c-shared" id="c-shared" hidden></div>
+
+    <!-- Equipos -->
+    <section class="c-panel" id="panel-equipos" role="tabpanel" aria-labelledby="tab-equipos">
+      <div class="c-teambar v-card">
+        <label class="v-field c-team-select">
+          <span>Equipo</span>
+          <select id="c-team" class="v-select"></select>
+        </label>
+        <div class="c-team-actions">
+          <button class="v-btn is-sm" type="button" id="c-new">＋ Nuevo</button>
+          <button class="v-btn is-ghost is-sm" type="button" id="c-rename">✎ Renombrar</button>
+          <button class="v-btn is-ghost is-sm" type="button" id="c-dup">⧉ Duplicar</button>
+          <button class="v-btn is-ghost is-sm" type="button" id="c-del">🗑 Borrar</button>
+          <a class="v-btn is-ghost is-sm" href="#c-io">⇄ Importar / exportar</a>
+        </div>
+      </div>
+
+      <div class="c-slots" id="c-slots" aria-label="Pokémon del equipo"></div>
+
+      <section class="c-editor v-card" id="c-editor" aria-label="Editar Pokémon"></section>
+
+      <section class="v-section" id="c-io" aria-labelledby="c-io-title">
+        <h2 class="v-title" id="c-io-title">Importar y exportar</h2>
+        <p class="v-intro">Exporta en formato de Pokémon Showdown (nombres en inglés, listo para su teambuilder y sus calculadoras) o comparte un código con otro jugador.</p>
+        <div class="c-io-grid">
+          <article class="v-card">
+            <h3>Showdown</h3>
+            <label class="v-field"><span>Texto del equipo actual</span><textarea id="c-export" class="c-code" rows="10" readonly spellcheck="false"></textarea></label>
+            <div class="c-row"><button class="v-btn is-sm" type="button" id="c-copy-export">Copiar texto</button></div>
+          </article>
+          <article class="v-card">
+            <h3>Compartir con otro jugador</h3>
+            <label class="v-field"><span>Código para compartir</span><textarea id="c-share" class="c-code" rows="4" readonly spellcheck="false"></textarea></label>
+            <div class="c-row">
+              <button class="v-btn is-sm" type="button" id="c-copy-share">Copiar código</button>
+              <button class="v-btn is-ghost is-sm" type="button" id="c-copy-link">Copiar enlace</button>
+            </div>
+            <p class="c-small">El enlace abre esta página con el equipo listo para importar. Nadie más ve tus equipos: se guardan solo en tu navegador.</p>
+          </article>
+          <article class="v-card">
+            <h3>Importar</h3>
+            <label class="v-field"><span>Pega texto de Showdown, un código o un enlace</span><textarea id="c-import" class="c-code" rows="8" spellcheck="false" placeholder="Garchomp @ Choice Scarf&#10;Ability: Rough Skin&#10;EVs: 252 Atk / 4 SpD / 252 Spe&#10;Jolly Nature&#10;- Earthquake&#10;…"></textarea></label>
+            <div class="c-row">
+              <button class="v-btn is-sm" type="button" id="c-import-new">Importar como equipo nuevo</button>
+              <button class="v-btn is-ghost is-sm" type="button" id="c-import-replace">Sustituir el actual</button>
+            </div>
+            <div id="c-import-report" aria-live="polite"></div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <!-- Análisis -->
+    <section class="c-panel" id="panel-analisis" role="tabpanel" aria-labelledby="tab-analisis" hidden>
+      <div id="c-analysis"></div>
+    </section>
+
+    <!-- Checklist -->
+    <section class="c-panel" id="panel-checklist" role="tabpanel" aria-labelledby="tab-checklist" hidden>
+      <div id="c-checklist"></div>
+    </section>
+
+    <!-- Guía -->
+    <section class="c-panel" id="panel-guia" role="tabpanel" aria-labelledby="tab-guia" hidden>
+      <h2 class="v-title">Guía competitiva</h2>
+      <p class="v-intro">Roles, estrategia, objetos de Cobblemon 1.7.3 y lo que hay que saber de Diosesmon, en una sola mini wiki. Las reglas de cada torneo las marca la <a href="https://wiki.diosesmon.net/" target="_blank" rel="noopener">Wiki de Diosesmon</a>.</p>
+      <div class="c-guide-tools">
+        <label class="v-field v-search c-guide-search"><span class="sr-only">Buscar en la guía</span><input id="c-guide-q" type="search" placeholder="Buscar rol, objeto, concepto o regla…" autocomplete="off"></label>
+        <div class="v-chips" id="c-guide-cats" role="group" aria-label="Filtrar por categoría"></div>
+        <div class="v-chips c-subchips" id="c-guide-itemcats" role="group" aria-label="Filtrar objetos" hidden></div>
+      </div>
+      <p class="c-count" id="c-guide-count" aria-live="polite"></p>
+      <div class="c-guide-grid" id="c-guide-list"></div>
+    </section>
+    <footer class="site-footer"><span>DIOSESMONWIKI · COMPETITIVO</span><span>Datos de Cobblemon 1.7.3</span></footer>
+  </main>
+
+  <dialog class="c-dialog" id="c-dialog">
+    <form method="dialog" class="c-dialog-body">
+      <h3 id="c-dialog-title"></h3>
+      <p id="c-dialog-text"></p>
+      <label class="v-field" id="c-dialog-field" hidden><span>Nombre</span><input id="c-dialog-input" maxlength="40" autocomplete="off"></label>
+      <div class="c-row c-dialog-actions">
+        <button class="v-btn is-ghost is-sm" value="cancel" type="submit">Cancelar</button>
+        <button class="v-btn is-sm" value="ok" id="c-dialog-ok" type="submit">Aceptar</button>
+      </div>
+    </form>
+  </dialog>
+  <div class="c-toast" id="c-toast" role="status" aria-live="polite"></div>
+</body>
+</html>

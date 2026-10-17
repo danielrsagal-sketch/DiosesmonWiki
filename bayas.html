@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="Las 70 bayas de Cobblemon 1.7.3 con datos reales del mod: efectos, cosecha, tiempos, abonos favoritos, biomas, buscador de mutaciones y guía de cultivo.">
+  <title>Bayas y Abonos | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=17">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/v-components.css?v=2">
+  <link rel="stylesheet" href="assets/css/bayas.css?v=2">
+  <script src="assets/js/site-nav.js?v=21" defer></script>
+  <script src="data/bayas-data.js?v=1" defer></script>
+  <script src="assets/js/bayas.js?v=1" defer></script>
+</head>
+<body>
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <a class="feedback-cta" href="feedback.html" title="Envíanos ideas, errores o datos que falten"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" width="44" height="44"><span><i aria-hidden="true"></i><b>¿Ideas o errores?</b> <em>Cuéntanos</em></span></a>
+    </div>
+  </header>
+
+  <main class="v-shell v-main">
+    <section class="v-page-head" aria-labelledby="bb-title">
+      <div>
+        <p class="v-kicker">Cultivo</p>
+        <h1 id="bb-title">Bayas y Abonos</h1>
+        <p class="v-lead">Las bayas de Cobblemon 1.7.3 con los datos reales del mod: qué hacen, cuánto dan, cuánto tardan, qué abono prefieren y con qué vecina mutan. Para organizar la granja sin adivinar.</p>
+        <ul class="bb-stats" id="bb-stats" aria-label="Resumen"></ul>
+      </div>
+      <div class="bb-art" aria-hidden="true">
+        <img class="pixel" src="assets/img/bayas/lum_berry.png" alt="" width="64" height="64">
+      </div>
+    </section>
+
+    <nav class="v-tabs" role="tablist" aria-label="Secciones de bayas">
+      <button class="v-tab" type="button" role="tab" id="tab-catalogo" aria-controls="panel-catalogo" aria-selected="true">🍓 Catálogo</button>
+      <button class="v-tab" type="button" role="tab" id="tab-mutaciones" aria-controls="panel-mutaciones" aria-selected="false" tabindex="-1">🧬 Mutaciones</button>
+      <button class="v-tab" type="button" role="tab" id="tab-abonos" aria-controls="panel-abonos" aria-selected="false" tabindex="-1">🧪 Abonos</button>
+      <button class="v-tab" type="button" role="tab" id="tab-tabla" aria-controls="panel-tabla" aria-selected="false" tabindex="-1">📋 Tabla</button>
+      <button class="v-tab" type="button" role="tab" id="tab-cultivar" aria-controls="panel-cultivar" aria-selected="false" tabindex="-1">🌱 Cómo cultivar</button>
+    </nav>
+
+    <!-- 1. Catálogo -->
+    <section class="bb-panel" id="panel-catalogo" role="tabpanel" aria-labelledby="tab-catalogo">
+      <h2 class="v-title">Catálogo de bayas</h2>
+      <p class="v-intro">Pulsa una baya para ver su ficha completa. Los tiempos son los del mod en minutos; en el juego cada ciclo dura un 40 % más (te lo explicamos en <a href="#cultivar" data-tab-link="cultivar">Cómo cultivar</a>).</p>
+      <div class="bb-filters v-card">
+        <div class="bb-filter-row">
+          <label class="v-field bb-grow"><span>Buscar</span><span class="v-search"><input id="cat-search" type="search" placeholder="Nombre, efecto, bioma, abono…" autocomplete="off"></span></label>
+          <label class="v-field"><span>Color</span><select id="cat-colour" class="v-select"><option value="">Todos</option></select></label>
+          <label class="v-check bb-mut-check"><input id="cat-mutation" type="checkbox"> Se consigue por mutación</label>
+        </div>
+        <div class="bb-filter-group">
+          <span class="bb-filter-label" id="cat-use-label">Uso</span>
+          <div class="v-chips" id="cat-use" role="group" aria-labelledby="cat-use-label"></div>
+        </div>
+        <div class="bb-filter-group">
+          <span class="bb-filter-label" id="cat-flavour-label">Sabor dominante</span>
+          <div class="v-chips" id="cat-flavour" role="group" aria-labelledby="cat-flavour-label"></div>
+        </div>
+        <div class="bb-filter-foot">
+          <p id="cat-count" class="bb-count" aria-live="polite"></p>
+          <button class="v-btn is-ghost is-sm" type="button" id="cat-reset">Limpiar filtros</button>
+        </div>
+      </div>
+      <div class="bb-grid" id="cat-grid"></div>
+      <p class="bb-empty" id="cat-empty" hidden>Ninguna baya cumple esos filtros.</p>
+    </section>
+
+    <!-- 2. Mutaciones -->
+    <section class="bb-panel" id="panel-mutaciones" role="tabpanel" aria-labelledby="tab-mutaciones" hidden>
+      <h2 class="v-title">Buscador de mutaciones</h2>
+      <p class="v-intro">Dos árboles de bayas distintas plantados <strong>lado con lado</strong> pueden dar una baya nueva. De las 70 bayas, 39 no salen silvestres y solo se consiguen así.</p>
+      <div class="bb-mut-tools">
+        <article class="v-card is-gold bb-mut-card">
+          <h3>¿Qué baya quieres?</h3>
+          <label class="v-field"><span>Baya objetivo</span><select id="mut-target" class="v-select"></select></label>
+          <div id="mut-target-out" aria-live="polite"></div>
+        </article>
+        <article class="v-card bb-mut-card">
+          <h3>Tengo estas dos</h3>
+          <div class="bb-two">
+            <label class="v-field"><span>Primera baya</span><select id="mut-a" class="v-select"></select></label>
+            <label class="v-field"><span>Segunda baya</span><select id="mut-b" class="v-select"></select></label>
+          </div>
+          <div id="mut-pair-out" aria-live="polite"></div>
+        </article>
+      </div>
+
+      <div class="bb-layout v-card">
+        <div class="bb-layout-grid" id="mut-layout" aria-hidden="true"></div>
+        <div>
+          <h3>Cómo plantarlas</h3>
+          <ul class="bb-list">
+            <li>Solo cuentan las <strong>4 vecinas de los lados</strong> (norte, sur, este y oeste). Las diagonales no.</li>
+            <li>Lo más eficaz es un <strong>damero</strong>: alterna las dos bayas para que cada árbol tenga cuatro vecinas de la otra.</li>
+            <li>Se decide <strong>al florecer</strong> por primera vez (etapa 3): un <strong>12,5 %</strong>, o un <strong>50 %</strong> con <strong>Abono Sorpresa</strong>.</li>
+            <li>Si sale, <strong>una de las bayas del árbol</strong> pasa a ser la mutada. El árbol sigue siendo de su baya.</li>
+            <li>Cualquiera de los dos árboles puede mutar: pon Abono Sorpresa en ambos. El bioma no influye en la mutación.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="v-title bb-mt">Todas las mutaciones</h2>
+      <div class="bb-table-tools">
+        <label class="v-field bb-grow"><span>Filtrar</span><span class="v-search"><input id="mut-search" type="search" placeholder="Busca una baya (resultado o padre)" autocomplete="off"></span></label>
+        <p class="bb-count" id="mut-count" aria-live="polite"></p>
+      </div>
+      <div class="v-table-wrap bb-scroll">
+        <table class="v-table bb-mut-table">
+          <thead><tr><th scope="col">Resultado</th><th scope="col">Baya A</th><th scope="col">Baya B</th><th scope="col">Cruce</th></tr></thead>
+          <tbody id="mut-table"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. Abonos -->
+    <section class="bb-panel" id="panel-abonos" role="tabpanel" aria-labelledby="tab-abonos" hidden>
+      <h2 class="v-title">Abonos</h2>
+      <p class="v-intro">Los ocho abonos reales de Cobblemon, con su efecto tal como está en el código del mod. Un árbol solo lleva <strong>un abono a la vez</strong> y solo se le puede poner mientras no tenga frutos.</p>
+      <div class="bb-mulch-tools">
+        <label class="v-field bb-grow"><span>Buscar</span><span class="v-search"><input id="mulch-search" type="search" placeholder="Abono o baya…" autocomplete="off"></span></label>
+        <p class="bb-count" id="mulch-count" aria-live="polite"></p>
+      </div>
+      <div class="bb-mulch-grid" id="mulch-grid"></div>
+      <div class="v-note bb-mt-sm"><span aria-hidden="true">💡</span><p><strong>¿Cuál pongo?</strong> Rápido si quieres <strong>más rondas</strong>, Fértil si quieres <strong>más bayas</strong>, Sorpresa si buscas una <strong>mutación</strong>, y el abono favorito si el árbol está <strong>fuera de su bioma preferido</strong>.</p></div>
+    </section>
+
+    <!-- 4. Tabla -->
+    <section class="bb-panel" id="panel-tabla" role="tabpanel" aria-labelledby="tab-tabla" hidden>
+      <h2 class="v-title">Tabla rápida</h2>
+      <p class="v-intro">Pulsa una columna para ordenar. Marca en la primera columna las bayas que ya tiene la granja: se guarda en este navegador y sale en el CSV.</p>
+      <div class="bb-table-tools">
+        <label class="v-field bb-grow"><span>Buscar</span><span class="v-search"><input id="tbl-search" type="search" placeholder="Nombre, efecto, abono…" autocomplete="off"></span></label>
+        <label class="v-field"><span>Uso</span><select id="tbl-use" class="v-select"><option value="">Todos</option></select></label>
+        <label class="v-check"><input id="tbl-owned" type="checkbox"> Solo las que faltan</label>
+        <button class="v-btn is-sm" type="button" id="tbl-csv">⬇ Exportar CSV</button>
+      </div>
+      <p class="bb-count" id="tbl-count" aria-live="polite"></p>
+      <div class="v-table-wrap bb-scroll">
+        <table class="v-table bb-big-table">
+          <thead><tr id="tbl-head"></tr></thead>
+          <tbody id="tbl-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. Cómo cultivar -->
+    <section class="bb-panel" id="panel-cultivar" role="tabpanel" aria-labelledby="tab-cultivar" hidden>
+      <h2 class="v-title">Cómo cultivar</h2>
+      <p class="v-intro">La mecánica real de los árboles de bayas en Cobblemon 1.7.3, sacada de sus datos y de su código.</p>
+
+      <div class="bb-stages v-card" aria-label="Etapas de un árbol de bayas">
+        <h3>Las 6 etapas de un árbol</h3>
+        <ol class="bb-stage-list">
+          <li><span class="bb-stage-n">0</span><strong>Recién plantado</strong><small>Si lo rompes ahora, recuperas la baya.</small></li>
+          <li><span class="bb-stage-n">1–2</span><strong>Brote y arbolito</strong><small>Aún puedes ponerle abono.</small></li>
+          <li class="is-key"><span class="bb-stage-n">3</span><strong>Florece</strong><small>Se decide cuántas bayas dará y si muta.</small></li>
+          <li><span class="bb-stage-n">4</span><strong>Frutos verdes</strong><small>Ya no admite abono.</small></li>
+          <li class="is-key"><span class="bb-stage-n">5</span><strong>Maduro</strong><small>Clic derecho para recoger.</small></li>
+        </ol>
+      </div>
+
+      <ol class="bb-steps">
+        <li class="v-card">
+          <h3>Consigue la primera baya</h3>
+          <p>La propia baya es la semilla. <strong>31 bayas</strong> salen silvestres en arboledas de su bioma (Aranja y Caquic, en cualquier bioma; Lichi, solo en la Isla espejismo). Varias también caen al derrotar a ciertos Pokémon salvajes: lo tienes en cada ficha. Las otras <strong>39</strong> solo salen por mutación.</p>
+        </li>
+        <li class="v-card">
+          <h3>Prepara tierra de cultivo</h3>
+          <p>Las bayas que plantas tú necesitan <strong>tierra de cultivo</strong> (arada con azada). La tierra normal, la arena o la nieve solo valen para los árboles que genera el mundo. Deja agua cerca para que la tierra no se seque.</p>
+        </li>
+        <li class="v-card">
+          <h3>Planta y ponle abono</h3>
+          <p>Planta la baya sobre la tierra de cultivo y ponle el abono enseguida: solo entra si el árbol no tiene otro abono y <strong>todavía no tiene frutos</strong> (antes de la etapa 4). Para que la cosecha extra y la mutación cuenten, mejor <strong>antes de que florezca</strong>.</p>
+        </li>
+        <li class="v-card">
+          <h3>Bioma preferido o abono favorito</h3>
+          <p>Cada baya tiene biomas preferidos: allí da <strong>+0 a +1 baya</strong> extra. Fuera de ellos, su <strong>abono favorito</strong> le da ese mismo extra. No se suman entre sí. El Abono Fértil sí se suma (+1 o +2) y la cosecha nunca pasa de los huecos de fruto del árbol.</p>
+        </li>
+        <li class="v-card">
+          <h3>Espera… o usa harina de huesos</h3>
+          <p>El tiempo del mod está en <strong>minutos</strong>, pero en cada ciclo el juego lo multiplica por <strong>1,4</strong> y lo reparte entre las etapas (una Aranja de 36–44 min tarda unos 50–61 min). Solo avanza con el chunk cargado. La <strong>harina de huesos</strong> sube una etapa con la probabilidad de cada baya (del 24 % al 56 %) y no funciona en un árbol maduro.</p>
+        </li>
+        <li class="v-card">
+          <h3>Busca mutaciones</h3>
+          <p>Planta en damero dos bayas que muten entre sí (mira el <a href="#mutaciones" data-tab-link="mutaciones">buscador</a>). Cada árbol lo intenta <strong>al florecer por primera vez</strong>: 12,5 % de base y 50 % con Abono Sorpresa. Si no muta, la forma de volver a intentarlo es plantar un árbol nuevo.</p>
+        </li>
+        <li class="v-card">
+          <h3>Recoge y repite</h3>
+          <p>Con el árbol maduro, clic derecho: te da toda la cosecha y el árbol <strong>vuelve a florecer</strong>. Tarda su tiempo de <strong>reposición</strong> (también ×1,4) en volver a madurar, sin replantar. Romper un árbol que ya creció no devuelve la baya.</p>
+        </li>
+      </ol>
+
+      <h2 class="v-title bb-mt">Para qué sirven en Diosesmon</h2>
+      <div class="v-grid cols-3">
+        <article class="v-card">
+          <h3>🎣 Cebo de la Poké Caña</h3>
+          <p>Los <strong>Poké Snacks están desactivados</strong> en el servidor, así que las bayas sirven de cebo en la caña: naturaleza, IVs, tipo, grupo huevo, shiny… El efecto de cada una como cebo está en su ficha.</p>
+        </article>
+        <article class="v-card">
+          <h3>🧃 Condimento de Bongurchatas</h3>
+          <p>Cualquier baya sirve de condimento en la cacerola. Sus <strong>puntos de sabor</strong> hacen que la Bongurchata suba más la stat de montura: desde 15 puntos, +1 extra, y hasta +6 con 105 o más.</p>
+        </article>
+        <article class="v-card">
+          <h3>📉 Bajar EVs</h3>
+          <p>Grana, Algama, Íspero, Meluce, Uvav y Tamate <strong>bajan 10 EVs</strong> de su stat y suben la amistad. Son las que corrigen un Pokémon competitivo que se pasó de EVs.</p>
+        </article>
+      </div>
+    </section>
+    <footer class="site-footer"><span>DIOSESMONWIKI · BAYAS</span><span>Datos de Cobblemon 1.7.3</span></footer>
+  </main>
+
+  <dialog class="bb-dialog" id="bb-dialog" aria-labelledby="bb-dialog-title">
+    <div class="bb-dialog-inner">
+      <button class="bb-close" type="button" id="bb-close" aria-label="Cerrar ficha">✕</button>
+      <div id="bb-dialog-body"></div>
+    </div>
+  </dialog>
+</body>
+</html>

@@ -30,8 +30,9 @@
   // En Crianza, el botón lleva al planificador con el objetivo de IVs de la caza.
   document.addEventListener("click", (event) => {
     const link = event.target.closest("[data-caza-ivs]");
-    if (!link || !document.getElementById("br-plan-title")) return;
+    const planner = document.getElementById("cr-plan-title") ?? document.getElementById("br-plan-title");
+    if (!link || !planner) return;
     event.preventDefault();
-    document.getElementById("br-plan-title").scrollIntoView({ behavior: "smooth", block: "start" });
+    planner.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 })();
