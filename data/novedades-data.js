@@ -9,6 +9,18 @@ window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-16",
     tag: "mejora",
+    title: "Eventos: Shiny Safari Day ampliado, shiny en exploración y Quiz Pokémon",
+    items: [
+      "El <strong>Shiny Safari Day</strong> se amplía hasta el domingo 18 a las 11:00 (hora de España); justo entonces empieza el <strong>Pokémon Day de Beldum</strong>.",
+      "Nuevo evento en Inicio: <strong>más shiny en los mundos de exploración</strong> desde el reinicio del sábado 17.",
+      "Nuevo evento: <strong>Quiz Pokémon de la comunidad</strong> el sábado 17, con llaves de legendarios para quienes lleguen al final.",
+      "Como siempre, la cuenta atrás de cada cartel se muestra en tu hora.",
+    ],
+    links: [["Ver en Inicio", "index.html#home-info-section"]],
+  },
+  {
+    date: "2026-10-16",
+    tag: "mejora",
     title: "Safari: comportamientos de los Pokémon y Safari Points",
     items: [
       "Cada Pokémon del Safari tiene un comportamiento: <strong>muy tímido</strong> (huye muy rápido), <strong>tímido</strong> (se aleja despacio), <strong>agresivo</strong> (te ataca) o <strong>neutral</strong> (no reacciona).",
