@@ -7,6 +7,16 @@
 //   links: botones al final [["Texto", "pagina.html"], …] (opcional)
 window.DIOSESMON_NOVEDADES = [
   {
+    date: "2026-10-19",
+    tag: "mejora",
+    title: "Safari: Tyranitar en Tierras Ígneas",
+    items: [
+      "<strong>Tyranitar</strong> aparece en <strong>Tierras Ígneas</strong> como spawn raro (con su familia: Larvitar y Pupitar). Se ve en el Safari, en la ficha de la Pokédex y en los breeders de Crianza.",
+      "Terminan los eventos del fin de semana: se retiran sus carteles de Inicio.",
+    ],
+    links: [["Ver Tierras Ígneas", "safari.html#pokemon-igneas"]],
+  },
+  {
     date: "2026-10-17",
     tag: "nuevo",
     title: "Nueva sección: Bayas y Abonos",
