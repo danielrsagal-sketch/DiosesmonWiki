@@ -12,14 +12,14 @@ const SITE_SECTIONS = [
   { href: "pokedex.html", label: "Pokédex", ready: true, icon: "items/poke-ball", color: "#ff5a5a", description: "Pokémon, formas regionales y fusiones con stats, hábitat, movimientos y captura." },
   { href: "dexrewards.html", label: "DexRewards", ready: true, icon: "items/coupon-1", color: "#5ee1ff", description: "Premios por completar la Pokédex general y la de cada generación." },
   { href: "gimnasios.html", label: "Gimnasios", ready: true, icon: "badges/1", color: "#ffd442", description: "Líderes, Alto Mando, Campeones y level caps de cada región." },
-  { href: "kits.html", label: "Kits", ready: true, icon: "items/premier-ball", color: "#e8ecf4", description: "Kits de rango y exclusivos: qué trae cada uno, ventajas y precio." },
-  { href: "misiones.html", label: "Misiones", icon: "items/town-map", color: "#9ce35a", description: "Misiones del servidor, requisitos y recompensas." },
+  { href: "tesoros.html", label: "Tesoros", ready: true, icon: "items/big-nugget", color: "#ffd442", description: "Los 8 gachapones del servidor con sus premios, skins y probabilidades." },
   { href: "crianza.html", label: "Crianza", ready: true, icon: "items/oval-charm", color: "#ff6fb1", description: "Planificador de cadena de crianza: 4, 5 o 6 IVs con breeders fáciles y costes." },
   { href: "competitivo.html", label: "Competitivo", ready: true, icon: "items/choice-band", color: "#ff5a5a", description: "Constructor de equipos con estadísticas reales, análisis de tipos, importar/exportar Showdown y checklist." },
   { href: "entrenamiento-ev.html", label: "Entrenamiento EV", ready: true, icon: "items/power-bracer", color: "#ff8a3d", description: "Piezas recias, vitaminas, combates 3v3, los mejores Pokémon para cada stat y los EVs de todos." },
   { href: "monturas.html", label: "Monturas", ready: true, icon: "items/air-balloon", color: "#4bb6ff", description: "54 Pokémon montables por tierra, agua y aire, con las mejores recomendaciones." },
+  { href: "misiones.html", label: "Misiones", icon: "items/town-map", color: "#9ce35a", description: "Misiones del servidor, requisitos y recompensas." },
   { href: "fosiles.html", label: "Fósiles", ready: true, icon: "items/old-amber", color: "#c9a26b", description: "Los 7 fósiles revivibles, los 23 yacimientos y la Máquina Restauradora." },
-  { href: "tesoros.html", label: "Tesoros", ready: true, icon: "items/big-nugget", color: "#ffd442", description: "Los 8 gachapones del servidor con sus premios, skins y probabilidades." },
+  { href: "kits.html", label: "Kits", ready: true, icon: "items/premier-ball", color: "#e8ecf4", description: "Kits de rango y exclusivos: qué trae cada uno, ventajas y precio." },
   { href: "trabajo.html", label: "Trabajos", ready: true, icon: "items/amulet-coin", color: "#ffa64d", description: "Los 7 trabajos del servidor, cómo se progresa en cada uno y cuántos puedes tener según tu rango." },
   { href: "torre-batalla.html", label: "Torre Batalla", icon: "items/muscle-band", color: "#b38cff", description: "Formato, rangos y premios de la Torre Batalla." },
   { href: "bayas.html", label: "Bayas", ready: true, icon: "items/sitrus-berry", color: "#43db95", description: "Las 70 bayas de Cobblemon: efectos, cosecha, tiempos, abonos y buscador de mutaciones." },
@@ -106,6 +106,6 @@ const SITE_SECTIONS = [
 // Sonidos de la wiki (assets/js/sfx.js), cargados aquí para que estén en todas las páginas.
 (function loadSfx() {
   const script = document.createElement("script");
-  script.src = "assets/js/sfx.js?v=2";
+  script.src = "assets/js/sfx.js?v=3";
   document.head.append(script);
 })();

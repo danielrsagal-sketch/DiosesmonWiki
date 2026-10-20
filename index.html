@@ -11,13 +11,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/topbar.css?v=17">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=18">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
-  <link rel="stylesheet" href="assets/css/home.css?v=11">
-  <script src="assets/js/site-nav.js?v=21" defer></script>
+  <link rel="stylesheet" href="assets/css/home.css?v=12">
+  <script src="assets/js/site-nav.js?v=22" defer></script>
   <script src="data/fusion-data.js" defer></script>
   <script src="data/gimnasios-data.js?v=6" defer></script>
   <script src="assets/js/home.js?v=6" defer></script>
+  <script src="assets/js/respaldo.js?v=1" defer></script>
   <script src="data/informacion-data.js?v=8" defer></script>
   <script src="assets/js/informacion.js?v=4" defer></script>
   <script src="data/cazas-data.js?v=3" defer></script>
@@ -91,6 +92,45 @@
           <p>Se calcula con lo que marcas en la Pokédex y en Gimnasios, guardado en este navegador.</p>
         </div>
         <div class="home-progress-grid" id="home-progress"></div>
+
+        <div class="bk" id="backup">
+          <div class="bk-head">
+            <span class="bk-icon" aria-hidden="true">💾</span>
+            <div>
+              <h3>Llévate tu progreso a otro navegador</h3>
+              <p>Todo lo que marcas en la wiki (Pokédex, gimnasios, equipos, cadenas de crianza, inventario, granja…) se guarda solo en este navegador. Haz una copia y cárgala en el móvil, en otro PC o tras borrar el historial.</p>
+            </div>
+          </div>
+          <div class="bk-grid">
+            <div class="bk-col">
+              <h4>1. Guardar desde aquí</h4>
+              <div class="bk-current" data-bk-current></div>
+              <div class="bk-actions">
+                <button type="button" class="bk-btn" data-bk-download>⬇ Descargar archivo</button>
+                <button type="button" class="bk-btn is-ghost" data-bk-code>📋 Copiar código</button>
+              </div>
+              <textarea class="bk-code" data-bk-out rows="3" readonly hidden aria-label="Código de tu progreso"></textarea>
+            </div>
+            <div class="bk-col">
+              <h4>2. Cargar en el otro navegador</h4>
+              <div class="bk-actions">
+                <label class="bk-btn"><input type="file" accept=".json,application/json" data-bk-file hidden>📂 Cargar archivo</label>
+              </div>
+              <textarea class="bk-code" data-bk-in rows="3" placeholder="…o pega aquí el código DIOSESMON-BK1:" aria-label="Pegar código de progreso"></textarea>
+              <div class="bk-actions"><button type="button" class="bk-btn is-ghost" data-bk-paste>Leer código</button></div>
+              <div class="bk-preview" data-bk-preview hidden>
+                <div data-bk-preview-body></div>
+                <label class="bk-check"><input type="checkbox" data-bk-replace><span>Borrar antes el progreso de este navegador (si no, se mezcla: lo que no venga en el respaldo se conserva)</span></label>
+                <div class="bk-actions">
+                  <button type="button" class="bk-btn" data-bk-restore>✔ Restaurar</button>
+                  <button type="button" class="bk-btn is-ghost" data-bk-cancel>Cancelar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="bk-status" data-bk-status role="status" aria-live="polite"></p>
+          <p class="bk-foot">🔒 La copia se queda en tu archivo o en tu portapapeles: no se envía a ningún servidor. No incluye contraseñas.</p>
+        </div>
       </section>
 
       <section aria-labelledby="home-sections-title">

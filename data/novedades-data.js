@@ -7,6 +7,28 @@
 //   links: botones al final [["Texto", "pagina.html"], …] (opcional)
 window.DIOSESMON_NOVEDADES = [
   {
+    date: "2026-10-20",
+    tag: "nuevo",
+    title: "Llévate tu progreso a otro navegador",
+    items: [
+      "Nuevo en Inicio: <strong>guarda una copia de todo tu progreso</strong> (Pokédex, gimnasios, equipos, cadenas de crianza, inventario de 1x31, granja de bayas…) en un archivo o en un código.",
+      "Cárgala en el móvil, en otro PC o después de borrar el historial y lo tendrás todo igual. Puedes mezclarla con lo que ya tengas o reemplazarlo.",
+      "La copia no pasa por ningún servidor y no incluye contraseñas.",
+    ],
+    links: [["Hacer una copia", "index.html#backup"]],
+  },
+  {
+    date: "2026-10-19",
+    tag: "mejora",
+    title: "Tesoros con música y menú reordenado",
+    items: [
+      "El <strong>simulador de Tesoros</strong> ahora suena: música mientras gira la ruleta, un «tic» por cada premio que pasa y una fanfarria al final (más épica si te toca algo raro). Respeta el volumen del altavoz de arriba.",
+      "Menú: <strong>Tesoros</strong> pasa al sitio de Kits, y Kits y Misiones van dentro de «Más».",
+      "Arreglado: el menú «Más» ya no queda tapado por las pestañas de las páginas.",
+    ],
+    links: [["Probar en Tesoros", "tesoros.html#legendario"]],
+  },
+  {
     date: "2026-10-19",
     tag: "mejora",
     title: "Safari: Tyranitar en Tierras Ígneas",

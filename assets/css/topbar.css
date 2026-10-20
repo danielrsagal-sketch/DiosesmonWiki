@@ -5,7 +5,7 @@ body { margin: 0; }
 .dex-topbar [hidden] { display: none !important; }
 /* La barra provisional del HTML no se ve mientras site-nav.js dibuja la definitiva. */
 .dex-nav[data-site-nav]:not(.is-ready) { visibility: hidden; }
-.dex-topbar { position: sticky; top: 0; z-index: 20; color: #fff; background: linear-gradient(180deg, #131823, #0a0d14); border-bottom: 1px solid #262f40; box-shadow: 0 6px 24px #0008; font-family: "Space Grotesk", sans-serif; }
+.dex-topbar { position: sticky; top: 0; z-index: 100; color: #fff; background: linear-gradient(180deg, #131823, #0a0d14); border-bottom: 1px solid #262f40; box-shadow: 0 6px 24px #0008; font-family: "Space Grotesk", sans-serif; }
 .dex-header-inner { width: min(100% - 36px, 1600px); min-height: 64px; display: flex; align-items: center; gap: 28px; margin: 0 auto; }
 .dex-brand { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; color: #f2f4fb; font-size: 18px; font-weight: 700; letter-spacing: .04em; text-decoration: none; }
 .dex-logo { width: 42px; height: 40px; object-fit: contain; filter: drop-shadow(0 2px 4px #0008); }

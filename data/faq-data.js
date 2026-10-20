@@ -86,7 +86,7 @@ window.DIOSESMON_FAQ = [
     icon: "pokemon/441",
     color: "#5ee1ff",
     questions: [
-      { id: "progreso", q: "¿Dónde se guarda lo que marco en la wiki?", a: "En <strong>tu navegador</strong> (Pokémon capturados, medallas, cadenas de crianza…). No se sincroniza: si cambias de navegador o dispositivo, o borras los datos del sitio, empiezas de cero." },
+      { id: "progreso", q: "¿Dónde se guarda lo que marco en la wiki?", a: "En <strong>tu navegador</strong> (Pokémon capturados, medallas, cadenas de crianza…). No se sincroniza solo, pero puedes <strong>llevártelo a otro navegador</strong>: en <a href=\"index.html#backup\">Inicio → Llévate tu progreso</a> descarga un archivo o copia un código, y cárgalo en el otro navegador o en el móvil. Haz una copia antes de borrar los datos del navegador." },
       { id: "datos-viejos", q: "La wiki no muestra los últimos cambios", a: "Recarga la página forzando la caché con <strong>Ctrl + F5</strong> (o <strong>Cmd + Shift + R</strong> en Mac). En el móvil, cierra la pestaña y vuelve a abrirla." },
       { id: "error-wiki", q: "Encontré un dato que está mal o falta", a: "Cuéntanoslo en <a href=\"feedback.html\">Feedback</a> (el botón de Chatot de arriba): lo revisamos y lo corregimos. Lo que vamos cambiando sale en <a href=\"novedades.html\">Novedades</a>." },
       { id: "oficial", q: "¿Los datos son oficiales?", a: "Las reglas del servidor (crianza, tienda, kits, tesoros…) salen de los menús de Diosesmon. Los datos de los Pokémon, de <strong>Cobblemon 1.7.3</strong>. Si algo no cuadra con lo que ves en el juego, manda un <a href=\"feedback.html\">Feedback</a>." },

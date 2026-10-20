@@ -126,7 +126,11 @@
         <div class="tr-sim-multi">${results.map((reward, index) => `<div class="tr-reveal" style="--d:${index * 0.12}s">${simTile(box, reward)}<em>${percent(reward.chance)}</em></div>`).join("")}</div>
         <p class="tr-sim-stats">${statsLine}</p>
         <div class="tr-sim-actions"><button class="tr-open" type="button" data-again="10">Otra vez ×10</button><button class="tr-open is-ghost" type="button" data-again="1">Abrir 1</button></div>`;
-      if (results.some((reward) => reward.chance < 1)) setTimeout(celebrate, 900);
+      // Un «tic» por cada premio que se da la vuelta y fanfarria al final (más grande si hay algo raro).
+      const rare = results.some((reward) => reward.chance < 1);
+      results.forEach((_, index) => setTimeout(() => window.DiosesSfx?.jingle("tick"), index * 120 + 200));
+      setTimeout(() => window.DiosesSfx?.jingle(rare ? "rare" : "win"), results.length * 120 + 350);
+      if (rare) setTimeout(celebrate, 900);
       return;
     }
     const winner = results[0];
@@ -141,6 +145,21 @@
     const stripEl = body.querySelector(".tr-strip");
     const tile = stripEl.children[52];
     spinning = true;
+    // Música mientras gira y un «tic» cada vez que un premio pasa por el marcador.
+    const stopMusic = window.DiosesSfx?.music() ?? (() => {});
+    const tileStep = tile.offsetWidth + 8;
+    let lastTick = -1;
+    const ticker = () => {
+      if (!spinning) return;
+      const shift = -new DOMMatrixReadOnly(getComputedStyle(stripEl).transform).m41;
+      const passed = Math.floor((shift + reel.clientWidth / 2) / tileStep);
+      if (passed !== lastTick) {
+        if (lastTick >= 0) window.DiosesSfx?.jingle("tick");
+        lastTick = passed;
+      }
+      requestAnimationFrame(ticker);
+    };
+    requestAnimationFrame(ticker);
     requestAnimationFrame(() => requestAnimationFrame(() => {
       const offset = tile.offsetLeft + tile.offsetWidth / 2 - reel.clientWidth / 2 + (Math.random() - 0.5) * tile.offsetWidth * 0.7;
       stripEl.style.transform = `translateX(-${offset}px)`;
@@ -148,6 +167,8 @@
     const finish = () => {
       if (!spinning) return;
       spinning = false;
+      stopMusic();
+      window.DiosesSfx?.jingle(winner.chance < 1 ? "rare" : "win");
       tile.classList.add("is-landed");
       const result = body.querySelector(".tr-sim-result");
       result.hidden = false;

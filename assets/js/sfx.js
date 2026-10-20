@@ -66,6 +66,78 @@
     });
   };
 
+  // Nota suelta programada en el tiempo del audio (para música y fanfarrias).
+  const note = (context, output, frequency, time, duration, { type = "square", level = 0.35 } = {}) => {
+    if (!frequency) return;
+    const osc = context.createOscillator();
+    const gain = context.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(frequency, time);
+    gain.gain.setValueAtTime(0.0001, time);
+    gain.gain.exponentialRampToValueAtTime(level, time + 0.006);
+    gain.gain.exponentialRampToValueAtTime(0.0001, time + duration * 0.95);
+    osc.connect(gain).connect(output);
+    osc.start(time);
+    osc.stop(time + duration + 0.02);
+  };
+
+  // Fanfarrias de la ruleta de Tesoros: cada nota es [frecuencia (0 = silencio), duración en pulsos].
+  const JINGLES = {
+    tick: { beat: 0.03, lead: [[1760, 1]], level: 0.18 },
+    win: { beat: 0.09, lead: [[784, 1], [988, 1], [1175, 1], [1568, 3]], bass: [[196, 3], [294, 3]] },
+    rare: {
+      beat: 0.1,
+      lead: [[1047, 1], [1047, 1], [1047, 1], [1047, 3], [831, 3], [932, 3], [1047, 2], [932, 1], [1047, 6]],
+      bass: [[262, 3], [0, 3], [208, 3], [233, 3], [262, 9]],
+    },
+  };
+  const jingle = (name) => {
+    const song = JINGLES[name];
+    if (silent() || !song) return;
+    const context = audio();
+    if (!context) return;
+    const start = context.currentTime + 0.01;
+    [["lead", "square", song.level ?? 0.32], ["bass", "triangle", 0.45]].forEach(([part, type, level]) => {
+      let time = start;
+      (song[part] ?? []).forEach(([frequency, beats]) => {
+        note(context, master, frequency, time, beats * song.beat, { type, level });
+        time += beats * song.beat;
+      });
+    });
+  };
+
+  // Música en bucle mientras gira la ruleta (estilo Game Boy). Devuelve una función para pararla con un fundido.
+  const SPIN_LEAD = [659, 784, 988, 784, 659, 784, 988, 1175, 698, 880, 1047, 880, 698, 880, 1047, 1319];
+  const SPIN_BASS = [165, 0, 165, 0, 175, 0, 175, 0];
+  const music = () => {
+    if (silent()) return () => {};
+    const context = audio();
+    if (!context) return () => {};
+    const bus = context.createGain();
+    bus.gain.value = 0.55;
+    bus.connect(master);
+    const step = 0.11;
+    let next = context.currentTime + 0.05;
+    let index = 0;
+    const schedule = () => {
+      while (next < context.currentTime + 0.4) {
+        note(context, bus, SPIN_LEAD[index % SPIN_LEAD.length], next, step * 0.9, { level: 0.22 });
+        if (index % 2 === 0) note(context, bus, SPIN_BASS[(index / 2) % SPIN_BASS.length], next, step * 1.8, { type: "triangle", level: 0.4 });
+        next += step;
+        index += 1;
+      }
+    };
+    schedule();
+    const timer = setInterval(schedule, 150);
+    return () => {
+      clearInterval(timer);
+      const now = context.currentTime;
+      bus.gain.setValueAtTime(bus.gain.value, now);
+      bus.gain.linearRampToValueAtTime(0.0001, now + 0.35);
+      setTimeout(() => bus.disconnect(), 500);
+    };
+  };
+
   let currentCry = null;
   const cry = (id) => {
     const number = parseInt(id, 10);
@@ -203,5 +275,5 @@
     }
   }
 
-  window.DiosesSfx = { play, cry, isMuted: silent };
+  window.DiosesSfx = { play, cry, jingle, music, isMuted: silent };
 })();
