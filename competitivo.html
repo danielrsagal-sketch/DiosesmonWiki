@@ -15,12 +15,13 @@
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/v-components.css?v=4">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <link rel="stylesheet" href="assets/css/competitivo.css?v=1">
+  <link rel="stylesheet" href="assets/css/competitivo.css?v=5">
   <script src="assets/js/site-nav.js?v=24" defer></script>
   <script src="data/competitivo-data.js?v=2" defer></script>
-  <script src="data/competitivo-guia.js?v=2" defer></script>
-  <script src="assets/js/competitivo-core.js?v=2" defer></script>
-  <script src="assets/js/competitivo.js?v=2" defer></script>
+  <script src="data/megas-data.js?v=1" defer></script>
+  <script src="data/competitivo-guia.js?v=3" defer></script>
+  <script src="assets/js/competitivo-core.js?v=4" defer></script>
+  <script src="assets/js/competitivo.js?v=7" defer></script>
 </head>
 <body style="--section-color: #ff5a5a">
   <header class="dex-topbar">
@@ -72,6 +73,10 @@
           <span>Equipo</span>
           <select id="c-team" class="v-select"></select>
         </label>
+        <div class="v-field c-size">
+          <span id="c-size-label">Pokémon por equipo</span>
+          <div class="c-size-chips" id="c-size" role="group" aria-labelledby="c-size-label"></div>
+        </div>
         <div class="c-team-actions">
           <button class="v-btn is-sm" type="button" id="c-new">＋ Nuevo</button>
           <button class="v-btn is-ghost is-sm" type="button" id="c-rename">✎ Renombrar</button>

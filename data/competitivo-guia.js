@@ -152,7 +152,7 @@ window.DIOSESMON_COMP_ITEM_TIPS = {
 
 // Checklist: 14 puntos. auto = se comprueba solo con los datos del equipo.
 window.DIOSESMON_COMP_CHECKLIST = [
-  { id: "seis-cuatro", ico: "👥", group: "Equipo", auto: true, title: "6 Pokémon con 4 movimientos",
+  { id: "seis-cuatro", ico: "👥", group: "Equipo", auto: true, title: "Equipo completo con 4 movimientos",
     text: "El equipo está completo y nadie tiene huecos en sus movimientos." },
   { id: "objetos", ico: "🎒", group: "Equipo", auto: true, title: "Todos llevan objeto",
     text: "Cada Pokémon tiene un objeto con función. Sin objeto regalas una ventaja." },

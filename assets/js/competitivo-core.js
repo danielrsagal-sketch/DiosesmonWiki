@@ -15,7 +15,7 @@
     { short: "Esp.", label: "Especial", cls: "is-spec" },
   ];
   const ITEM_CATS = {
-    of: "Ofensivo", ve: "Velocidad", de: "Defensivo", so: "Soporte", ba: "Bayas", cr: "Crianza y EVs",
+    of: "Ofensivo", ve: "Velocidad", de: "Defensivo", so: "Soporte", ba: "Bayas", cr: "Crianza y EVs", mg: "Megapiedras",
   };
 
   const toID = (text) => String(text || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
@@ -37,6 +37,44 @@
   const abilities = D.abilities.map((a, index) => ({ index, es: a[0], en: a[1], id: toID(a[1]) }));
   const abilityById = new Map(abilities.map((a) => [a.id, a]));
   const items = D.items.map((it) => ({ id: it[0], es: it[1], en: it[2], cat: it[3], effect: it[4], sid: toID(it[2]) }));
+  // Megapiedras y prismas de las Regresiones Primigenias, sacados de data/megas-data.js (solo las megas disponibles).
+  const MG = window.DIOSESMON_MEGAS;
+  if (MG) {
+    const PRIMAL_ORBS = { groudon: ["red_orb", "Prisma Rojo", "Red Orb"], kyogre: ["blue_orb", "Prisma Azul", "Blue Orb"] };
+    const enName = (id) => id.split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+    for (const m of MG.megas) {
+      if (!m.available) continue;
+      const orb = m.kind === "primal" ? PRIMAL_ORBS[toID(m.base)] : null;
+      if (!m.stone && !orb) continue;
+      const [id, es, en] = orb || [m.stone.id, m.stone.name, enName(m.stone.id)];
+      const effect = orb
+        ? `Hace que ${m.base} entre en combate como ${m.name} (${m.types.join("/")}).`
+        : `Permite a ${m.base} megaevolucionar a ${m.name} (${m.types.join("/")}). Necesita ${MG.bracelet.name}.`;
+      items.push({ id, es, en, cat: "mg", effect, sid: toID(en), mega: m, icon: m.stone ? m.stone.icon : null });
+    }
+  }
+  // Las formas regionales (Raichu de Alola, Slowbro de Galar) no megaevolucionan.
+  const megaFits = (it, sp) => !!(it && it.mega && it.mega.dex === sp.num && !sp.form);
+  const megaStoneFor = (sp) => items.filter((it) => megaFits(it, sp));
+  // Forma de combate (mega o primigenia) de un set: copia del Pokémon con la especie, tipos,
+  // stats base y habilidad de la mega. Las especies virtuales «mega:<clave>» solo existen en el índice.
+  function battleForm(mon) {
+    const sp = speciesById.get(mon.sp);
+    if (!sp || !MG) return null;
+    const it = itemById.get(mon.item);
+    let m = megaFits(it, sp) ? it.mega : null;
+    if (!m && !sp.form && mon.moves.includes("dragonascent")) m = MG.megas.find((x) => x.available && x.dex === sp.num && !x.stone && x.kind === "mega") || null;
+    if (!m) return null;
+    const id = `mega:${m.key}`;
+    if (!speciesById.has(id)) {
+      const typeIdx = m.types.map((es) => types.findIndex((t) => t.es === es)).filter((i) => i >= 0);
+      const b = m.stats;
+      speciesById.set(id, { ...sp, id, es: m.name, en: m.name, types: typeIdx.length ? typeIdx : sp.types,
+        base: [b.hp, b.atk, b.def, b.spa, b.spd, b.spe], sprite: m.pokeapi || sp.sprite, mega: m, baseId: sp.id });
+    }
+    const ab = m.abilities[0];
+    return { mon: { ...mon, sp: id, ab: ab ? ab.id : mon.ab }, mega: m, ability: ab ? ab.name : "" };
+  }
   const itemById = new Map(items.map((it) => [it.id, it]));
   const itemBySid = new Map(items.map((it) => [it.sid, it]));
   const itemByEs = new Map(items.map((it) => [toID(it.es), it]));
@@ -145,20 +183,25 @@
     levitate: { 4: 0 }, eartheater: { 4: 0 }, flashfire: { 9: 0 }, wellbakedbody: { 9: 0 },
     voltabsorb: { 12: 0 }, lightningrod: { 12: 0 }, motordrive: { 12: 0 },
     waterabsorb: { 10: 0 }, stormdrain: { 10: 0 }, dryskin: { 10: 0, 9: 1.25 }, sapsipper: { 11: 0 },
+    primordialsea: { 9: 0 }, desolateland: { 10: 0 },
     thickfat: { 9: 0.5, 14: 0.5 }, heatproof: { 9: 0.5 }, waterbubble: { 9: 0.5 }, purifyingsalt: { 7: 0.5 }, fluffy: { 9: 2 },
   };
   function defensiveProfile(mon) {
     const sp = speciesById.get(mon.sp);
     const ab = ABILITY_DEF[mon.ab] || null;
     return types.map((t) => {
-      let m = effVs(t.index, sp.types);
+      // Turbulencia (Mega Rayquaza): nada es súper eficaz contra su parte Volador.
+      let m = mon.ab === "deltastream" ? sp.types.reduce((acc, d) => acc * (d === 2 ? Math.min(1, eff(t.index, d)) : eff(t.index, d)), 1) : effVs(t.index, sp.types);
       if (ab && t.index in ab) m *= ab[t.index];
       if (mon.ab === "wonderguard" && m <= 1) m = 0;
       return m;
     });
   }
+  // Habilidades que convierten los movimientos de tipo Normal (Piel Celeste, Piel Feérica, Dragonización…).
+  const ATE = { aerilate: 2, pixilate: 17, refrigerate: 14, galvanize: 12, dragonize: 15 };
+  const moveTypeFor = (mon, move) => (move.type === 0 && mon.ab in ATE ? ATE[mon.ab] : move.type);
   function offensiveMult(mon, move, defType) {
-    let m = eff(move.type, defType);
+    let m = eff(moveTypeFor(mon, move), defType);
     if (move.id === "freezedry" && defType === 10) m = 2;
     if ((mon.ab === "scrappy" || mon.ab === "mindseye") && defType === 7 && (move.type === 0 || move.type === 1)) m = 1;
     return m;
@@ -314,6 +357,7 @@
   function packTeam(team) {
     return {
       n: team.name,
+      s: team.size || 6,
       m: team.mons.filter(Boolean).map((p) => [p.sp, p.nick, p.lvl, p.ab, p.item, p.nat, p.evs, p.ivs, p.moves]),
     };
   }
@@ -330,7 +374,8 @@
       if (lost.length) warnings.push(`${speciesById.get(sp).es}: se quitan movimientos que no reconozco (${lost.join(", ")}).`);
       mons.push(mon);
     }
-    return { team: { name: String(obj.n || "Equipo compartido").slice(0, 40), mons }, warnings };
+    const size = [3, 4, 6].includes(obj.s) && obj.s >= mons.length ? obj.s : 6;
+    return { team: { name: String(obj.n || "Equipo compartido").slice(0, 40), mons, size }, warnings };
   }
   const toB64Url = (bytes) => {
     let bin = "";
@@ -369,7 +414,7 @@
 
   window.VComp = {
     D, toID, norm, STAT_KEYS, STAT_SHORT, CATEGORY, ITEM_CATS, TYPE_COLORS,
-    species, speciesById, moves, moveById, abilities, abilityById, items, itemById, natures, natureById, types,
+    species, speciesById, moves, moveById, abilities, abilityById, items, itemById, megaStoneFor, megaFits, battleForm, moveTypeFor, natures, natureById, types,
     learnset, methodLabels, speciesAbilities, blankMon, sanitizeMon, calcStats, evTotal, natureMult,
     eff, effVs, defensiveProfile, offensiveMult, exportShowdown, importShowdown, encodeShare, decodeShare, SHARE_PREFIX,
   };

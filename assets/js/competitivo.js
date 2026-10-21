@@ -18,18 +18,33 @@
   const isMobile = () => window.matchMedia("(max-width: 700px)").matches;
 
   // ---------- Estado ----------
-  function makeTeam(name, mons = []) {
-    const list = mons.slice(0, 6);
-    while (list.length < 6) list.push(null);
-    return { id: uid(), name: name || "Equipo", mons: list, checks: {} };
+  // Solo puede haber una mega por equipo (las Regresiones Primigenias no cuentan).
+  const isMegaStone = (id) => { const it = C.itemById.get(id); return !!(it && it.mega && it.mega.kind === "mega"); };
+  const megaHolder = (t, except = -1) => t.mons.findIndex((m, k) => m && k !== except && isMegaStone(m.item));
+  const megaStripped = [];
+  // Formatos: 6 (normal), 4 y 3 (regulaciones, Torre Batalla…).
+  const SIZES = [6, 4, 3];
+  function makeTeam(name, mons = [], size = 6) {
+    size = SIZES.includes(size) ? size : 6;
+    const list = mons.slice(0, size);
+    while (list.length < size) list.push(null);
+    let holder = null;
+    for (const mon of list) {
+      if (!mon || !isMegaStone(mon.item)) continue;
+      if (!holder) { holder = mon; continue; }
+      megaStripped.push(`${C.speciesById.get(mon.sp).es}: se le quita la ${C.itemById.get(mon.item).es} (solo una mega por equipo y ya la tiene ${C.speciesById.get(holder.sp).es}).`);
+      mon.item = "";
+    }
+    return { id: uid(), name: name || "Equipo", size, mons: list, checks: {}, noMega: [] };
   }
   function load() {
     try {
       const raw = JSON.parse(localStorage.getItem(KEY) || "null");
       if (raw && Array.isArray(raw.teams) && raw.teams.length) {
         const teams = raw.teams.map((t) => {
-          const team = makeTeam(String(t.name || "Equipo").slice(0, 40), (Array.isArray(t.mons) ? t.mons : []).map(C.sanitizeMon));
+          const team = makeTeam(String(t.name || "Equipo").slice(0, 40), (Array.isArray(t.mons) ? t.mons : []).map(C.sanitizeMon), t.size);
           team.id = typeof t.id === "string" ? t.id : team.id;
+          team.noMega = Array.isArray(t.noMega) ? t.noMega.filter((i) => Number.isInteger(i) && i >= 0 && i < team.size) : [];
           team.checks = t.checks && typeof t.checks === "object" ? Object.fromEntries(Object.entries(t.checks).filter(([, v]) => v === true)) : {};
           return team;
         });
@@ -40,6 +55,7 @@
     return { teams: [first], active: first.id };
   }
   let store = load();
+  const loadStripped = megaStripped.splice(0);
   let selected = 0;
   let openSecs = (() => { try { return JSON.parse(localStorage.getItem(OPEN_KEY) || "null"); } catch (e) { return null; } })();
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (error) { /* modo privado */ } };
@@ -47,6 +63,19 @@
   const monAt = (i) => team().mons[i];
   const spOf = (mon) => C.speciesById.get(mon.sp);
   const displayName = (mon) => (mon.nick ? mon.nick : spOf(mon).es);
+  // Forma que se muestra de un Pokémon del equipo: la mega/primigenia si su interruptor está en ON.
+  const megaOn = (t, i) => !(t.noMega || []).includes(i);
+  const megaBlocked = (t, mon) => {
+    const bf = C.battleForm(mon);
+    return !!(bf && bf.mega.kind === "mega" && !isMegaStone(mon.item) && megaHolder(t, t.mons.indexOf(mon)) >= 0);
+  };
+  const formOf = (mon, t = team()) => (megaBlocked(t, mon) ? null : C.battleForm(mon));
+  const viewOf = (mon) => {
+    const t = team();
+    const i = t.mons.indexOf(mon);
+    const bf = i >= 0 && megaOn(t, i) ? formOf(mon, t) : null;
+    return bf ? bf.mon : mon;
+  };
 
   // ---------- Utilidades de interfaz ----------
   let toastTimer = 0;
@@ -173,14 +202,36 @@
   function renderTeamSelect() {
     $("#c-team").innerHTML = store.teams.map((t) => {
       const n = t.mons.filter(Boolean).length;
-      return `<option value="${esc(t.id)}"${t.id === store.active ? " selected" : ""}>${esc(t.name)} · ${n}/6</option>`;
+      return `<option value="${esc(t.id)}"${t.id === store.active ? " selected" : ""}>${esc(t.name)} · ${n}/${t.size}</option>`;
     }).join("");
+    const t = team();
+    $("#c-size").innerHTML = SIZES.map((n) => `<button type="button" class="v-chip" data-size="${n}" aria-pressed="${n === t.size}">${n}</button>`).join("");
   }
+  $("#c-size").addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-size]");
+    if (!b) return;
+    const t = team();
+    const size = Number(b.dataset.size);
+    if (size === t.size) return;
+    const filled = t.mons.filter(Boolean);
+    if (filled.length > size) {
+      const extra = filled.slice(size).map(displayName).join(", ");
+      const okCut = await ask({ title: `¿Pasar a ${size} Pokémon?`, text: `El equipo tiene ${filled.length}. Se quitarán los últimos: ${extra}.`, ok: "Quitar", danger: true });
+      if (!okCut) return;
+    }
+    // Se juntan los Pokémon al principio para no perder ninguno al reducir huecos.
+    const list = size < t.size ? filled.slice(0, size) : t.mons.slice();
+    while (list.length < size) list.push(null);
+    t.size = size; t.mons = list; t.noMega = [];
+    selected = Math.min(selected, size - 1);
+    save(); renderAll();
+    toast(`Equipo de ${size} Pokémon.`);
+  });
   $("#c-team").addEventListener("change", (e) => { store.active = e.target.value; selected = 0; save(); renderAll(); });
   $("#c-new").addEventListener("click", async () => {
     const name = await ask({ title: "Nuevo equipo", input: `Equipo ${store.teams.length + 1}`, ok: "Crear" });
     if (name === null) return;
-    const t = makeTeam(name.slice(0, 40) || `Equipo ${store.teams.length + 1}`);
+    const t = makeTeam(name.slice(0, 40) || `Equipo ${store.teams.length + 1}`, [], team().size);
     store.teams.push(t); store.active = t.id; selected = 0; save(); renderAll();
     toast(`Equipo «${t.name}» creado.`);
   });
@@ -191,7 +242,7 @@
   });
   $("#c-dup").addEventListener("click", () => {
     const src = team();
-    const copyTeam = makeTeam(`${src.name} (copia)`.slice(0, 40), src.mons.map((m) => (m ? JSON.parse(JSON.stringify(m)) : null)));
+    const copyTeam = makeTeam(`${src.name} (copia)`.slice(0, 40), src.mons.map((m) => (m ? JSON.parse(JSON.stringify(m)) : null)), src.size);
     copyTeam.checks = { ...src.checks };
     store.teams.splice(store.teams.indexOf(src) + 1, 0, copyTeam);
     store.active = copyTeam.id; save(); renderAll();
@@ -216,10 +267,12 @@
       if (!mon) {
         return `<button type="button" class="c-slot is-empty${sel}" data-slot="${i}" aria-pressed="${i === selected}"><span class="c-slot-plus" aria-hidden="true">＋</span><span>Hueco ${i + 1}</span><small>Añadir Pokémon</small></button>`;
       }
-      const sp = spOf(mon);
+      const view = viewOf(mon);
+      const sp = spOf(view);
       const item = C.itemById.get(mon.item);
       const nat = C.natureById.get(mon.nat);
-      const ab = C.abilityById.get(mon.ab);
+      const megaAbName = view !== mon ? formOf(mon).ability : "";
+      const ab = megaAbName ? { es: megaAbName } : C.abilityById.get(mon.ab);
       const moves = mon.moves.map((id) => {
         const mv = C.moveById.get(id);
         return mv ? `<li style="--type-color:${C.types[mv.type].color}">${esc(mv.es)}</li>` : `<li class="is-empty">—</li>`;
@@ -229,7 +282,7 @@
         <span class="c-slot-head">
           <img class="pixel" src="${spriteUrl(sp)}" alt="" width="72" height="72" loading="lazy">
           <span class="c-slot-id">
-            <strong>${esc(displayName(mon))}</strong>
+            <strong>${esc(mon.nick || sp.es)}</strong>
             ${mon.nick ? `<small>${esc(sp.es)}</small>` : ""}
             <span class="c-slot-types">${sp.types.map(typeChip).join("")}</span>
           </span>
@@ -279,15 +332,24 @@
       html: `<img class="pixel" src="${spriteUrl(sp)}" alt="" width="40" height="40" loading="lazy"><span class="c-opt-main"><b>${esc(sp.es)}</b><small>#${sp.num}${sp.en !== sp.es ? ` · ${esc(sp.en)}` : ""}</small></span><span class="c-opt-side">${sp.types.map(typeChip).join("")}${sp.treasure ? '<span class="v-badge">Tesoro</span>' : ""}</span>`,
     }));
   }
-  function itemOptions(q) {
+  // Las megapiedras de otros Pokémon solo salen si se buscan; la del Pokémon actual va la primera.
+  const itemOptionsFor = (mon) => (q) => {
+    const sp = spOf(mon);
+    const own = new Set(C.megaStoneFor(sp).map((it) => it.id));
+    const t = team();
+    const other = megaHolder(t, t.mons.indexOf(mon));
+    const taken = other >= 0 ? `Ya hay mega: ${displayName(t.mons[other])}` : "";
     const res = [{ id: "", html: `<span class="c-opt-main"><b>Sin objeto</b></span>`, search: "sin objeto ninguno" }];
-    for (const it of C.items) {
-      const text = C.norm(`${it.es} ${it.en} ${C.ITEM_CATS[it.cat]} ${it.effect}`);
+    const list = [...C.items.filter((it) => own.has(it.id)), ...C.items.filter((it) => !own.has(it.id))];
+    for (const it of list) {
+      if (it.cat === "mg" && !own.has(it.id) && !q) continue;
+      const text = C.norm(`${it.es} ${it.en} ${C.ITEM_CATS[it.cat]} ${it.effect} ${it.mega ? `${it.mega.base} ${it.mega.name} mega` : ""}`);
       if (!matchAll(text, q)) continue;
-      res.push({ id: it.id, html: `<span class="c-opt-main"><b>${esc(it.es)}</b><small>${esc(it.en)} · ${esc(it.effect)}</small></span><span class="c-opt-side"><span class="v-badge is-dim">${C.ITEM_CATS[it.cat]}</span></span>` });
+      const ico = it.icon ? `<img class="pixel" src="${it.icon}" alt="" width="32" height="32" loading="lazy">` : "";
+      res.push({ id: it.id, html: `${ico}<span class="c-opt-main"><b>${esc(it.es)}</b><small>${esc(it.en)} · ${esc(it.effect)}</small></span><span class="c-opt-side"><span class="v-badge ${own.has(it.id) && !(taken && isMegaStone(it.id)) ? "" : "is-dim"}">${taken && isMegaStone(it.id) ? esc(taken) : own.has(it.id) ? "Su megapiedra" : C.ITEM_CATS[it.cat]}</span></span>` });
     }
     return q ? res.filter((o) => o.id || matchAll(o.search, q)) : res;
-  }
+  };
   function moveOptions(mon, slot) {
     const ls = C.learnset(spOf(mon));
     const taken = new Set(mon.moves.filter((id, i) => id && i !== slot));
@@ -313,8 +375,17 @@
     const e = C.learnset(spOf(mon)).get(id);
     if (!e) return `<span class="c-move-empty">Elige un movimiento</span>`;
     const mv = e.move;
-    const stab = spOf(mon).types.includes(mv.type) && mv.cat ? '<span class="c-stab" title="Mismo tipo que el Pokémon: +50 % de daño">STAB</span>' : "";
+    const stab = spOf(viewOf(mon)).types.includes(mv.type) && mv.cat ? '<span class="c-stab" title="Mismo tipo que el Pokémon: +50 % de daño">STAB</span>' : "";
     return `${typeChip(mv.type)}${catBadge(mv.cat)}${stab}<span class="c-move-stats"><span title="Potencia">Pot. ${mv.power || "—"}</span><span title="Precisión">Prec. ${mv.acc ? mv.acc + "%" : "∞"}</span><span title="PP">PP ${mv.pp}</span>${mv.prio ? `<span title="Prioridad">Prio. ${mv.prio > 0 ? "+" : ""}${mv.prio}</span>` : ""}</span><span class="c-move-src">${esc(C.methodLabels(e).join(" · "))}</span>`;
+  }
+  function megaNote(m, mon) {
+    const b = m.stats;
+    const ab = m.abilities.length ? m.abilities.map((a) => a.name).join(" / ") : "sin habilidad todavía";
+    const how = m.kind === "primal" ? "Al entrar en combate se transforma en" : "Al megaevolucionar pasa a";
+    const bf = formOf(mon);
+    const st = bf ? C.calcStats(bf.mon) : null;
+    const withSet = st ? ` Con este set: ${st.map((v, i) => `${C.STAT_SHORT[i]} ${v}`).join(" · ")}.` : "";
+    return `${how} ${m.name}: ${m.types.join("/")} · ${ab} · base PS ${b.hp}, Atq ${b.atk}, Def ${b.def}, AtE ${b.spa}, DfE ${b.spd}, Vel ${b.spe}.${withSet} Con el selector «Forma» cambias entre la forma normal y la mega, aquí y en el Análisis.`;
   }
   function itemWarnings(mon) {
     const sp = spOf(mon);
@@ -326,6 +397,11 @@
     if (["choice_band", "choice_specs", "choice_scarf"].includes(mon.item) && mvs.some((m) => m.cat === 0)) out.push("Con un objeto Elección, los movimientos de estado le dejan bloqueado sin atacar.");
     if (mon.item === "light_ball" && sp.num !== 25) out.push("La Bola Luminosa solo funciona en Pikachu.");
     if ((mon.item === "metal_powder" || mon.item === "quick_powder") && sp.num !== 132) out.push("Este polvo solo funciona en Ditto.");
+    const it = C.itemById.get(mon.item);
+    if (it && it.mega && !C.megaFits(it, sp)) out.push(`La ${it.es} solo sirve a ${it.mega.base}${sp.form && it.mega.dex === sp.num ? " en su forma normal" : ""}: ${sp.es} no puede megaevolucionar con ella.`);
+    if (C.megaFits(it, sp)) out.push(megaNote(it.mega, mon));
+    else if (!(it && it.mega) && formOf(mon)) out.push(megaNote(formOf(mon).mega, mon));
+    else if (megaBlocked(team(), mon)) out.push(`Aunque conoce Ascenso Draco, no puede megaevolucionar: solo puede haber una mega por equipo y ya la tiene ${displayName(team().mons[megaHolder(team())])}.`);
     if (mon.item.startsWith("power_") && mon.item !== "power_herb") out.push("Las piezas recias son para entrenar EVs: en combate reducen a la mitad la Velocidad.");
     return out;
   }
@@ -345,15 +421,30 @@
       return;
     }
     const sp = spOf(mon);
-    const stats = C.calcStats(mon);
+    const bf = formOf(mon);
+    const view = viewOf(mon);
+    const vsp = spOf(view);
+    const isMega = view !== mon;
+    const stats = C.calcStats(view);
     const nat = C.natureById.get(mon.nat);
     const abilities = C.speciesAbilities(sp);
+    const megaAb = isMega ? bf.mega.abilities[0] : null;
+    const abOptions = abilities.map((a) => `<option value="${a.ability.id}"${a.ability.id === mon.ab ? " selected" : ""}>${esc(a.ability.es)}${a.hidden ? " (oculta)" : ""}</option>`).join("");
+    const formPick = bf ? `<div class="c-form-pick" role="group" aria-label="Forma que se muestra">
+            <span class="c-small">Forma:</span>
+            <button type="button" class="v-chip" data-form="0" aria-pressed="${!isMega}">${esc(sp.es)}</button>
+            <button type="button" class="v-chip" data-form="1" aria-pressed="${isMega}">${bf.mega.kind === "primal" ? "🔴" : "💎"} ${esc(bf.mega.name)}</button>
+          </div>` : "";
+    const abField = isMega
+      ? `<div class="v-field"><span>Habilidad (${bf.mega.kind === "primal" ? "primigenia" : "mega"})</span><div class="v-input c-ab-fixed" title="${esc(megaAb ? megaAb.desc : "")}">${esc(megaAb ? megaAb.name : "Sin habilidad todavía")}</div>
+          <small class="c-small">Antes de transformarse: <select class="v-select c-ab-base" id="c-ed-ab" aria-label="Habilidad de la forma normal">${abOptions}</select></small></div>`
+      : `<label class="v-field"><span>Habilidad</span><select class="v-select" id="c-ed-ab">${abOptions}</select></label>`;
     const total = C.evTotal(mon);
     const warns = itemWarnings(mon);
     const isOpen = (k) => (openSecs ? openSecs[k] !== false : !isMobile() || k === "set");
     ed.innerHTML = `${nav}
       <div class="c-ed-head">
-        <img class="pixel c-ed-sprite" src="${spriteUrl(sp)}" alt="${esc(sp.es)}" width="112" height="112">
+        <img class="pixel c-ed-sprite" src="${spriteUrl(vsp)}" alt="${esc(vsp.es)}" width="112" height="112">
         <div class="c-ed-id">
           <div class="c-ed-row3">
             <div class="v-field"><span>Especie</span><div id="c-ed-species"></div></div>
@@ -363,7 +454,8 @@
               <button type="button" class="v-chip" data-lvl="50" aria-pressed="${mon.lvl === 50}">50</button><button type="button" class="v-chip" data-lvl="100" aria-pressed="${mon.lvl === 100}">100</button></div>
             </div>
           </div>
-          <div class="c-ed-tags">${sp.types.map(typeChip).join("")}<span class="c-small">#${sp.num} · ${esc(sp.en)} · base ${sp.base.reduce((a, b) => a + b, 0)}</span>${sp.treasure ? '<span class="v-badge">Tesoro</span>' : ""}</div>
+          <div class="c-ed-tags">${vsp.types.map(typeChip).join("")}<span class="c-small">#${sp.num} · ${esc(isMega ? vsp.es : sp.en)} · base ${vsp.base.reduce((a, b) => a + b, 0)}</span>${sp.treasure ? '<span class="v-badge">Tesoro</span>' : ""}</div>
+          ${formPick}
         </div>
         <div class="c-ed-tools">
           <button type="button" class="v-btn is-ghost is-sm" data-move="-1" ${selected === 0 ? "disabled" : ""} title="Mover a la izquierda">← Mover</button>
@@ -374,8 +466,8 @@
 
       <details class="c-sec" data-sec="set"${isOpen("set") ? " open" : ""}>
         <summary>Habilidad, objeto y naturaleza</summary>
-        <div class="c-sec-body c-ed-row3">
-          <label class="v-field"><span>Habilidad</span><select class="v-select" id="c-ed-ab">${abilities.map((a) => `<option value="${a.ability.id}"${a.ability.id === mon.ab ? " selected" : ""}>${esc(a.ability.es)}${a.hidden ? " (oculta)" : ""}</option>`).join("")}</select></label>
+        <div class="c-sec-body c-ed-row3${isMega ? " is-mega" : ""}">
+          ${abField}
           <div class="v-field"><span>Objeto</span><div id="c-ed-item"></div></div>
           <label class="v-field"><span>Naturaleza</span><select class="v-select" id="c-ed-nat">${C.natures.map((n) => `<option value="${n.id}"${n.id === mon.nat ? " selected" : ""}>${esc(n.es)}${n.up !== n.down ? ` (↑${C.STAT_SHORT[n.up]} ↓${C.STAT_SHORT[n.down]})` : " (neutra)"}</option>`).join("")}</select></label>
         </div>
@@ -392,8 +484,9 @@
       </details>
 
       <details class="c-sec" data-sec="stats"${isOpen("stats") ? " open" : ""}>
-        <summary>Estadísticas, EVs e IVs <span class="c-sum-note" id="c-ev-sum">${total}/510 EVs</span></summary>
+        <summary>Estadísticas, EVs e IVs <span class="c-sum-note" id="c-ev-sum">${total}/510 EVs</span>${isMega ? ` <span class="v-badge">${esc(vsp.es)}</span>` : ""}</summary>
         <div class="c-sec-body">
+          ${isMega ? `<p class="v-note c-mb"><span>Mostrando las estadísticas de <strong>${esc(vsp.es)}</strong>. Los EVs, los IVs y la naturaleza son los mismos que en la forma normal.</span></p>` : bf ? `<p class="c-small c-mb">Mostrando la forma normal. Elige <strong>${esc(bf.mega.name)}</strong> en «Forma» para ver sus estadísticas.</p>` : ""}
           <div class="c-presets">
             <span class="c-small">EVs:</span>
             <button type="button" class="v-chip" data-ev="1,5,0">252 Atq · 252 Vel · 4 PS</button>
@@ -412,7 +505,7 @@
           </div>
           <div class="c-stats" role="table" aria-label="Estadísticas">
             <div class="c-stat c-stat-headrow" role="row"><span role="columnheader">Stat</span><span role="columnheader">Base</span><span role="columnheader" class="c-hide-m">EVs</span><span role="columnheader">EV</span><span role="columnheader">IV</span><span role="columnheader">Total</span><span role="columnheader" class="c-hide-m"></span></div>
-            ${stats.map((v, i) => statRow(mon, sp, nat, i, v)).join("")}
+            ${stats.map((v, i) => statRow(mon, vsp, nat, i, v)).join("")}
           </div>
           <p class="c-ev-left" id="c-ev-left">${evLeftText(total)}</p>
           <p class="c-small">Fórmula oficial: PS = ⌊(2·Base + IV + ⌊EV/4⌋)·Nv/100⌋ + Nv + 10; resto = ⌊(⌊(2·Base + IV + ⌊EV/4⌋)·Nv/100⌋ + 5)·Naturaleza⌋. En Diosesmon el nivel máximo lo marcan tus medallas.</p>
@@ -421,7 +514,16 @@
 
     combo($("#c-ed-species"), { label: "Cambiar especie", value: sp.es, placeholder: "Buscar Pokémon…", options: speciesOptions, onPick: (id) => pickSpecies(id) });
     const item = C.itemById.get(mon.item);
-    combo($("#c-ed-item"), { label: "Objeto", value: item ? item.es : "", placeholder: "Sin objeto · buscar…", options: itemOptions, onPick: (id) => { mon.item = id; commit(true); } });
+    combo($("#c-ed-item"), { label: "Objeto", value: item ? item.es : "", placeholder: "Sin objeto · buscar…", options: itemOptionsFor(mon), onPick: (id) => {
+      const other = isMegaStone(id) ? megaHolder(team(), selected) : -1;
+      if (other >= 0) {
+        const o = team().mons[other];
+        toast(`Solo puede haber una mega por equipo: ${displayName(o)} ya lleva la ${C.itemById.get(o.item).es}.`);
+        renderEditor();
+        return;
+      }
+      mon.item = id; commit(true);
+    } });
     for (let i = 0; i < 4; i++) {
       const mv = C.moveById.get(mon.moves[i]);
       combo($(`#c-ed-move-${i}`), {
@@ -458,6 +560,13 @@
     lvl.addEventListener("change", () => { mon.lvl = Math.min(100, Math.max(1, Math.round(Number(lvl.value)) || 100)); commit(true); });
     $$("[data-lvl]", ed).forEach((b) => b.addEventListener("click", () => { mon.lvl = Number(b.dataset.lvl); commit(true); }));
     $("#c-ed-ab").addEventListener("change", (e) => { mon.ab = e.target.value; commit(true); });
+    $$("#c-editor [data-form]").forEach((b) => b.addEventListener("click", () => {
+      const t = team();
+      t.noMega = (t.noMega || []).filter((x) => x !== selected);
+      if (b.dataset.form === "0") t.noMega.push(selected);
+      commit(true);
+      $(`#c-editor [data-form="${b.dataset.form}"]`)?.focus();
+    }));
     $("#c-ed-nat").addEventListener("change", (e) => { mon.nat = e.target.value; commit(true); });
     $$("[data-move]", ed).forEach((b) => b.addEventListener("click", () => {
       const to = selected + Number(b.dataset.move);
@@ -515,7 +624,7 @@
     commit(false);
   }
   function refreshStats(mon, changed, typing) {
-    const stats = C.calcStats(mon);
+    const stats = C.calcStats(viewOf(mon));
     const ref = mon.lvl * 4.6 + 40;
     $$(".c-stat[data-stat]").forEach((row) => {
       const i = Number(row.dataset.stat);
@@ -628,7 +737,8 @@
     if (replace) {
       const t = team();
       const src = result.teams[0];
-      t.mons = makeTeam("", src.mons).mons;
+      if (src.mons.length > t.size) t.size = 6;
+      t.mons = makeTeam("", src.mons, t.size).mons;
       t.checks = {};
       if (src.name) t.name = src.name.slice(0, 40);
       count = src.mons.length;
@@ -644,6 +754,7 @@
     save();
     renderAll();
     const teamsTxt = result.teams.length > 1 && !replace ? ` en ${result.teams.length} equipos` : "";
+    result.warnings.push(...megaStripped.splice(0));
     report(`<div><strong>Importados ${count} Pokémon${teamsTxt}.</strong>${result.warnings.length ? ` Revisa estos avisos:${warnList(result.warnings)}` : " Todo reconocido."}</div>`, result.warnings.length ? "" : "is-ok");
   }
   const warnList = (list) => (list.length ? `<ul class="c-warn-list">${list.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>` : "");
@@ -668,7 +779,9 @@
         <div class="c-row"><button class="v-btn is-sm" type="button" id="c-shared-ok">Guardar como equipo nuevo</button><button class="v-btn is-ghost is-sm" type="button" id="c-shared-no">Descartar</button></div></div>`;
       box.hidden = false;
       $("#c-shared-ok").addEventListener("click", () => {
-        const nt = makeTeam(t.name, t.mons);
+        const nt = makeTeam(t.name, t.mons, t.size);
+        const stripped = megaStripped.splice(0);
+        if (stripped.length) setTimeout(() => toast(stripped[0]), 600);
         store.teams.push(nt); store.active = nt.id; selected = 0; save();
         box.hidden = true; showTab("equipos"); renderAll();
         toast(`Equipo «${nt.name}» guardado.`);
@@ -685,8 +798,16 @@
   // ---------- Análisis ----------
   const fmtMult = (m) => (m === 0 ? "0" : m === 0.25 ? "¼" : m === 0.5 ? "½" : m === 1 ? "" : m === 1.25 ? "×1,25" : `×${m}`);
   const damaging = (mon) => mon.moves.map((id) => C.moveById.get(id)).filter((mv) => mv && mv.cat > 0);
+  // Pokémon del equipo tal y como combaten: con su mega o primigenia si está activada.
+  function battleMons(t) {
+    return t.mons.map((mon, i) => {
+      if (!mon) return null;
+      const bf = megaOn(t, i) ? formOf(mon, t) : null;
+      return bf ? bf.mon : mon;
+    }).filter(Boolean);
+  }
   function teamAnalysis(t) {
-    const mons = t.mons.filter(Boolean);
+    const mons = battleMons(t);
     const profiles = mons.map(C.defensiveProfile);
     const rows = C.types.map((type) => {
       const vals = profiles.map((p) => p[type.index]);
@@ -730,8 +851,23 @@
     const uncovered = A.coverage.filter((c) => c.best < 1);
     const noSE = A.coverage.filter((c) => c.best >= 0 && c.best <= 1);
     const speedSorted = A.stats.slice().sort((a, b) => b.stats[5] - a.stats[5]);
+    const forms = t.mons.map((mon, i) => (mon ? { i, mon, bf: formOf(mon, t) } : null)).filter((f) => f && f.bf);
+    const formsHtml = forms.length ? `<section class="v-section c-forms">
+        <h3 class="c-h3">Formas especiales en el análisis</h3>
+        <p class="c-small">Activa las megas y regresiones primigenias que quieras tener en cuenta: el análisis usa entonces sus tipos, sus estadísticas y su habilidad.</p>
+        <div class="c-forms-list">${forms.map(({ i, mon, bf }) => {
+          const on = megaOn(t, i);
+          const msp = C.speciesById.get(bf.mon.sp);
+          return `<button type="button" class="c-form-chip v-card${on ? " is-on" : ""}" data-mega="${i}" aria-pressed="${on}">
+            <img class="pixel" src="${spriteUrl(on ? msp : spOf(mon))}" alt="" width="48" height="48">
+            <span><b>${esc(on ? bf.mega.name : displayName(mon))}</b><small>${on ? `${msp.types.map(typeChip).join("")}${bf.ability ? ` ${esc(bf.ability)}` : ""}` : `Forma normal · ${esc(bf.mega.name)} desactivada`}</small></span>
+            <span class="c-form-switch" aria-hidden="true">${on ? "ON" : "OFF"}</span>
+          </button>`;
+        }).join("")}</div>
+        <p class="c-small c-mt">Solo puede haber <strong>una mega por equipo</strong>; las Regresiones Primigenias no cuentan.</p>
+      </section>` : "";
     const head = A.mons.map((mon) => `<span class="c-mx-mon" title="${esc(displayName(mon))}"><img class="pixel" src="${spriteUrl(spOf(mon))}" alt="${esc(displayName(mon))}" width="40" height="40"></span>`).join("");
-    const pad = Math.max(0, 6 - A.mons.length);
+    const pad = Math.max(0, t.size - A.mons.length);
     const matrix = A.rows.map((r) => {
       const cls = r.weak >= 3 ? " is-bad" : r.weak >= 2 && r.resist + r.immune === 0 ? " is-warn" : "";
       const cells = r.vals.map((v) => `<span class="c-mx-cell ${v === 0 ? "is-imm" : v > 1 ? (v >= 4 ? "is-x4" : "is-weak") : v < 1 ? "is-res" : ""}">${fmtMult(v)}</span>`).join("") + '<span class="c-mx-cell is-pad"></span>'.repeat(pad);
@@ -742,6 +878,7 @@
     box.innerHTML = `
       <h2 class="v-title">Análisis de «${esc(t.name)}»</h2>
       <p class="v-intro">Calculado con las estadísticas reales de cada set (nivel, EVs, IVs y naturaleza) y teniendo en cuenta habilidades como Levitación, Absorbe Agua o Sebo.</p>
+      ${formsHtml}
       <div class="v-grid cols-4 c-sum">
         <div class="v-card c-sum-card ${danger.length ? "is-bad" : "is-ok"}"><span>Debilidades peligrosas</span><strong>${danger.length}</strong><small>${danger.length ? danger.map((r) => esc(r.type.es)).join(", ") : "Ningún tipo amenaza a medio equipo"}</small></div>
         <div class="v-card c-sum-card ${uncovered.length ? "is-bad" : "is-ok"}"><span>Tipos que resisten todo</span><strong>${A.hasMoves ? uncovered.length : "—"}</strong><small>${A.hasMoves ? (uncovered.length ? uncovered.map((c) => esc(c.type.es)).join(", ") : "Siempre pegas al menos neutro") : "Faltan movimientos de daño"}</small></div>
@@ -796,6 +933,16 @@
       </div>`;
   }
 
+  $("#c-analysis").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-mega]");
+    if (!b) return;
+    const t = team();
+    const i = Number(b.dataset.mega);
+    t.noMega = megaOn(t, i) ? [...(t.noMega || []), i] : (t.noMega || []).filter((x) => x !== i);
+    save(); renderAnalysis();
+    $(`#c-analysis [data-mega="${i}"]`)?.focus();
+  });
+
   // ---------- Checklist ----------
   const SPEED_CONTROL = new Set(["tailwind", "trickroom", "thunderwave", "icywind", "electroweb", "stickyweb", "glare", "stunspore", "nuzzle", "scaryface", "stringshot", "rocktomb", "bulldoze", "lowsweep", "mudshot", "agility", "rockpolish", "dragondance", "shellsmash", "quiverdance", "shiftgear", "autotomize", "flamecharge", "trailblaze", "cottonspore", "bleakwindstorm"]);
   const SPEED_ABIL = new Set(["speedboost", "swiftswim", "chlorophyll", "sandrush", "slushrush", "unburden", "prankster"]);
@@ -806,9 +953,9 @@
     const res = {};
     const names = (list) => list.map(displayName).join(", ");
     const missingMoves = mons.filter((m) => m.moves.filter(Boolean).length < 4);
-    res["seis-cuatro"] = mons.length === 6 && !missingMoves.length
-      ? [true, "Equipo completo."]
-      : [false, mons.length < 6 ? `Faltan ${6 - mons.length} Pokémon.` : `Sin 4 movimientos: ${names(missingMoves)}.`];
+    res["seis-cuatro"] = mons.length === t.size && !missingMoves.length
+      ? [true, `Equipo completo (${t.size}).`]
+      : [false, mons.length < t.size ? `Faltan ${t.size - mons.length} Pokémon.` : `Sin 4 movimientos: ${names(missingMoves)}.`];
     const noItem = mons.filter((m) => !m.item);
     res.objetos = mons.length && !noItem.length ? [true, "Todos equipados."] : [false, mons.length ? `Sin objeto: ${names(noItem)}.` : "No hay Pokémon."];
     const lowEV = mons.filter((m) => C.evTotal(m) < 508);
@@ -880,14 +1027,15 @@
     ["todos", "Todo"], ["fundamentos", "🧩 Fundamentos"], ["roles", "⚔️ Roles"], ["estrategia", "🧠 Estrategia"],
     ["objetos", "🎒 Objetos"], ["diosesmon", "🐉 Diosesmon"], ["torneos", "📜 Torneos y reglas"],
   ];
-  const ITEM_ICONS = { of: "⚔️", ve: "⚡", de: "🛡️", so: "🧩", ba: "🍓", cr: "🏋️" };
+  const ITEM_ICONS = { of: "⚔️", ve: "⚡", de: "🛡️", so: "🧩", ba: "🍓", cr: "🏋️", mg: "💎" };
   let guideCat = "todos";
   let guideItemCat = "";
   let guideEntries = null;
   function buildGuide() {
     const tips = window.DIOSESMON_COMP_ITEM_TIPS || {};
     const base = (window.DIOSESMON_COMP_GUIDE || []).map((g) => ({ ...g, kind: "guide", search: C.norm(`${g.title} ${g.tags} ${g.text} ${g.tip}`) }));
-    const objs = C.items.map((it) => {
+    // Las megapiedras tienen su propia sección (megas.html); aquí solo los objetos de combate.
+    const objs = C.items.filter((it) => it.cat !== "mg").map((it) => {
       const extra = tips[it.id] || {};
       return {
         kind: "item", id: `obj-${it.id}`, cat: "objetos", sub: it.cat, ico: ITEM_ICONS[it.cat], title: it.es, en: it.en,
@@ -901,7 +1049,7 @@
     if (!guideEntries) {
       buildGuide();
       $("#c-guide-cats").innerHTML = GUIDE_CATS.map(([id, label]) => `<button type="button" class="v-chip" data-cat="${id}" aria-pressed="${id === guideCat}">${label}</button>`).join("");
-      $("#c-guide-itemcats").innerHTML = [["", "Todos los objetos"], ...Object.entries(C.ITEM_CATS)].map(([id, label]) => `<button type="button" class="v-chip" data-icat="${id}" aria-pressed="${id === guideItemCat}">${id ? ITEM_ICONS[id] + " " : ""}${label}</button>`).join("");
+      $("#c-guide-itemcats").innerHTML = [["", "Todos los objetos"], ...Object.entries(C.ITEM_CATS).filter(([id]) => id !== "mg")].map(([id, label]) => `<button type="button" class="v-chip" data-icat="${id}" aria-pressed="${id === guideItemCat}">${id ? ITEM_ICONS[id] + " " : ""}${label}</button>`).join("");
       $("#c-guide-cats").addEventListener("click", (e) => {
         const b = e.target.closest("[data-cat]"); if (!b) return;
         guideCat = b.dataset.cat; guideItemCat = "";
@@ -946,6 +1094,7 @@
 
   // ---------- Inicio ----------
   renderAll();
+  if (loadStripped.length) { save(); toast(loadStripped.length > 1 ? `Solo puede haber una mega por equipo: se han quitado ${loadStripped.length} megapiedras de más.` : loadStripped[0]); }
   let startTab = "equipos";
   try { startTab = localStorage.getItem(TAB_KEY) || "equipos"; } catch (error) { /* nada */ }
   const hashTab = location.hash.replace("#", "");

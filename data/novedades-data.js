@@ -8,6 +8,19 @@
 window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-21",
+    tag: "mejora",
+    title: "Competitivo: megas y equipos de 3 o 4",
+    items: [
+      "Sugerencias del jugador <strong>HAYAIKEN</strong>. ¡Gracias!",
+      "Ya puedes equipar las <strong>megapiedras</strong> y los prismas de Kyogre y Groudon. La de tu Pokémon sale la primera en la lista de objetos.",
+      "Nuevo selector <strong>«Forma»</strong>: elige la mega o la primigenia y verás sus tipos, su habilidad y sus estadísticas con tus EVs, IVs y naturaleza. El <strong>Análisis</strong> también la tiene en cuenta (Turbulencia, Mar del Albor, Piel Celeste…).",
+      "Solo se permite <strong>una mega por equipo</strong>. Las Regresiones Primigenias no cuentan.",
+      "Equipos de <strong>6, 4 o 3 Pokémon</strong> para regulaciones o la Torre Batalla.",
+    ],
+    links: [["Ir a Competitivo", "competitivo.html"]],
+  },
+  {
+    date: "2026-10-21",
     tag: "nuevo",
     title: "Nueva sección: Objetos",
     items: [
