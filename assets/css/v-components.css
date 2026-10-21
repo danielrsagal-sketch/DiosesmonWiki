@@ -128,3 +128,11 @@ html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 .type-chip { display: inline-block; padding: 1px 8px; color: #fff; background: var(--type-color, #555); border-radius: 5px; font-size: 11px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; text-shadow: 0 1px 0 rgba(0, 0, 0, .35); }
 .pixel { image-rendering: pixelated; }
 
+
+/* Banner clásico de la wiki (section.css) dentro de las páginas con componentes v-* */
+.v-main .sec-hero h1 { font-size: clamp(40px, 5vw, 58px); letter-spacing: -.025em; line-height: 1; }
+.v-main .sec-hero .sec-lead { margin-top: 14px; font-size: 18px; line-height: 1.55; }
+.v-main .sec-hero .eyebrow { margin: 0 0 10px; }
+@media (max-width: 760px) { .v-main .sec-hero .sec-lead { font-size: 16px; } }
+.v-main .sec-hero .hero-tips strong { color: #fff; }
+.v-main .sec-hero .hero-tips li:not(:has(img)) { padding-left: 13px; }

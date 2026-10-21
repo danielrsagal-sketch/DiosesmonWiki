@@ -1,0 +1,97 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="Objetos de Diosesmon: todos los objetos de Cobblemon 1.7.3, Mega Showdown y Navas ZA Megas con su receta, si su crafteo está desactivado en el servidor y dónde se consiguen (kits, tesoros, drops, Safari, cazas).">
+  <title>Objetos | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=18">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/v-components.css?v=4">
+  <link rel="stylesheet" href="assets/css/section.css?v=1">
+  <link rel="stylesheet" href="assets/css/objetos.css?v=1">
+  <script src="assets/js/site-nav.js?v=24" defer></script>
+  <script src="data/objetos-data.js?v=13" defer></script>
+  <script src="assets/js/objetos.js?v=4" defer></script>
+</head>
+<body style="--section-color: #ff8a3d">
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <a class="feedback-cta" href="feedback.html" title="Envíanos ideas, errores o datos que falten"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" width="44" height="44"><span><i aria-hidden="true"></i><b>¿Ideas o errores?</b> <em>Cuéntanos</em></span></a>
+    </div>
+  </header>
+
+  <main class="v-shell v-main">
+    <section class="sec-hero">
+      <div>
+        <p class="eyebrow">OBJETOS</p>
+        <h1>Objetos</h1>
+        <p class="sec-lead">Todos los objetos del servidor con su receta, <strong>si su crafteo está desactivado en Diosesmon</strong> y dónde se consiguen: kits, tesoros, drops de Pokémon, Zona Safari, cazas… Datos de Cobblemon 1.7.3 y de los mods <strong>Mega Showdown</strong> y <strong>Navas ZA Megas</strong>.</p>
+        <ul class="hero-tips ob-stats" id="ob-stats" aria-label="Resumen"></ul>
+      </div>
+      <div class="sec-art" aria-hidden="true">
+        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/225.png" alt="">
+        <img class="sec-item pixel" src="assets/img/items/cobblemon/exp_share.png" alt="">
+      </div>
+    </section>
+
+    <section class="v-section ob-notes" aria-label="Avisos">
+      <p class="v-note is-bad"><span>⛔ <strong>Si un crafteo está desactivado, el objeto solo se consigue por las vías indicadas</strong> (kits, tesoros, drops, Zona Safari, cazas…). Aunque el juego te enseñe la receta, en el servidor no funciona.</span></p>
+      <p class="v-note"><span>🛠️ La lista de crafteos desactivados <strong>la mantiene el staff</strong> de Diosesmon y puede cambiar. ¿Algo no cuadra? <a href="feedback.html">Avísanos</a>. Las <strong>bayas</strong> tienen su propia página: <a href="bayas.html">Bayas y Abonos</a>.</span></p>
+    </section>
+
+    <section class="v-section" aria-labelledby="ob-list-title">
+      <h2 class="v-title" id="ob-list-title">Todos los objetos <span class="v-badge" id="ob-count"></span></h2>
+      <div class="v-card ob-filters">
+        <label class="v-field ob-search"><span>Buscar</span><span class="v-search"><input class="v-input" id="ob-q" type="search" placeholder="Nombre, efecto, kit, Pokémon que lo suelta…" autocomplete="off"></span></label>
+        <label class="v-field"><span>Categoría</span><select class="v-select" id="ob-cat"><option value="">Todas</option></select></label>
+        <label class="v-field"><span>Origen</span><select class="v-select" id="ob-origin"><option value="">Todos</option></select></label>
+        <div class="v-field ob-wide"><span>Crafteo en Diosesmon</span><div class="v-chips" id="ob-state" role="group" aria-label="Crafteo en Diosesmon">
+          <button class="v-chip" type="button" data-value="" aria-pressed="true">Todos</button>
+          <button class="v-chip" type="button" data-value="on" aria-pressed="false">✅ Se craftea</button>
+          <button class="v-chip" type="button" data-value="off" aria-pressed="false">⛔ Desactivado</button>
+          <button class="v-chip" type="button" data-value="none" aria-pressed="false">➖ Sin receta</button>
+        </div></div>
+        <div class="v-field ob-wide"><span>Dónde se consigue</span><div class="v-chips" id="ob-where" role="group" aria-label="Dónde se consigue">
+          <button class="v-chip" type="button" data-value="" aria-pressed="true">Da igual</button>
+          <button class="v-chip" type="button" data-value="kit" aria-pressed="false">🎁 Kits</button>
+          <button class="v-chip" type="button" data-value="tesoro" aria-pressed="false">🎰 Tesoros</button>
+          <button class="v-chip" type="button" data-value="drop" aria-pressed="false">🐾 Drops</button>
+          <button class="v-chip" type="button" data-value="safari" aria-pressed="false">🦒 Safari</button>
+          <button class="v-chip" type="button" data-value="caza" aria-pressed="false">🎯 Cazas</button>
+          <button class="v-chip" type="button" data-value="premio" aria-pressed="false">🏆 Premios</button>
+          <button class="v-chip" type="button" data-value="mundo" aria-pressed="false">🗺️ En el mundo</button>
+        </div></div>
+      </div>
+      <p class="ob-summary" id="ob-summary" aria-live="polite"></p>
+      <div class="ob-grid" id="ob-grid"></div>
+      <p class="ob-empty" id="ob-empty" hidden>Ningún objeto coincide con el filtro.</p>
+      <div class="ob-more"><button class="v-btn is-ghost" type="button" id="ob-more" hidden>Mostrar más</button></div>
+    </section>
+
+    <dialog class="ob-dialog" id="ob-dialog" aria-labelledby="ob-dialog-title">
+      <div class="ob-dialog-inner">
+        <button class="ob-close" type="button" id="ob-close" aria-label="Cerrar">✕</button>
+        <div id="ob-dialog-body"></div>
+      </div>
+    </dialog>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · OBJETOS</span><span>Cobblemon 1.7.3 · Mega Showdown · Navas ZA Megas · sugerencia de HAYAIKEN</span></footer>
+  </main>
+</body>
+</html>

@@ -13,9 +13,10 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/topbar.css?v=18">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
-  <link rel="stylesheet" href="assets/css/v-components.css?v=2">
+  <link rel="stylesheet" href="assets/css/v-components.css?v=4">
+  <link rel="stylesheet" href="assets/css/section.css?v=1">
   <link rel="stylesheet" href="assets/css/crianza.css?v=11">
-  <script src="assets/js/site-nav.js?v=22" defer></script>
+  <script src="assets/js/site-nav.js?v=24" defer></script>
   <script src="data/crianza-data.js?v=2" defer></script>
   <script src="data/safari-pokemon.js?v=4" defer></script>
   <script src="assets/js/crianza-shared.js?v=10" defer></script>
@@ -25,7 +26,7 @@
   <script src="data/cazas-data.js?v=3" defer></script>
   <script src="assets/js/cazas.js?v=2" defer></script>
 </head>
-<body>
+<body style="--section-color: #ff6fb1">
   <header class="dex-topbar">
     <div class="dex-header-inner">
       <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
@@ -42,19 +43,22 @@
   </header>
 
   <main class="v-shell v-main">
-    <section class="v-page-head">
+    <section class="sec-hero">
       <div>
-        <p class="v-kicker">Guardería · Cadenas de IVs</p>
+        <p class="eyebrow">GUARDERÍA Y CADENAS</p>
         <h1>Crianza</h1>
-        <p class="v-lead">Elige tu Pokémon y te armamos la cadena entera con las reglas de Diosesmon: qué breeders atrapar, qué pesa o brazal lleva cada uno, cuánto cuesta y cuánto tarda.</p>
-        <ul class="cr-head-tips" aria-label="Precios y reglas clave">
-          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/power-bracer.png" alt="" width="30" height="30" class="pixel">Objeto recio · <strong data-price-item>$500</strong></li>
-          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/oval-charm.png" alt="" width="30" height="30" class="pixel">Elegir sexo · <strong data-price-gender>$500</strong></li>
-          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/safari-ball.png" alt="" width="30" height="30" class="pixel">Safari · <strong>1 IV a 31</strong></li>
-          <li class="is-bad"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/destiny-knot.png" alt="" width="30" height="30" class="pixel">Lazo Destino · <strong>nunca</strong></li>
+        <p class="sec-lead">El mejor método del servidor para sacar Pokémon con IVs perfectos es la <strong>cadena de crianza</strong> con pesas y brazales. Elige tu Pokémon y te armamos la cadena completa: qué breeders atrapar, qué lleva cada uno, cuánto cuesta y cuánto tarda.</p>
+        <ul class="hero-tips" aria-label="Precios y reglas clave">
+          <li><img src="assets/img/items/cobblemon/power_weight.png" alt="">Pesas y brazales · <strong data-price-item>$500</strong></li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/oval-charm.png" alt="">Elegir sexo · <strong data-price-gender>$500</strong></li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/safari-ball.png" alt="">Safari: 1 IV a 31</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/destiny-knot.png" alt="">Lazo Destino: nunca</li>
         </ul>
       </div>
-      <img class="v-page-art cr-art" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/468.png" alt="" width="120" height="120">
+      <div class="sec-art" aria-hidden="true">
+        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/468.png" alt="">
+        <img class="sec-item" src="assets/img/items/cobblemon/power_bracer.png" alt="">
+      </div>
     </section>
 
     <nav class="v-tabs" aria-label="Secciones de Crianza" id="cr-tabs">

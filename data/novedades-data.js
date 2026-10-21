@@ -7,6 +7,31 @@
 //   links: botones al final [["Texto", "pagina.html"], …] (opcional)
 window.DIOSESMON_NOVEDADES = [
   {
+    date: "2026-10-21",
+    tag: "nuevo",
+    title: "Nueva sección: Objetos",
+    items: [
+      "Sugerencia del jugador <strong>HAYAIKEN</strong>. ¡Gracias!",
+      "Todos los objetos de Cobblemon, <strong>Mega Showdown</strong> y <strong>Navas ZA Megas</strong> con su receta (ingredientes con iconos y cantidades).",
+      "Cada objeto dice <strong>si su crafteo está desactivado en Diosesmon</strong> (por ejemplo, los Poké Snacks y los caramelos de IV) y <strong>dónde se consigue</strong>: kits, tesoros, Pokémon que lo sueltan, Zona Safari, cazas, gimnasios…",
+      "Las recetas y los crafteos desactivados son <strong>los reales del servidor</strong>, no los del mod: por ejemplo, la Veloz Ball y el resto de Poké Balls salen con su receta de Diosesmon.",
+      "Buscador y filtros por categoría, por estado del crafteo y por dónde se consigue.",
+    ],
+    links: [["Ver Objetos", "objetos.html"]],
+  },
+  {
+    date: "2026-10-21",
+    tag: "nuevo",
+    title: "Nueva sección: Megaevoluciones",
+    items: [
+      "Sugerencia del jugador <strong>HAYAIKEN</strong>. ¡Gracias!",
+      "Todas las <strong>megas del servidor</strong> (mods Mega Showdown y Navas ZA Megas) con sus estadísticas, habilidades, tipos y megapiedra, y cuánto ganan respecto a su forma normal.",
+      "Filtra por tipo, por megas clásicas o de <strong>Leyendas Z-A</strong>, y ordénalas por total, Ataque, Velocidad… También salen Kyogre y Groudon Primigenios.",
+      "Las megas de Z-A están activas en el servidor, pero su habilidad <strong>no es oficial</strong> (Leyendas Z-A no tiene habilidades): la página lo marca, avisa de que <strong>no coinciden con Pokémon Showdown</strong> (por ejemplo, Mega Staraptor) y explica por qué los mods no se actualizan al momento.",
+    ],
+    links: [["Ver Megaevoluciones", "megas.html"]],
+  },
+  {
     date: "2026-10-20",
     tag: "nuevo",
     title: "Llévate tu progreso a otro navegador",

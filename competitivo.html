@@ -13,15 +13,16 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/topbar.css?v=18">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
-  <link rel="stylesheet" href="assets/css/v-components.css?v=2">
+  <link rel="stylesheet" href="assets/css/v-components.css?v=4">
+  <link rel="stylesheet" href="assets/css/section.css?v=1">
   <link rel="stylesheet" href="assets/css/competitivo.css?v=1">
-  <script src="assets/js/site-nav.js?v=22" defer></script>
+  <script src="assets/js/site-nav.js?v=24" defer></script>
   <script src="data/competitivo-data.js?v=2" defer></script>
   <script src="data/competitivo-guia.js?v=2" defer></script>
   <script src="assets/js/competitivo-core.js?v=2" defer></script>
   <script src="assets/js/competitivo.js?v=2" defer></script>
 </head>
-<body>
+<body style="--section-color: #ff5a5a">
   <header class="dex-topbar">
     <div class="dex-header-inner">
       <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
@@ -38,13 +39,21 @@
   </header>
 
   <main class="v-shell v-main">
-    <section class="v-page-head" aria-labelledby="c-title">
+    <section class="sec-hero">
       <div>
-        <p class="v-kicker">Diosesmon · Modo competitivo</p>
-        <h1 id="c-title">Competitivo</h1>
-        <p class="v-lead">Monta tus equipos con estadísticas reales de Cobblemon 1.7.3: EVs, IVs, naturaleza, habilidad, objeto y movimientos que sí se aprenden en el servidor. Analiza tipos y velocidad, repasa el checklist y compártelo con otros jugadores.</p>
+        <p class="eyebrow">DIOSESMON · MODO COMPETITIVO</p>
+        <h1>Competitivo</h1>
+        <p class="sec-lead">Monta tus equipos con estadísticas reales de Cobblemon 1.7.3: EVs, IVs, naturaleza, habilidad, objeto y movimientos que sí se aprenden en el servidor. Analiza tipos y velocidad, repasa el checklist y compártelo con otros jugadores.</p>
+        <ul class="hero-tips">
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/choice-band.png" alt="">Constructor de equipos</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/expert-belt.png" alt="">Análisis de tipos</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">Formato Showdown</li>
+        </ul>
       </div>
-      <img class="v-page-art c-art" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png" alt="" width="120" height="120">
+      <div class="sec-art" aria-hidden="true">
+        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/445.png" alt="">
+        <img class="sec-item" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/choice-scarf.png" alt="">
+      </div>
     </section>
 
     <nav class="v-tabs" role="tablist" aria-label="Secciones de Competitivo">

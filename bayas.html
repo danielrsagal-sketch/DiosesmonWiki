@@ -13,13 +13,14 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/topbar.css?v=18">
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
-  <link rel="stylesheet" href="assets/css/v-components.css?v=2">
+  <link rel="stylesheet" href="assets/css/v-components.css?v=4">
+  <link rel="stylesheet" href="assets/css/section.css?v=1">
   <link rel="stylesheet" href="assets/css/bayas.css?v=2">
-  <script src="assets/js/site-nav.js?v=22" defer></script>
+  <script src="assets/js/site-nav.js?v=24" defer></script>
   <script src="data/bayas-data.js?v=1" defer></script>
   <script src="assets/js/bayas.js?v=1" defer></script>
 </head>
-<body>
+<body style="--section-color: #43db95">
   <header class="dex-topbar">
     <div class="dex-header-inner">
       <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
@@ -36,15 +37,16 @@
   </header>
 
   <main class="v-shell v-main">
-    <section class="v-page-head" aria-labelledby="bb-title">
+    <section class="sec-hero">
       <div>
-        <p class="v-kicker">Cultivo</p>
-        <h1 id="bb-title">Bayas y Abonos</h1>
-        <p class="v-lead">Las bayas de Cobblemon 1.7.3 con los datos reales del mod: qué hacen, cuánto dan, cuánto tardan, qué abono prefieren y con qué vecina mutan. Para organizar la granja sin adivinar.</p>
-        <ul class="bb-stats" id="bb-stats" aria-label="Resumen"></ul>
+        <p class="eyebrow">CULTIVO</p>
+        <h1>Bayas y Abonos</h1>
+        <p class="sec-lead">Las bayas de Cobblemon 1.7.3 con los datos reales del mod: qué hacen, cuánto dan, cuánto tardan, qué abono prefieren y con qué vecina mutan. Para organizar la granja sin adivinar.</p>
+        <ul class="hero-tips bb-stats" id="bb-stats" aria-label="Resumen"></ul>
       </div>
-      <div class="bb-art" aria-hidden="true">
-        <img class="pixel" src="assets/img/bayas/lum_berry.png" alt="" width="64" height="64">
+      <div class="sec-art" aria-hidden="true">
+        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/182.png" alt="">
+        <img class="sec-item" src="assets/img/bayas/lum_berry.png" alt="">
       </div>
     </section>
 

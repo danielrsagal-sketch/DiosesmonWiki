@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="Megaevoluciones de Diosesmon: todas las megas y Regresiones Primigenias del servidor con sus estadísticas, habilidades, megapiedra y cuánto ganan respecto a la forma normal.">
+  <title>Megaevoluciones | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=18">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/v-components.css?v=4">
+  <link rel="stylesheet" href="assets/css/section.css?v=1">
+  <link rel="stylesheet" href="assets/css/megas.css?v=3">
+  <script src="assets/js/site-nav.js?v=24" defer></script>
+  <script src="data/megas-data.js?v=1" defer></script>
+  <script src="assets/js/type-colors.js?v=1" defer></script>
+  <script src="assets/js/megas.js?v=3" defer></script>
+</head>
+<body style="--section-color: #c9a6ff">
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <a class="feedback-cta" href="feedback.html" title="Envíanos ideas, errores o datos que falten"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" width="44" height="44"><span><i aria-hidden="true"></i><b>¿Ideas o errores?</b> <em>Cuéntanos</em></span></a>
+    </div>
+  </header>
+
+  <main class="v-shell v-main">
+    <section class="sec-hero">
+      <div>
+        <p class="eyebrow">COMBATE</p>
+        <h1>Megaevoluciones</h1>
+        <p class="sec-lead">Todas las megas del servidor con sus estadísticas, habilidades y megapiedra, y cuánto mejoran respecto a su forma normal. Datos de Cobblemon 1.7.3 y de los mods <strong>Mega Showdown</strong> y <strong>Navas ZA Megas</strong>.</p>
+        <ul class="hero-tips mg-stats" id="mg-stats" aria-label="Resumen"></ul>
+      </div>
+      <div class="sec-art" aria-hidden="true">
+        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10034.png" alt="">
+        <img class="sec-item" src="assets/img/megas/charizardite_x.png" alt="">
+      </div>
+    </section>
+
+    <section class="v-section" aria-labelledby="mg-how-title">
+      <h2 class="v-title" id="mg-how-title">Cómo megaevolucionar</h2>
+      <div class="mg-how">
+        <article class="v-card"><img class="pixel" src="assets/img/megas/keystone.png" alt="" width="48" height="48"><div><h3>1. Una Megapulsera</h3><p>El entrenador necesita una <strong id="mg-bracelet">Megapulsera</strong>, que se hace con una <strong id="mg-keystone">Piedra activadora</strong>.</p></div></article>
+        <article class="v-card"><img class="pixel" src="assets/img/megas/charizardite_x.png" alt="" width="48" height="48"><div><h3>2. Su megapiedra</h3><p>El Pokémon tiene que llevar equipada <strong>su megapiedra</strong> (cada mega tiene la suya). Rayquaza no la necesita: le basta con conocer <strong>Ascenso Draco</strong>.</p></div></article>
+        <article class="v-card"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="" width="48" height="48"><div><h3>3. En combate</h3><p>Megaevoluciona durante el combate y vuelve a su forma normal al terminar. Solo puede megaevolucionar <strong>un Pokémon por combate</strong>.</p></div></article>
+      </div>
+    </section>
+
+    <section class="v-section" aria-labelledby="mg-za-title">
+      <h2 class="v-title" id="mg-za-title">Sobre las megas de Leyendas Z-A</h2>
+      <div class="mg-warn">
+        <p class="v-note"><span>⚠️ <strong>Sus habilidades no son oficiales.</strong> En Pokémon Leyendas Z-A los combates no usan habilidades, así que las megas nuevas de ese juego <strong>no tienen una habilidad oficial</strong>. Para que funcionen en Cobblemon, el mod <strong>Navas ZA Megas</strong> les pone una elegida por sus creadores (algunas inventadas, como Mega Sol o Dragonización). Por eso las marcamos como <em>«no oficial»</em>: pueden cambiar cuando se actualice el mod, y Mega Zeraora todavía no tiene ninguna.</span></p>
+        <p class="v-note is-bad"><span>🆚 <strong>No es lo mismo que Pokémon Showdown.</strong> Showdown también tuvo que elegir habilidades (y a veces stats) para estas megas por su cuenta, así que muchas <strong>no coinciden</strong> con las del servidor. Pasa mucho con <strong>Mega Staraptor</strong>. En Diosesmon <strong>vale siempre lo del mod</strong>, que es lo que ves en esta página: si en Showdown sale otra cosa, no es un error del servidor. Para calcular daños o montar equipos, usa los datos de aquí (o el <a href="competitivo.html">constructor de Competitivo</a>).</span></p>
+        <p class="v-note is-info"><span>🔧 <strong>¿Por qué no se actualizan los mods sin más?</strong> Mega Showdown y Navas ZA Megas están hechos para <strong>Cobblemon 1.7.3</strong>. Una versión nueva suele pedir otra versión de Cobblemon, y eso obliga a actualizar a la vez el servidor, el modpack de todos los jugadores y el resto de mods que dependen de Cobblemon (incluido el de Diosesmon), y a probar que no se rompa nada: Pokémon guardados, objetos, combates, spawns… En el futuro el servidor puede actualizar los mods, pero de momento no hay nada confirmado.</span></p>
+      </div>
+    </section>
+
+    <section class="v-section" aria-labelledby="mg-list-title">
+      <h2 class="v-title" id="mg-list-title">Todas las megas <span class="v-badge" id="mg-count"></span></h2>
+      <div class="v-card mg-filters">
+        <label class="v-field mg-search"><span>Buscar</span><span class="v-search"><input class="v-input" id="mg-q" type="search" placeholder="Pokémon, megapiedra o habilidad…" autocomplete="off"></span></label>
+        <label class="v-field"><span>Tipo</span><select class="v-select" id="mg-type"><option value="">Todos</option></select></label>
+        <label class="v-field"><span>Ordenar por</span><select class="v-select" id="mg-sort">
+          <option value="dex">N.º de Pokédex</option>
+          <option value="total">Total de stats</option>
+          <option value="gain">Lo que gana al megaevolucionar</option>
+          <option value="atk">Ataque</option>
+          <option value="spa">At. Esp.</option>
+          <option value="spe">Velocidad</option>
+          <option value="def">Defensa</option>
+          <option value="spd">Def. Esp.</option>
+          <option value="hp">PS</option>
+        </select></label>
+        <div class="v-field"><span>Origen</span><div class="v-chips" id="mg-source" role="group" aria-label="Origen">
+          <button class="v-chip" type="button" data-source="" aria-pressed="true">Todas</button>
+          <button class="v-chip" type="button" data-source="clasica" aria-pressed="false">Clásicas (X/Y y ROZA)</button>
+          <button class="v-chip" type="button" data-source="za" aria-pressed="false">Leyendas Z-A</button>
+        </div></div>
+        <label class="v-check mg-avail"><input type="checkbox" id="mg-avail" checked><span>Solo las de Pokémon disponibles en el servidor</span></label>
+      </div>
+      <div class="mg-grid" id="mg-grid"></div>
+      <p class="mg-empty" id="mg-empty" hidden>Ninguna mega coincide con el filtro.</p>
+    </section>
+
+    <footer class="site-footer"><span>DIOSESMONWIKI · MEGAEVOLUCIONES</span><span>Cobblemon 1.7.3 · Mega Showdown · Navas ZA Megas</span></footer>
+  </main>
+</body>
+</html>

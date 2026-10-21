@@ -36,6 +36,7 @@ data/                 Datos que usan las páginas
   competitivo-data.js   Generado por tools/build_competitivo_data.py (especies, movimientos, habilidades, objetos y naturalezas)
   competitivo-guia.js   Guía competitiva y checklist     ← editar a mano
   kits-data.js          Generado por tools/build_kits_data.py (desde extra/, no publicado)
+  objetos-data.js       Generado por tools/build_objetos_data.py (crafteos desactivados: editar tools/source/objetos-diosesmon.xlsx)
 tools/                Scripts que generan los datos (no forman parte de la web)
   source/               Excel de fusiones, logos originales y mapa original de la Zona Safari
   legacy/               Código antiguo de CheckDex/FusionDex (ya no se usa)
@@ -91,9 +92,13 @@ python tools/build_ev_data.py          # EVs y spawns para Entrenamiento EV
 python tools/build_crianza_data.py     # grupos huevo y géneros para Crianza (después de build_ev_data)
 python -I tools/build_bayas_data.py    # bayas y abonos (descarga los sprites que falten)
 python -I tools/build_competitivo_data.py  # datos del constructor de equipos
+python -I tools/build_megas_data.py     # megaevoluciones (lee los .jar de Mega Showdown y Navas ZA Megas de la carpeta mods)
 python tools/build_kits_data.py        # kits desde las capturas de extra/PaginaDioses/DiosesmonKits
 python tools/build_safari_pokemon.py   # Pokémon de cada zona del Safari desde tools/source/safari-pokemon.txt
 python tools/build_drop_overrides.py   # drops desactivados en Diosesmon desde tools/source/drops-diosesmon.xlsx (--crear para rehacer el Excel)
+python -I tools/build_objetos_data.py   # objetos, recetas y crafteos desactivados desde tools/source/objetos-diosesmon.xlsx (lee los .jar de la carpeta mods)
+python -I tools/build_objetos_data.py --crear  # crea el Excel de objetos o le añade los objetos nuevos sin perder lo escrito
+python -I tools/build_objetos_data.py --recetas "<instancia>/diosesmon-recetas.json"  # recetas reales del servidor: en el juego, con el mod diosesmon-recetas, usa /wikirecetas
 ```
 
 Al cambiar un archivo de `assets/` o `data/`, sube su número de versión (`?v=N`) en las páginas que lo cargan para que los navegadores no usen la copia antigua.

@@ -15,6 +15,8 @@ const SITE_SECTIONS = [
   { href: "tesoros.html", label: "Tesoros", ready: true, icon: "items/big-nugget", color: "#ffd442", description: "Los 8 gachapones del servidor con sus premios, skins y probabilidades." },
   { href: "crianza.html", label: "Crianza", ready: true, icon: "items/oval-charm", color: "#ff6fb1", description: "Planificador de cadena de crianza: 4, 5 o 6 IVs con breeders fáciles y costes." },
   { href: "competitivo.html", label: "Competitivo", ready: true, icon: "items/choice-band", color: "#ff5a5a", description: "Constructor de equipos con estadísticas reales, análisis de tipos, importar/exportar Showdown y checklist." },
+  { href: "megas.html", label: "Megas", ready: true, icon: "items/mega-ring", color: "#c9a6ff", description: "Todas las Megaevoluciones del servidor con sus stats, habilidades y megapiedra." },
+  { href: "objetos.html", label: "Objetos", ready: true, icon: "items/exp-share", color: "#ff8a3d", description: "Todos los objetos con su receta, dónde se consiguen y si su crafteo está desactivado en el servidor." },
   { href: "entrenamiento-ev.html", label: "Entrenamiento EV", ready: true, icon: "items/power-bracer", color: "#ff8a3d", description: "Piezas recias, vitaminas, combates 3v3, los mejores Pokémon para cada stat y los EVs de todos." },
   { href: "monturas.html", label: "Monturas", ready: true, icon: "items/air-balloon", color: "#4bb6ff", description: "54 Pokémon montables por tierra, agua y aire, con las mejores recomendaciones." },
   { href: "misiones.html", label: "Misiones", icon: "items/town-map", color: "#9ce35a", description: "Misiones del servidor, requisitos y recompensas." },
