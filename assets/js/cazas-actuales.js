@@ -12,16 +12,29 @@
   const stars = (count) => `<span class="caza-stars">${"★".repeat(count)}<i>${"★".repeat(5 - count)}</i></span>`;
   const pad = (value) => String(value).padStart(2, "0");
   let current = null;
+  // Fin de la rotación: la hora exacta que manda el mod, o inicio + 12 h.
+  const endOf = (data) => (data.expiresAt ? Date.parse(data.expiresAt) : Date.parse(data.startedAt) + HOURS * 3600000);
+  const extraChips = (hunt) => {
+    const chips = [
+      hunt.ball && `<span title="Poké Ball">◓ ${escapeHtml(hunt.ball)}</span>`,
+      hunt.ability && `<span title="Habilidad">✦ ${escapeHtml(hunt.ability)}</span>`,
+      hunt.eggGroup && `<span title="Grupo huevo">🥚 ${escapeHtml(hunt.eggGroup)}</span>`,
+      hunt.rarity && `<span title="Rareza">${escapeHtml(hunt.rarity)}</span>`,
+    ].filter(Boolean);
+    return chips.length ? `<span class="hc-extra">${chips.join("")}</span>` : "";
+  };
 
   const huntCard = (hunt, kind) => {
     const tier = tierOf(kind, hunt.stars);
     const href = kind === "crianza" ? `crianza.html#${hunt.id}${hunt.ivs === 4 ? "-4" : ""}` : `pokedex.html#pokemon/${hunt.id}`;
-    return `<a class="hc-hunt" href="${href}">
+    const rewards = Array.isArray(hunt.rewards) && hunt.rewards.length ? ` title="Recompensas: ${escapeHtml(hunt.rewards.join(" · "))}"` : "";
+    return `<a class="hc-hunt" href="${href}"${rewards}>
       <img src="${SPRITES}/${hunt.id}.png" alt="" width="72" height="72" loading="lazy">
       <span class="hc-hunt-body">
         <strong>${escapeHtml(hunt.name)}</strong>
         ${stars(hunt.stars)}
         ${kind === "crianza" ? `<small class="hc-ivs">${hunt.ivs}/6 IVs</small>` : ""}
+        ${extraChips(hunt)}
         <b class="hc-money">${tier ? money(tier.money) : "—"}</b>
       </span>
     </a>`;
@@ -29,8 +42,7 @@
 
   const draw = () => {
     if (!current) return;
-    const start = Date.parse(current.startedAt);
-    const end = start + HOURS * 3600000;
+    const end = endOf(current);
     const now = Date.now();
     section.hidden = false;
     if (now >= end) {
@@ -65,7 +77,7 @@
   setInterval(() => {
     const box = root.querySelector("[data-hc-timer]");
     if (!box) return draw();
-    const left = Date.parse(current.startedAt) + HOURS * 3600000 - Date.now();
+    const left = endOf(current) - Date.now();
     if (left <= 0) return draw();
     box.textContent = `${Math.floor(left / 3600000)} h ${pad(Math.floor(left / 60000) % 60)} min ${pad(Math.floor(left / 1000) % 60)} s`;
   }, 1000);

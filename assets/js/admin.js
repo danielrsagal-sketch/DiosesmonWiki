@@ -6,6 +6,11 @@
   const SPRITES = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon";
   const species = (window.POKEDEX_SPECIES ?? []).filter((entry) => entry.kind === "pokemon" || !entry.kind);
   const byName = new Map(species.map((entry) => [entry.name.toLowerCase(), entry]));
+  const byId = new Map(species.map((entry) => [entry.id, entry]));
+  // Datos extra que trae el mod (rareza, Poké Ball, habilidad, grupo huevo, recompensas): se conservan al guardar.
+  const EXTRAS = ["rarity", "ball", "ability", "eggGroup", "rewards"];
+  let extras = {};
+  let expiresAt = null;
   const tiers = Object.fromEntries((window.DIOSESMON_CAZAS?.kinds ?? []).map((kind) => [kind.kind, kind.tiers]));
   const $ = (id) => document.getElementById(id);
   const form = $("adm-form");
@@ -57,10 +62,16 @@
 
   const fill = (data) => {
     start.value = toLocalInput(new Date(data.startedAt));
+    expiresAt = data.expiresAt ?? null;
+    extras = {};
+    for (const kind of ["captura", "crianza"]) for (const hunt of data[kind] ?? []) {
+      const extra = Object.fromEntries(EXTRAS.filter((key) => hunt[key]).map((key) => [key, hunt[key]]));
+      if (Object.keys(extra).length) extras[`${kind}:${hunt.id}`] = extra;
+    }
     for (const kind of ["captura", "crianza"]) {
       document.querySelectorAll(`.adm-hunt[data-kind="${kind}"]`).forEach((slot, index) => {
         const hunt = data[kind]?.[index];
-        slot.querySelector("[data-name]").value = hunt?.name ?? "";
+        slot.querySelector("[data-name]").value = (hunt && byId.get(hunt.id)?.name) ?? hunt?.name ?? "";
         slot.querySelector("[data-stars]").value = String(hunt?.stars ?? index + 1);
         const ivs = slot.querySelector("[data-ivs]");
         if (ivs) ivs.value = String(hunt?.ivs ?? tiers.crianza?.find((tier) => tier.stars === (hunt?.stars ?? index + 1))?.ivs ?? 2);
@@ -103,9 +114,13 @@
       if (!entry) return [];
       const hunt = { id: entry.id, name: entry.name, stars: Number(slot.querySelector("[data-stars]").value) };
       if (kind === "crianza") hunt.ivs = Number(slot.querySelector("[data-ivs]").value);
-      return [hunt];
+      return [{ ...hunt, ...(extras[`${kind}:${entry.id}`] ?? {}) }];
     });
-    return { startedAt: fromLocalInput(start.value).toISOString(), captura: read("captura"), crianza: read("crianza") };
+    const startedAt = fromLocalInput(start.value).toISOString();
+    const body = { startedAt, captura: read("captura"), crianza: read("crianza") };
+    // La hora de rotación del mod solo vale si no se ha cambiado el inicio a mano.
+    if (expiresAt && Math.abs(Date.parse(expiresAt) - Date.parse(startedAt) - HOURS * 3600000) < 60000) body.expiresAt = expiresAt;
+    return body;
   };
 
   const say = (text, tone) => { status.textContent = text; status.className = `adm-status is-${tone}`; };
@@ -146,6 +161,28 @@
     } catch {
       say("No se pudo copiar automáticamente.", "bad");
     }
+  });
+
+  // Pegar lo que copia el mod con /wikicazas.
+  $("adm-paste").addEventListener("click", async () => {
+    $("adm-paste-card").hidden = false;
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text.trim().startsWith("{")) $("adm-paste-text").value = text;
+    } catch { /* sin permiso para leer el portapapeles: se pega a mano */ }
+    $("adm-paste-text").focus();
+  });
+  $("adm-paste-fill").addEventListener("click", () => {
+    let data;
+    try {
+      data = JSON.parse($("adm-paste-text").value);
+    } catch {
+      return say("Eso no es lo que copia /wikicazas (no es JSON válido).", "bad");
+    }
+    if (!data || !data.startedAt || !Array.isArray(data.captura) || !Array.isArray(data.crianza)) return say("Faltan datos: copia otra vez con /wikicazas.", "bad");
+    fill(data);
+    $("adm-paste-card").hidden = true;
+    say(`Rellenado con ${data.captura.length + data.crianza.length} cazas del mod. Revisa y pulsa «Guardar cazas».`, "ok");
   });
 
   // Carga lo guardado; si no hay nada, el respaldo de la wiki.

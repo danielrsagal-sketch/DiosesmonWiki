@@ -1,6 +1,7 @@
 // /api/cazas (lo llama worker/index.js)
 //   GET  → cazas actuales (público, lo usa Inicio).
-//   PUT  → guarda las cazas (solo admin: cabecera «Authorization: Bearer <contraseña>»).
+//   PUT  → guarda las cazas. Cabecera «Authorization: Bearer <clave>» con la contraseña de admin
+//          o con la clave de subida del mod de Cazas (secreto opcional CAZAS_UPLOAD_TOKEN).
 // Necesita en el Worker: el KV CAZAS_KV (en wrangler.jsonc) y el secreto ADMIN_PASSWORD (en el panel de Cloudflare).
 const KEY = "cazas-actuales";
 const MAX_HUNTS = 6;
@@ -21,6 +22,10 @@ async function sameSecret(given, expected) {
   return diff === 0;
 }
 
+// Textos opcionales que manda el mod (rareza, Poké Ball, habilidad, grupo huevo y recompensas).
+const text = (value, max) => String(value ?? "").replace(/[\u0000-\u001f]/g, "").trim().slice(0, max);
+const EXTRAS = ["rarity", "ball", "ability", "eggGroup"];
+
 function cleanHunts(list, withIvs) {
   if (!Array.isArray(list) || list.length > MAX_HUNTS) return null;
   const hunts = [];
@@ -35,6 +40,14 @@ function cleanHunts(list, withIvs) {
       const ivs = Number(item?.ivs);
       if (!Number.isInteger(ivs) || ivs < 1 || ivs > 6) return null;
       hunt.ivs = ivs;
+    }
+    for (const key of EXTRAS) {
+      const value = text(item?.[key], 40);
+      if (value) hunt[key] = value;
+    }
+    if (Array.isArray(item?.rewards)) {
+      const rewards = item.rewards.slice(0, 10).map((reward) => text(reward, 80)).filter(Boolean);
+      if (rewards.length) hunt.rewards = rewards;
     }
     hunts.push(hunt);
   }
@@ -57,7 +70,9 @@ export async function onRequestPut({ request, env }) {
   const problem = configError(env);
   if (problem) return json({ error: problem }, 503);
   const token = (request.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "");
-  if (!token || !(await sameSecret(token, env.ADMIN_PASSWORD))) {
+  const isAdmin = token && (await sameSecret(token, env.ADMIN_PASSWORD));
+  const isMod = token && !isAdmin && env.CAZAS_UPLOAD_TOKEN && (await sameSecret(token, env.CAZAS_UPLOAD_TOKEN));
+  if (!isAdmin && !isMod) {
     // Pequeña espera para frenar a quien pruebe contraseñas a lo bruto.
     await new Promise((resolve) => setTimeout(resolve, 800));
     return json({ error: "Contraseña incorrecta." }, 401);
@@ -72,7 +87,17 @@ export async function onRequestPut({ request, env }) {
   const captura = cleanHunts(body?.captura, false);
   const crianza = cleanHunts(body?.crianza, true);
   if (!Number.isFinite(startedAt) || !captura || !crianza) return json({ error: "Datos incompletos o no válidos." }, 400);
-  const saved = { startedAt: new Date(startedAt).toISOString(), captura, crianza, updatedAt: new Date().toISOString() };
+  const expiresAt = Date.parse(body?.expiresAt);
+  const saved = { startedAt: new Date(startedAt).toISOString(), captura, crianza };
+  if (Number.isFinite(expiresAt) && expiresAt > startedAt) saved.expiresAt = new Date(expiresAt).toISOString();
+  saved.source = isMod ? "mod" : "admin";
+  // El mod sube cada vez que cambian: si ya está guardado igual, no se gasta una escritura del KV.
+  const previous = await env.CAZAS_KV.get(KEY, "json");
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  if (isMod && previous && previous.startedAt === saved.startedAt && same(previous.captura, captura) && same(previous.crianza, crianza)) {
+    return json({ ...previous, unchanged: true });
+  }
+  saved.updatedAt = new Date().toISOString();
   await env.CAZAS_KV.put(KEY, JSON.stringify(saved));
   return json(saved);
 }

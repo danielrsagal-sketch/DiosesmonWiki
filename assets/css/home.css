@@ -215,6 +215,8 @@ main { overflow-x: clip; }
 .hc-hunt .caza-stars i { color: #3a4c6e; font-style: normal; }
 .hc-ivs { padding: 1px 8px; color: #08101f; background: var(--kind); border-radius: 999px; font: 700 10.5px "DM Mono", monospace; }
 .hc-money { color: #9ff0c8; font: 700 15px "DM Mono", monospace; }
+.hc-extra { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; max-width: 100%; }
+.hc-extra span { padding: 1px 6px; color: #c9d6ee; background: #16243d; border: 1px solid #253753; border-radius: 999px; font-size: 10.5px; line-height: 1.5; overflow-wrap: anywhere; }
 .hc-stale { display: grid; gap: 4px; margin: 0; padding: 14px 16px; color: #d8e3f6; background: #121d32; border: 1px dashed #3a4c6e; border-radius: 12px; font-size: 15px; }
 .hc-stale span { color: #9fb0cc; font-size: 14px; }
 .hc-stale b { color: #fff; }

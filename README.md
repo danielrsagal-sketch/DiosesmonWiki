@@ -68,6 +68,15 @@ Configuración una sola vez en Cloudflare:
 
 Si la API no responde (por ejemplo en local con `python -m http.server`), Inicio usa el bloque `current` de `data/cazas-data.js`. El botón «Copiar como respaldo» de admin genera ese bloque.
 
+### Mod de Cazas (`diosesmon-cazas`)
+
+Mod de cliente (Fabric 1.21.1, proyecto aparte en `Documents/diosesmon-cazas`). Lee las Cazas que el servidor envía al PokePad (las guarda `diosesmon-client` en `ClientCazasState`) sin abrir ningún menú: las pide al entrar al servidor y otra vez cuando rotan, y las sube con `PUT /api/cazas`.
+
+- Se autentica con una **clave de subida** distinta de la de admin: secreto `CAZAS_UPLOAD_TOKEN` del Worker. En el juego: `/wikicazas clave <clave>`.
+- `/wikicazas` las copia al portapapeles (botón «Pegar del mod» de admin.html) y las sube si hay clave. `/wikicazas estado`, `/wikicazas auto on|off`, `/wikicazas url <url>`.
+- Además de lo de siempre manda la hora exacta de rotación (`expiresAt`) y, por caza, `rarity`, `ball`, `ability`, `eggGroup` y `rewards`. Inicio los muestra si están.
+- Lee las clases de `diosesmon-client` por reflexión: si una actualización del mod de Diosesmon las cambia, avisa en el chat y hay que adaptarlo.
+
 ## Probar en local
 
 Desde la carpeta del proyecto:

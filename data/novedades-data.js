@@ -9,6 +9,16 @@ window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-21",
     tag: "mejora",
+    title: "Cazas de Inicio más al día",
+    items: [
+      "Las Cazas de Inicio se actualizarán <strong>solas</strong> cuando roten en el servidor, con la <strong>hora exacta</strong> de la siguiente rotación.",
+      "Cada caza podrá mostrar más datos: Poké Ball, habilidad, grupo huevo y rareza. Pasa el ratón por encima para ver sus recompensas.",
+    ],
+    links: [["Ver Cazas en Inicio", "index.html#home-cazas-section"]],
+  },
+  {
+    date: "2026-10-21",
+    tag: "mejora",
     title: "Competitivo: megas y equipos de 3 o 4",
     items: [
       "Sugerencias del jugador <strong>HAYAIKEN</strong>. ¡Gracias!",
