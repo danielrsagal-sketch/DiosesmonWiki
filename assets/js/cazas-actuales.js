@@ -27,7 +27,7 @@
   const huntCard = (hunt, kind) => {
     const tier = tierOf(kind, hunt.stars);
     const href = kind === "crianza" ? `crianza.html#${hunt.id}${hunt.ivs === 4 ? "-4" : ""}` : `pokedex.html#pokemon/${hunt.id}`;
-    const rewards = Array.isArray(hunt.rewards) && hunt.rewards.length ? ` title="Recompensas: ${escapeHtml(hunt.rewards.join(" · "))}"` : "";
+    const rewards = Array.isArray(hunt.rewards) && hunt.rewards.length ? ` title="Recompensas: ${escapeHtml(hunt.rewards.map((reward) => String(reward).replace(/<\/?[a-zA-Z_#:0-9-]+>/g, "")).join(" · "))}"` : "";
     return `<a class="hc-hunt" href="${href}"${rewards}>
       <img src="${SPRITES}/${hunt.id}.png" alt="" width="72" height="72" loading="lazy">
       <span class="hc-hunt-body">

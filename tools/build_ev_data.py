@@ -8,10 +8,13 @@ import json
 import re
 import tarfile
 from pathlib import Path
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from diosesmon_config import AVAILABLE_THROUGH  # noqa: E402
 
 from build_fosiles_monturas import CACHE, ROOT, download_icons
 
-MAX_NATIONAL_ID = 493  # Generaciones activas en el servidor: 1 a 4.
+MAX_NATIONAL_ID = AVAILABLE_THROUGH  # Generaciones activas en el servidor (diosesmon_config).
 STATS = ["hp", "attack", "defence", "special_attack", "special_defence", "speed"]
 RARITY_ORDER = {"common": 0, "uncommon": 1, "rare": 2, "ultra-rare": 3}
 

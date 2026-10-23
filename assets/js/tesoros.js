@@ -63,7 +63,7 @@
       </div>
       ${box.kind === "all" ? `
         <div class="tr-all">
-          <p>Este tesoro puede darte <strong>cualquier Pokémon disponible en el servidor</strong> (generaciones 1 a 4), y siempre con su <strong>habilidad oculta</strong>. Cada uno tiene un <strong>0,24%</strong> de probabilidad.</p>
+          <p>Este tesoro puede darte <strong>cualquier Pokémon disponible en el servidor</strong> (generaciones 1 a 5, incluida Teselia), y siempre con su <strong>habilidad oculta</strong>. Cada uno tiene alrededor de un <strong>0,15%</strong> de probabilidad.</p>
           <a class="sec-cta" href="pokedex.html"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="">Ver todos en la Pokédex</a>
         </div>` : `
         <div class="tr-legend"><span class="is-legend">Menos de 1%</span><span class="is-epic">1–2,5%</span><span class="is-rare">2,5–6%</span><span class="is-common">Más de 6%</span></div>
@@ -89,8 +89,10 @@
   // --- Simulador de apertura (solo por diversión: no da nada en el servidor) ---
   const sim = document.getElementById("tr-sim");
   const simStats = {};
+  // Caja «cualquier Pokémon»: las generaciones activas (1 a 5, hasta #649), todas con la misma probabilidad.
+  const ALL_POKEMON = 649;
   const pool = (box) => (box.kind === "all"
-    ? Array.from({ length: 493 }, (_, index) => ({ name: `#${index + 1}`, id: index + 1, chance: 0.24 }))
+    ? Array.from({ length: ALL_POKEMON }, (_, index) => ({ name: `#${index + 1}`, id: index + 1, chance: 100 / ALL_POKEMON }))
     : box.rewards);
   function roll(box) {
     const list = pool(box);

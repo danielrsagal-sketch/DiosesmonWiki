@@ -22,8 +22,9 @@ async function sameSecret(given, expected) {
   return diff === 0;
 }
 
-// Textos opcionales que manda el mod (rareza, Poké Ball, habilidad, grupo huevo y recompensas).
-const text = (value, max) => String(value ?? "").replace(/[\u0000-\u001f]/g, "").trim().slice(0, max);
+// Textos opcionales que manda el mod (rareza, Poké Ball, habilidad, grupo huevo y recompensas),
+// sin caracteres de control ni etiquetas de color del servidor (<gold>…).
+const text = (value, max) => String(value ?? "").replace(/[\u0000-\u001f]/g, "").replace(/<\/?[a-zA-Z_#:0-9-]+>/g, "").trim().slice(0, max);
 const EXTRAS = ["rarity", "ball", "ability", "eggGroup"];
 
 function cleanHunts(list, withIvs) {

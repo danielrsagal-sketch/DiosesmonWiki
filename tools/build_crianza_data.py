@@ -7,9 +7,12 @@ Uso: python tools/build_crianza_data.py  (después de build_ev_data.py)
 import json
 import re
 from pathlib import Path
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from diosesmon_config import AVAILABLE_THROUGH  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-MAX_NATIONAL_ID = 493
+MAX_NATIONAL_ID = AVAILABLE_THROUGH  # Generaciones activas en el servidor (diosesmon_config).
 
 
 def js_value(path, name):

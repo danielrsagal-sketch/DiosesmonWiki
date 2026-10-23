@@ -15,7 +15,7 @@
     { key: "trf", label: "Espacio Raro físico", hint: "Vel 0", trickRoom: true, stats: () => ["hp", "atk", "def", "spd"] },
     { key: "tre", label: "Espacio Raro especial", hint: "Vel 0", trickRoom: true, stats: () => ["hp", "def", "spa", "spd"] },
   ];
-  // Pokémon competitivos de las generaciones 1 a 4 (que se pueden criar), con su papel habitual.
+  // Pokémon competitivos de las generaciones 1 a 5 (que se pueden criar), con su papel habitual.
   const COMPETITIVE = [
     [445, "Físico"], [373, "Físico"], [248, "Físico"], [149, "Físico"], [376, "Físico"], [212, "Físico"], [448, "Mixto"], [286, "Físico"],
     [130, "Físico"], [461, "Físico"], [473, "Físico"], [472, "Defensivo"], [392, "Mixto"], [214, "Físico"], [68, "Físico"], [475, "Físico"],
@@ -26,6 +26,9 @@
     [3, "Especial"], [6, "Especial"], [9, "Especial"], [272, "Especial"], [460, "Especial"], [471, "Especial"], [469, "Especial"], [26, "Especial"],
     [242, "Defensivo"], [227, "Defensivo"], [197, "Defensivo"], [134, "Defensivo"], [36, "Soporte"], [437, "Defensivo"], [205, "Defensivo"], [423, "Defensivo"],
     [73, "Defensivo"], [477, "Defensivo"], [169, "Soporte"], [442, "Soporte"], [454, "Físico"], [80, "Defensivo"], [59, "Físico"], [112, "Físico"],
+    [530, "Físico"], [635, "Especial"], [609, "Especial"], [612, "Físico"], [534, "Físico"], [553, "Físico"], [598, "Defensivo"], [637, "Especial"],
+    [571, "Especial"], [560, "Defensivo"], [625, "Físico"], [591, "Defensivo"], [596, "Especial"], [576, "Soporte"], [497, "Especial"], [500, "Mixto"],
+    [503, "Físico"], [620, "Físico"], [579, "Especial"], [593, "Defensivo"], [589, "Físico"], [563, "Defensivo"], [547, "Soporte"], [604, "Especial"],
   ];
   const ROLE_COLORS = { Físico: "var(--warn)", Especial: "var(--info)", Mixto: "var(--gold-2)", Defensivo: "var(--ok)", Soporte: "var(--female)" };
   // Espera de crianza y slots según el rango.

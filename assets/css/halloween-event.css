@@ -1,0 +1,164 @@
+/* Página del evento de Halloween (halloween.html). Colores propios: se ven igual con o sin el tema de Halloween. */
+.hw-page { --hw-orange: #ff8c1a; --hw-orange-2: #ffb35c; --hw-purple: #8a4fd8; --hw-night: #170e24; --hw-panel: #21152f; --hw-line: #432a5c; }
+.hw-page .eyebrow { color: var(--hw-orange); }
+.hw-page .v-title { border-left-color: var(--hw-orange); }
+.hw-page .v-card { background: var(--hw-panel); border-color: var(--hw-line); }
+.hw-small { margin: 8px 0 0; color: #b4a4c9; font-size: 13px; }
+.hw-small a { color: var(--hw-orange-2); }
+
+/* Ticket */
+.hw-ticket { display: flex; align-items: center; gap: 26px; padding: 22px 26px; background: linear-gradient(135deg, #3a1f12, var(--hw-panel) 55%); border: 2px solid #ff8c1a88; box-shadow: 0 0 30px #ff8c1a22; }
+.hw-ticket-img { width: 220px; height: auto; flex: none; image-rendering: pixelated; filter: drop-shadow(0 6px 14px #ff8c1a55); animation: hw-sway 4s ease-in-out infinite; }
+.hw-ticket-body { min-width: 0; }
+.hw-ticket-name { margin: 0; color: #fff; font-size: 30px; letter-spacing: .04em; text-transform: uppercase; }
+.hw-ticket-name span { color: var(--hw-orange); }
+.hw-ticket-price { margin: 4px 0 8px; color: #6cf0a0; font: 700 22px "DM Mono", monospace; }
+.hw-ticket-how { margin: 0 0 12px; color: #d8cde8; }
+.hw-ticket-how kbd { padding: 1px 7px; color: #fff; background: #2d1d40; border: 1px solid var(--hw-line); border-bottom-width: 3px; border-radius: 6px; font: 700 13px "DM Mono", monospace; }
+.hw-includes-title { margin: 0 0 6px; color: #b4a4c9; font: 12px "DM Mono", monospace; letter-spacing: .1em; text-transform: uppercase; }
+.hw-includes { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.hw-includes li { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; color: #fff; background: #2d1d40; border: 1px solid #ff8c1a66; border-radius: 999px; font-weight: 600; }
+@keyframes hw-sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg) translateY(-4px); } }
+
+/* Bingo */
+.hw-bingo { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 20px; align-items: start; }
+.hw-card-wrap { position: sticky; top: 84px; padding: 18px; text-align: center; }
+.hw-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px; background: #2d1d40; border: 2px solid #6a4a8c; border-radius: 14px; }
+.hw-cell { position: relative; display: grid; place-items: center; aspect-ratio: 1; background: #120a1c; border: 2px solid #3d2852; border-radius: 10px; overflow: hidden; }
+.hw-cell b { position: absolute; top: 4px; left: 7px; color: #7d6a96; font: 700 11px "DM Mono", monospace; }
+.hw-cell i { color: #a993c4; font: 700 26px "DM Mono", monospace; font-style: normal; }
+.hw-cell img { width: 70%; height: auto; image-rendering: pixelated; }
+.hw-cell.is-free { background: radial-gradient(circle, #3a2650, #1c1129); border-color: #8a6bb0; }
+.hw-cell.is-done { background: radial-gradient(circle, #5a2d0c, #1c1129); border-color: var(--hw-orange); box-shadow: inset 0 0 18px #ff8c1a55; animation: hw-pop .35s ease; }
+@keyframes hw-pop { from { transform: scale(.8); } to { transform: scale(1); } }
+.hw-card-count { margin: 12px 0 10px; color: #d8cde8; font-size: 15px; }
+.hw-card-count strong { color: var(--hw-orange); }
+.hw-rewards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: left; }
+.hw-reward { display: grid; grid-template-columns: auto 1fr; gap: 0 8px; align-items: center; padding: 8px 10px; background: #1a1026; border: 1px solid var(--hw-line); border-radius: 10px; }
+.hw-reward span { grid-row: span 2; font-size: 24px; }
+.hw-reward b { color: #fff; }
+.hw-reward small { color: #a896be; font-size: 11.5px; line-height: 1.35; }
+.hw-reward.is-got { border-color: #43db95; background: #12251e; }
+.hw-reward.is-got b::after { content: " ✓"; color: #43db95; }
+.hw-card-wrap .v-btn { margin-top: 12px; }
+
+.hw-missions { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.hw-mission { padding: 12px 14px; transition: border-color .15s ease; }
+.hw-mission.is-done { border-color: #43db9599; background: linear-gradient(135deg, #142a22, var(--hw-panel) 60%); }
+.hw-mission-head { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.hw-mission-num { display: grid; place-items: center; width: 28px; height: 28px; color: #170e24; background: var(--hw-orange); border-radius: 50%; font: 700 13px "DM Mono", monospace; }
+.hw-mission.is-done .hw-mission-num { background: #43db95; }
+.hw-mission-ico { width: 48px; height: 48px; object-fit: contain; image-rendering: pixelated; }
+.hw-mission-title h3 { margin: 0; color: #fff; font-size: 16px; }
+.hw-mission-title p { margin: 2px 0 0; color: #b9abcd; font-size: 13.5px; }
+.hw-counter { display: flex; align-items: center; gap: 4px; }
+.hw-step, .hw-done { min-width: 34px; height: 34px; padding: 0 10px; color: #fff; background: #2d1d40; border: 1px solid var(--hw-line); border-radius: 9px; font-weight: 700; cursor: pointer; }
+.hw-step:hover, .hw-done:hover { border-color: var(--hw-orange); }
+.hw-done[aria-pressed="true"] { color: #08101f; background: #43db95; border-color: #43db95; }
+.hw-value { width: 52px; height: 34px; padding: 0 4px; color: #fff; text-align: right; background: #120a1c; border: 1px solid var(--hw-line); border-radius: 9px; font: 700 14px "DM Mono", monospace; }
+.hw-goal { margin-right: 4px; color: #a896be; font: 700 14px "DM Mono", monospace; }
+.hw-tips { margin-top: 10px; }
+.hw-tips summary { color: var(--hw-orange-2); font-weight: 600; cursor: pointer; }
+.hw-tip { margin: 8px 0; color: #d8cde8; line-height: 1.5; }
+.hw-tip strong { color: #fff; }
+.hw-mons { display: flex; flex-wrap: wrap; gap: 6px; }
+.hw-mon { display: inline-flex; align-items: center; gap: 2px; padding: 0 10px 0 0; color: #e9e1f5; background: #1a1026; border: 1px solid var(--hw-line); border-radius: 999px; font-size: 13px; text-decoration: none; }
+.hw-mon:hover { border-color: var(--hw-orange); }
+.hw-mon img { width: 40px; height: 40px; margin: -4px 0; }
+.hw-lines { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 6px; }
+.hw-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 4px; background: #170e24; border: 1px solid #33224a; border-radius: 12px; }
+.hw-line i { color: #7d6a96; font-style: normal; }
+.hw-recipe { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: 6px 0 10px; }
+.hw-recipe img { max-width: 100%; height: auto; border-radius: 10px; image-rendering: pixelated; }
+.hw-recipe span { color: #a896be; font-size: 26px; }
+.hw-berries { display: flex; flex-wrap: wrap; gap: 6px; }
+.hw-berry { display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px 3px 4px; color: #e9e1f5; background: #1a1026; border: 1px solid var(--hw-line); border-radius: 999px; font-size: 13px; text-decoration: none; }
+.hw-berry:hover { border-color: var(--hw-orange); }
+.hw-mission-img { display: block; margin: 4px 0 8px; border-radius: 10px; image-rendering: pixelated; }
+.hw-link { margin-top: 10px; }
+
+/* Casa Encantada y tienda */
+.hw-house { display: flex; align-items: center; gap: 18px; padding: 18px 22px; }
+.hw-house p { margin: 0; color: #d8cde8; line-height: 1.55; }
+.hw-house img { flex: none; filter: drop-shadow(0 6px 12px #8a4fd877); animation: hw-sway 5s ease-in-out infinite; }
+.hw-shop { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.hw-shop li { display: grid; justify-items: center; gap: 3px; padding: 14px 10px; text-align: center; }
+.hw-shop-ico { font-size: 28px; }
+.hw-shop b { color: #fff; font-size: 14px; }
+.hw-shop small { color: #6cf0a0; font: 700 13px "DM Mono", monospace; }
+.hw-shop .is-more { place-content: center; border-style: dashed; }
+.hw-shop .is-more small { color: #a896be; font-family: inherit; font-weight: 500; }
+
+/* Galería de decoraciones y visor 3D */
+.hw-decor-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-bottom: 14px; }
+.hw-search { display: flex; align-items: center; gap: 8px; flex: 1 1 260px; max-width: 420px; padding: 0 12px; background: #1a1026; border: 1px solid var(--hw-line); border-radius: 999px; }
+.hw-search:focus-within { border-color: var(--hw-orange); }
+.hw-search input { flex: 1; min-width: 0; height: 40px; color: #fff; background: none; border: 0; outline: 0; font: inherit; }
+.hw-decor { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.hw-decor-card { display: grid; justify-items: center; gap: 4px; width: 100%; height: 100%; padding: 10px 8px 12px; color: inherit; text-align: center; font: inherit; cursor: pointer; transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease; }
+.hw-decor-card:hover, .hw-decor-card:focus-visible { border-color: var(--hw-orange); transform: translateY(-3px); box-shadow: 0 10px 24px #ff8c1a22; }
+.hw-decor-card img { width: 112px; height: 112px; object-fit: contain; image-rendering: auto; filter: drop-shadow(0 6px 8px #0008); transition: transform .2s ease; }
+.hw-decor-card:hover img { transform: scale(1.08) rotate(-3deg); }
+.hw-decor-card b { color: #fff; font-size: 13.5px; line-height: 1.25; }
+.hw-decor-card small { color: #6cf0a0; font: 700 12px "DM Mono", monospace; }
+.hw-shop-group { display: flex; align-items: center; gap: 8px; margin: 18px 0 10px; color: #fff; font-size: 17px; }
+.hw-shop-group span { padding: 1px 8px; color: #170e24; background: var(--hw-orange); border-radius: 999px; font: 700 12px "DM Mono", monospace; }
+.hw-decor-card { position: relative; }
+.hw-decor-card.is-static { cursor: default; }
+.hw-decor-card.is-static:hover { transform: none; }
+.hw-decor-card.is-static img { image-rendering: pixelated; }
+.hw-decor-card small.is-coins { color: #ffd442; }
+.hw-decor-card em { font-style: normal; }
+.hw-group-text { margin: -4px 0 10px; color: #d8cde8; font-size: 14px; line-height: 1.5; }
+.hw-group-text strong { color: #fff; }
+.hw-perk { margin-top: 2px; padding: 3px 8px; color: #ffe3c2; background: #3a1f12; border: 1px solid #ff8c1a55; border-radius: 8px; font-size: 12px; line-height: 1.3; }
+.hw-3d { position: absolute; top: 8px; right: 8px; padding: 1px 7px; color: #170e24; background: var(--hw-orange); border-radius: 999px; font: 700 10px "DM Mono", monospace; }
+.hw-more { margin-top: 18px; padding: 14px 16px; }
+.hw-more > summary { color: var(--hw-orange-2); font-weight: 600; cursor: pointer; }
+.hw-more[open] > summary { margin-bottom: 8px; }
+.hw-viewer { width: min(92vw, 720px); padding: 0; color: #f2f4fb; background: #170e24; border: 2px solid #ff8c1a88; border-radius: 16px; box-shadow: 0 30px 80px #000c; }
+.hw-viewer::backdrop { background: #07030ccc; backdrop-filter: blur(3px); }
+.hw-viewer-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--hw-line, #432a5c); }
+.hw-viewer-head h3 { margin: 0; font-size: 20px; }
+.hw-viewer-close { width: 36px; height: 36px; color: #fff; background: #2d1d40; border: 1px solid #432a5c; border-radius: 50%; font-size: 16px; cursor: pointer; }
+.hw-viewer-close:hover { border-color: #ff8c1a; }
+.hw-viewer-stage { position: relative; height: min(62vh, 480px); background: radial-gradient(circle at 50% 40%, #3a2252, #120a1c 75%); cursor: grab; }
+.hw-viewer-stage:active { cursor: grabbing; }
+.hw-viewer-stage canvas { display: block; width: 100%; height: 100%; }
+.hw-viewer-loading { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: #b4a4c9; }
+.hw-viewer-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 16px; color: #b4a4c9; font-size: 13px; border-top: 1px solid #432a5c; }
+.hw-viewer-nav { display: flex; gap: 6px; }
+
+/* Mapa de la Mansión */
+.hw-map-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 12px; }
+.hw-map-floors { display: flex; flex-wrap: wrap; gap: 6px; }
+.hw-map-count b { color: var(--hw-orange); }
+.hw-map { height: min(78vh, 680px); padding: 0; overflow: hidden; background: #0b0612; }
+.hw-map .leaflet-container, .hw-map.leaflet-container { background: #0b0612; font-family: inherit; }
+.hw-map-image { image-rendering: pixelated; }
+.hw-pin { display: grid; place-items: center; }
+.hw-pin img { width: 40px; height: 40px; margin: -4px; image-rendering: pixelated; filter: drop-shadow(0 0 6px #8a6bff) drop-shadow(0 2px 2px #000); }
+.hw-pin b { position: absolute; right: -4px; bottom: -2px; min-width: 16px; padding: 0 3px; color: #170e24; text-align: center; background: var(--hw-orange, #ff8c1a); border-radius: 999px; font: 700 10px/14px "DM Mono", monospace; }
+.hw-pin.is-found img { opacity: .45; filter: grayscale(1) drop-shadow(0 2px 2px #000); }
+.hw-pin.is-found b { background: #43db95; }
+.hw-pin.is-npc img { filter: drop-shadow(0 0 6px #ffd442) drop-shadow(0 2px 2px #000); }
+.hw-map .leaflet-popup-content-wrapper, .hw-map .leaflet-popup-tip { color: #f2f4fb; background: #21152f; border: 1px solid #432a5c; }
+.hw-map .leaflet-popup-content { margin: 10px 14px; font-size: 13px; line-height: 1.5; }
+.hw-pin-btn { margin-top: 6px; padding: 4px 10px; color: #170e24; background: #ff8c1a; border: 0; border-radius: 999px; font: 700 12px inherit; cursor: pointer; }
+
+@media (max-width: 860px) {
+  .hw-bingo { grid-template-columns: 1fr; }
+  .hw-card-wrap { position: static; max-width: 420px; width: 100%; margin: 0 auto; }
+}
+@media (max-width: 620px) {
+  .hw-ticket { flex-direction: column; text-align: center; padding: 18px 16px; }
+  .hw-ticket-img { width: 180px; }
+  .hw-includes { justify-content: center; }
+  .hw-mission-head { grid-template-columns: auto auto minmax(0, 1fr); }
+  .hw-counter { grid-column: 1 / -1; justify-content: flex-end; }
+  .hw-house { flex-direction: column; text-align: center; }
+  .hw-rewards { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hw-ticket-img, .hw-house img, .hw-cell.is-done { animation: none; }
+}

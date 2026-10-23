@@ -1,6 +1,6 @@
 // DexRewards: progreso por sección calculado con las capturas marcadas en la Pokédex de la wiki.
 const PROGRESS_KEY = "wiki-diosesmon-pokedex-state-v1";
-const AVAILABLE_THROUGH = 493;
+const AVAILABLE_THROUGH = 649;
 const SPRITES = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon";
 const sections = (window.DEXREWARDS ?? []).map((section) => ({
   ...section,

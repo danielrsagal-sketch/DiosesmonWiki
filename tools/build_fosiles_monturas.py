@@ -13,11 +13,11 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from diosesmon_config import is_available
+from diosesmon_config import AVAILABLE_THROUGH, is_available
 
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / "tools" / "build-cache"
-MAX_NATIONAL_ID = 493  # Generaciones activas en el servidor: 1 a 4.
+MAX_NATIONAL_ID = AVAILABLE_THROUGH  # Generaciones activas en el servidor (diosesmon_config).
 # Formas regionales montables que se pueden conseguir en el servidor (al evolucionar un Pokémon normal).
 AVAILABLE_FORMS = {(122, "galar")}
 

@@ -1,0 +1,24 @@
+{
+  "_comentario": [
+    "Spawns propios de Diosesmon que no vienen en Cobblemon 1.7.3. Lo lee tools/build_cobblemon_data.py.",
+    "legendarios: texto para los legendarios y singulares que no tienen spawn en Cobblemon (los invoca el mod del servidor).",
+    "extra: spawns que se añaden a un Pokémon (número de la Pokédex). biomes: etiquetas («#cobblemon:is_forest») o biomas («minecraft:deep_dark»).",
+    "rarity: common, uncommon, rare, ultra-rare o special. level y bucket son opcionales; notes es una lista de avisos cortos."
+  ],
+  "legendarios": {
+    "bucket": "Evento legendario",
+    "position": "Cerca de un jugador",
+    "notes": ["El servidor lo invoca al azar cerca de un jugador"]
+  },
+  "extra": {
+    "479": [
+      {
+        "bucket": "Especial",
+        "rarity": "special",
+        "position": "Suelo",
+        "biomes": ["minecraft:deep_dark"],
+        "notes": ["En la Ciudad antigua", "Necesita redstone cerca"]
+      }
+    ]
+  }
+}

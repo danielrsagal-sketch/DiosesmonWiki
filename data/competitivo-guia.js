@@ -91,7 +91,7 @@ window.DIOSESMON_COMP_GUIDE = [
   // ---------- Diosesmon ----------
   { id: "ds-especies", ico: "🐉", cat: "diosesmon", title: "Pokémon disponibles en Diosesmon",
     tags: "disponibles generaciones legendarios tesoros formas regionales cobblemon",
-    text: "El servidor tiene los Pokémon de las generaciones 1 a 4 (con sus formas regionales) y 27 legendarios de otras generaciones que se consiguen en los Tesoros. El constructor solo ofrece esos.",
+    text: "El servidor tiene los Pokémon de las generaciones 1 a 5 (con sus formas regionales) y los legendarios de otras generaciones que se consiguen en los Tesoros. El constructor solo ofrece esos.",
     tip: "Los legendarios de Tesoros llevan la etiqueta «Tesoro» en el buscador de especies." },
   { id: "ds-levelcap", ico: "🎖️", cat: "diosesmon", title: "El nivel máximo lo marcan las medallas",
     tags: "level cap nivel maximo medallas gimnasio 15 100",

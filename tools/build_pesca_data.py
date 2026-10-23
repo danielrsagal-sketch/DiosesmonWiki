@@ -8,8 +8,9 @@ import re
 import tarfile
 
 from build_fosiles_monturas import CACHE, ROOT, download_icons
+from diosesmon_config import AVAILABLE_THROUGH
 
-MAX_NATIONAL_ID = 493
+MAX_NATIONAL_ID = AVAILABLE_THROUGH  # Generaciones activas en el servidor (diosesmon_config).
 STATS = {"hp": "PS", "atk": "Ataque", "def": "Defensa", "spa": "At. Esp.", "spd": "Def. Esp.", "spe": "Velocidad"}
 TYPES = {"normal": "Normal", "fire": "Fuego", "water": "Agua", "grass": "Planta", "electric": "Eléctrico", "ice": "Hielo",
          "fighting": "Lucha", "poison": "Veneno", "ground": "Tierra", "flying": "Volador", "psychic": "Psíquico", "bug": "Bicho",

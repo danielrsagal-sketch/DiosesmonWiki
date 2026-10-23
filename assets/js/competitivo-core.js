@@ -292,7 +292,7 @@
     if (m) { nick = m[1]; spName = m[2]; }
     const sp = findSpecies(spName);
     if (!sp) {
-      warn(`«${spName}» no es un Pokémon disponible en Diosesmon (solo gen 1-4, sus formas regionales y los legendarios de Tesoros): se omite.`);
+      warn(`«${spName}» no es un Pokémon disponible en Diosesmon (solo gen 1-5, sus formas regionales y los legendarios de Tesoros): se omite.`);
       return null;
     }
     const label = sp.es;

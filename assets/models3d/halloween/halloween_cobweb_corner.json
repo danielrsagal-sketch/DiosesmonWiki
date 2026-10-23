@@ -1,0 +1,1 @@
+{"textures":{"0":"assets/img/halloween3d/tex/cobweb_corner.png"},"elements":[{"f":[0,0,0.5],"to":[16,16,0.5],"faces":{"north":{"t":"0","uv":[0,0,16,16]},"south":{"t":"0","uv":[0,0,16,16]}}},{"f":[0.5,0,0],"to":[0.5,16,16],"faces":{"east":{"t":"0","uv":[16,0,0,16]},"west":{"t":"0","uv":[0,0,16,16]}}}]}

@@ -2,9 +2,10 @@
 const SPRITE_BASE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites";
 const POKEDEX_KEY = "wiki-diosesmon-pokedex-state-v1";
 const GYMS_KEY = "wiki-diosesmon-gyms-v1";
-// Gen 1–4 más los 27 legendarios de otras generaciones que salen en los Tesoros.
+// Gen 1–5 (hasta #649) más los legendarios de otras generaciones que salen en los Tesoros.
+const AVAILABLE_THROUGH = 649;
 const TREASURE_LEGENDARIES = new Set([494, 638, 639, 641, 642, 645, 648, 649, 716, 717, 718, 785, 786, 787, 788, 789, 790, 801, 802, 808, 809, 891, 893, 894, 895, 1002, 1025]);
-const AVAILABLE_SPECIES = 493 + TREASURE_LEGENDARIES.size;
+const AVAILABLE_SPECIES = AVAILABLE_THROUGH + [...TREASURE_LEGENDARIES].filter((id) => id > AVAILABLE_THROUGH).length;
 const NATIONAL_SPECIES = 1025;
 
 function escapeHtml(value) {
@@ -50,7 +51,7 @@ function renderProgress() {
   for (let id = 1; id <= NATIONAL_SPECIES; id += 1) {
     const state = dex[`pokemon:${id}`];
     if (state?.caught) nationalCaught += 1;
-    if (id > 493 && !TREASURE_LEGENDARIES.has(id)) continue;
+    if (id > AVAILABLE_THROUGH && !TREASURE_LEGENDARIES.has(id)) continue;
     if (state?.seen) seen += 1;
     if (state?.caught) caught += 1;
   }

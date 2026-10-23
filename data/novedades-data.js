@@ -7,6 +7,48 @@
 //   links: botones al final [["Texto", "pagina.html"], …] (opcional)
 window.DIOSESMON_NOVEDADES = [
   {
+    date: "2026-10-23",
+    tag: "nuevo",
+    title: "Kits exclusivos de Halloween",
+    items: [
+      "Ya están en <a href=\"kits.html\">Kits</a> los 5 kits exclusivos nuevos: <strong>Grimer Alola</strong> (3.000), <strong>Houndoom</strong> (4.800), <strong>Dusknoir</strong> (6.750), <strong>Charizard</strong> (8.250) y <strong>Giratina</strong> (11.800 DiosesCoins).",
+      "Cada uno con todos sus objetos, encantamientos, su especialidad y las ventajas de llevar la armadura completa. Se venden hasta el 18 de noviembre y, una vez comprado, se reclama cada 15 días.",
+      "Los kits exclusivos rotan cada mes: los anteriores (Eevee, Sandslash, Sceptile, Metagross y Ho-Oh) están en la pestaña <strong>Fuera de rotación</strong>. Si ya los compraste, los sigues reclamando cada 15 días.",
+    ],
+    links: [["Ver los kits", "kits.html#giratina"]],
+  },
+  {
+    date: "2026-10-23",
+    tag: "nuevo",
+    title: "🎃 Evento de Halloween",
+    items: [
+      "Nueva página del <a href=\"halloween.html\">evento de Halloween</a>: el <strong>Ticket Calabaza</strong> (45.000 PokéDólares), que da acceso al Bingo Halloween y a la Casa Encantada.",
+      "Las <strong>8 misiones del Bingo</strong> explicadas, con los Pokémon que te sirven: los Fantasma del Safari, los Fuego y Siniestro del Nether, las líneas evolutivas que salen enteras en el Nether y la receta de la <strong>Baya Calabaza</strong>.",
+      "Marca tu progreso y mira tu cartón: hay premio por <strong>línea</strong> y por <strong>cartón lleno</strong>.",
+      "<strong>Mapa de la Mansión Encantada</strong> con zoom: el Adivinador y, si te atascas, los Litwick escondidos (ocultos por defecto, sin spoilers). Márcalos y cuentan en tu misión.",
+      "La <strong>tienda del evento</strong> completa: globos, mascotas, peluches y decoraciones, con sus precios. Las decoraciones se ven en <strong>3D</strong>, sacadas del juego: pulsa una y gírala. Debajo, otras 79 decoraciones de Halloween del servidor.",
+      "La wiki se viste de Halloween mientras dure el evento. El Safari ya no es la novedad: ahora está al lado de Inicio.",
+    ],
+    links: [["Ver el evento", "halloween.html"]],
+  },
+  {
+    date: "2026-10-23",
+    tag: "nuevo",
+    title: "¡Llega la 5.ª generación: Teselia!",
+    items: [
+      "Los <strong>156 Pokémon de Teselia</strong> (#494 a #649) ya están activos en toda la wiki: ahora hay <strong>668 especies disponibles</strong>.",
+      "<a href=\"pokedex.html\">Pokédex</a> con sus fichas, hábitats, evoluciones y drops, y Teselia cuenta en <a href=\"dexrewards.html\">DexRewards</a> y en tu progreso de Inicio.",
+      "Aparecen también en <a href=\"entrenamiento-ev.html\">Entrenamiento EV</a>, <a href=\"crianza.html\">Crianza</a>, <a href=\"pesca.html\">Pesca</a>, <a href=\"monturas.html\">Monturas</a>, <a href=\"bayas.html\">Bayas</a>, <a href=\"objetos.html\">Objetos</a> y el constructor <a href=\"competitivo.html\">Competitivo</a>.",
+      "<a href=\"fosiles.html\">Fósiles</a>: ya se reviven el <strong>Fósil Tapa</strong> (Tirtouga) y el <strong>Fósil Pluma</strong> (Archen).",
+      "<a href=\"megas.html\">Megas</a> nuevas disponibles: Emboar, Excadrill, Audino, Scolipede, Scrafty, Eelektross, Chandelure y Golurk.",
+      "<a href=\"gimnasios.html\">Gimnasios</a>: ya están los 8 líderes de Teselia, su Alto Mando y el Campeón Mirto. Sus equipos y recompensas llegarán cuando el servidor los publique.",
+      "<a href=\"tesoros.html\">Tesoros</a>: la caja de cualquier Pokémon ya incluye los de Teselia.",
+      "En la Pokédex, los <strong>legendarios y singulares</strong> muestran cómo aparecen: el servidor los invoca al azar cerca de un jugador.",
+      "<strong>Rotom</strong> ya tiene su hábitat: la Ciudad antigua, con redstone cerca.",
+    ],
+    links: [["Ver Pokédex", "pokedex.html"]],
+  },
+  {
     date: "2026-10-21",
     tag: "mejora",
     title: "Cazas de Inicio más al día",

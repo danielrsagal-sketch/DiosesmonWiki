@@ -565,6 +565,8 @@ def acquisition(catalog_ids, es_name, loot, tags):
     unmatched = []
     # Kits
     for kit in js_value("data/kits-data.js", "DIOSESMON_KITS") or []:
+        if kit.get("available") is False:
+            continue  # Kits fuera de rotación: ahora no se pueden comprar, no cuentan como «dónde se consigue».
         for item in kit["items"]:
             add(item["id"], {"t": "kit", "l": f"Kit {kit['name']}", "h": f"kits.html#{kit['key']}"})
     # Tesoros

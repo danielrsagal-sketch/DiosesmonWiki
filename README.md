@@ -108,6 +108,8 @@ python tools/build_drop_overrides.py   # drops desactivados en Diosesmon desde t
 python -I tools/build_objetos_data.py   # objetos, recetas y crafteos desactivados desde tools/source/objetos-diosesmon.xlsx (lee los .jar de la carpeta mods)
 python -I tools/build_objetos_data.py --crear  # crea el Excel de objetos o le añade los objetos nuevos sin perder lo escrito
 python -I tools/build_objetos_data.py --recetas "<instancia>/diosesmon-recetas.json"  # recetas reales del servidor: en el juego, con el mod diosesmon-recetas, usa /wikirecetas
+python -I tools/build_halloween3d.py   # decoraciones de Halloween en 3D (modelos, texturas y nombres) desde el .jar de diosesmon-client
+node tools/render_halloween3d.js       # miniaturas de esas decoraciones (con la wiki en local y puppeteer-core)
 ```
 
 Al cambiar un archivo de `assets/` o `data/`, sube su número de versión (`?v=N`) en las páginas que lo cargan para que los navegadores no usen la copia antigua.

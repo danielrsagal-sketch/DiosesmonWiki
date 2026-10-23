@@ -5,9 +5,17 @@
 //   ready: false muestra la tarjeta de Inicio como «En construcción»
 //   badge: etiqueta destacada en la pestaña y en la tarjeta (p. ej. «NUEVO»)
 //   nav: false la deja fuera de las pestañas (Feedback va como botón fijo en la barra)
+//   season: true solo se muestra mientras dura el evento de temporada (SEASON_EVENT)
+
+// Evento de temporada: mientras dure, la wiki usa su tema (colores y decoración) y sale su pestaña.
+// Al pasar la fecha «until» todo vuelve solo a la normalidad. Para quitarlo antes, adelanta la fecha.
+const SEASON_EVENT = { name: "Halloween", until: "2026-11-03T00:00:00-03:00", theme: "assets/css/halloween.css?v=1" };
+const SEASON_ACTIVE = Date.now() < Date.parse(SEASON_EVENT.until) && !/[?&]tema=normal(&|$)/.test(location.search);
+
 const SITE_SECTIONS = [
-  { href: "safari.html", label: "Safari", badge: "NUEVO", ready: true, icon: "items/safari-ball", color: "#43db95", description: "Mapa interactivo con zoom: zonas, spawn, taxis, Poképaradas y entrenadores." },
+  { href: "halloween.html", label: "Halloween", badge: "EVENTO", season: true, ready: true, icon: "pokemon/609", color: "#ff8c1a", description: "Evento de Halloween: Ticket Calabaza, Bingo con sus 8 misiones explicadas, Casa Encantada y tienda." },
   { href: "index.html", label: "Inicio" },
+  { href: "safari.html", label: "Safari", ready: true, icon: "items/safari-ball", color: "#43db95", description: "Mapa interactivo con zoom: zonas, spawn, taxis, Poképaradas y entrenadores." },
   { href: "guia.html", label: "Guía", ready: true, icon: "items/explorer-kit", color: "#43db95", description: "¿Eres nuevo? Cómo entrar al servidor, tus primeros pasos y cómo progresar." },
   { href: "pokedex.html", label: "Pokédex", ready: true, icon: "items/poke-ball", color: "#ff5a5a", description: "Pokémon, formas regionales y fusiones con stats, hábitat, movimientos y captura." },
   { href: "dexrewards.html", label: "DexRewards", ready: true, icon: "items/coupon-1", color: "#5ee1ff", description: "Premios por completar la Pokédex general y la de cada generación." },
@@ -20,16 +28,32 @@ const SITE_SECTIONS = [
   { href: "entrenamiento-ev.html", label: "Entrenamiento EV", ready: true, icon: "items/power-bracer", color: "#ff8a3d", description: "Piezas recias, vitaminas, combates 3v3, los mejores Pokémon para cada stat y los EVs de todos." },
   { href: "monturas.html", label: "Monturas", ready: true, icon: "items/air-balloon", color: "#4bb6ff", description: "54 Pokémon montables por tierra, agua y aire, con las mejores recomendaciones." },
   { href: "misiones.html", label: "Misiones", icon: "items/town-map", color: "#9ce35a", description: "Misiones del servidor, requisitos y recompensas." },
-  { href: "fosiles.html", label: "Fósiles", ready: true, icon: "items/old-amber", color: "#c9a26b", description: "Los 7 fósiles revivibles, los 23 yacimientos y la Máquina Restauradora." },
+  { href: "fosiles.html", label: "Fósiles", ready: true, icon: "items/old-amber", color: "#c9a26b", description: "Los 9 fósiles revivibles, los 23 yacimientos y la Máquina Restauradora." },
   { href: "kits.html", label: "Kits", ready: true, icon: "items/premier-ball", color: "#e8ecf4", description: "Kits de rango y exclusivos: qué trae cada uno, ventajas y precio." },
   { href: "trabajo.html", label: "Trabajos", ready: true, icon: "items/amulet-coin", color: "#ffa64d", description: "Los 7 trabajos del servidor, cómo se progresa en cada uno y cuántos puedes tener según tu rango." },
   { href: "torre-batalla.html", label: "Torre Batalla", icon: "items/muscle-band", color: "#b38cff", description: "Formato, rangos y premios de la Torre Batalla." },
   { href: "bayas.html", label: "Bayas", ready: true, icon: "items/sitrus-berry", color: "#43db95", description: "Las 70 bayas de Cobblemon: efectos, cosecha, tiempos, abonos y buscador de mutaciones." },
-  { href: "pesca.html", label: "Pesca", ready: true, icon: "items/super-rod", color: "#4bb6ff", description: "Poké Cañas, encantamientos, el efecto de cada cebo y los 88 Pokémon que se pescan." },
+  { href: "pesca.html", label: "Pesca", ready: true, icon: "items/super-rod", color: "#4bb6ff", description: "Poké Cañas, encantamientos, el efecto de cada cebo y los 99 Pokémon que se pescan." },
   { href: "preguntas-frecuentes.html", label: "Preguntas frecuentes", ready: true, icon: "pokemon/201", color: "#5ee1ff", description: "Problemas y dudas frecuentes del servidor y de la wiki, con buscador." },
   { href: "novedades.html", label: "Novedades", ready: true, icon: "items/journal", color: "#43db95", description: "Lo último que se ha añadido, mejorado o arreglado en la wiki." },
   { href: "feedback.html", label: "Feedback", nav: false, ready: true, icon: "items/poke-ball", color: "#ffd442", description: "Envía ideas, errores o datos que falten en la wiki." },
-];
+].filter((section) => !section.season || SEASON_ACTIVE);
+
+// Tema del evento de temporada: hoja de estilos y decoración (telarañas y murciélagos).
+(function seasonTheme() {
+  if (!SEASON_ACTIVE || !SEASON_EVENT.theme) return;
+  const root = document.documentElement;
+  root.classList.add("is-halloween");
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = SEASON_EVENT.theme;
+  document.head.append(link);
+  const deco = document.createElement("div");
+  deco.className = "hw-deco";
+  deco.setAttribute("aria-hidden", "true");
+  deco.innerHTML = '<i class="hw-web is-left"></i><i class="hw-web is-right"></i><i class="hw-bat"></i><i class="hw-bat"></i><i class="hw-bat"></i>';
+  document.body.append(deco);
+})();
 
 (function renderSiteNav() {
   const current = location.pathname.split("/").pop() || "index.html";

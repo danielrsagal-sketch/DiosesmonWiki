@@ -57,12 +57,24 @@ RANK_COMMANDS = [
     ["/pokeheal", 1], ["/pc", 1], ["/back", 2], ["/hat", 2], ["/afk", 2], ["/hatch", 3], ["/enderchest", 3], ["/near", 3],
     ["/feed", 3], ["/tpahere", 3], ["/repair", 4], ["/sit", 4], ["/tptoggle", 4], ["/nv", 4], ["/heal", 4],
 ]
+# Kits exclusivos fuera de rotación (los exclusivos rotan cada mes): siguen en la wiki con su marca.
 EXCLUSIVES = [
     {"key": "eevee", "name": "Eevee", "folder": "Kit_01", "color": "#d39a5c", "specialty": "Minería (10/10)"},
     {"key": "sandslash", "name": "Sandslash", "folder": "Kit_02", "color": "#e8c45a", "specialty": "PvP (9/10)"},
     {"key": "sceptile", "name": "Sceptile", "folder": "Kit_03", "color": "#4fc06a", "specialty": "PvP y Minería (7/10)"},
     {"key": "metagross", "name": "Metagross", "folder": "Kit_04", "color": "#5aa8e0", "specialty": "PvP y Minería (8/10)"},
     {"key": "hooh", "name": "Ho-Oh", "folder": "Kit_05", "color": "#ff6a3d", "specialty": "PvP y Minería (10/10)"},
+]
+# Kits exclusivos a la venta ahora (edición de Halloween 2026): datos en datos_nuevos/ y capturas en kits_nuevos/.
+# El precio, la especialidad, las ventajas y la categoría de cada objeto van en su JSON.
+NEW_EDITION = {"name": "Halloween 2026", "saleUntil": "2026-11-18T06:00:00-03:00"}
+NEW_EXCLUSIVES = [
+    {"key": "grimer-alola", "name": "Grimer Alola", "folder": "Kit_01", "color": "#9be04a"},
+    {"key": "houndoom", "name": "Houndoom", "folder": "Kit_02", "color": "#ff7a3d"},
+    {"key": "dusknoir", "name": "Dusknoir", "folder": "Kit_03", "color": "#b4a3c9"},
+    {"key": "charizard", "name": "Charizard", "folder": "Kit_04", "color": "#ff8c1a"},
+    # Su primera captura repite la pantalla de selección: la skin sale de la segunda.
+    {"key": "giratina", "name": "Giratina", "folder": "Kit_05", "color": "#d24b4b", "skinFrom": "02_item.png"},
 ]
 # Objetos de Minecraft cuyo icono es la textura de un bloque.
 MINECRAFT_BLOCK_ICONS = {
@@ -79,7 +91,13 @@ CATEGORIES = ["Armas", "Herramientas", "Armadura", "Pokéballs", "Curación", "V
 CATEGORY_ALIASES = {"Poké Balls": "Pokéballs"}
 
 # Rejilla del menú de kits en las capturas (1936×1048): bordes y fondos de los slots.
-HOVER_BORDER = (181, 218, 244)
+# El menú cambia de colores según la temporada (azul normal, morado en Halloween).
+THEMES = {
+    "normal": {"hover": (181, 218, 244), "min_blue": 200},
+    "halloween": {"hover": (173, 151, 201), "min_blue": 160},
+}
+THEME = dict(THEMES["normal"])
+HOVER_BORDER = THEME["hover"]
 GRID_COLUMNS = [942 + 72 * column for column in range(5)]
 GRID_BOX = (900, 400, 1330, 700)
 SLOT = 65
@@ -106,7 +124,7 @@ def hovered_slot(image):
     xs, ys = [], []
     for y in range(image.size[1]):
         for x in range(image.size[0]):
-            if pixels[x, y] == HOVER_BORDER:
+            if pixels[x, y] == THEME["hover"]:
                 xs.append(x)
                 ys.append(y)
     if not xs:
@@ -115,7 +133,7 @@ def hovered_slot(image):
     # El tooltip puede tapar parte del borde: se ajusta a la columna y al alto del slot.
     columns = [column - GRID_BOX[0] for column in GRID_COLUMNS]
     column = min(columns, key=lambda start: min(abs(start - left), abs(start + SLOT - right)))
-    if bottom - top < SLOT - 4 and not any(pixels[x, top] == HOVER_BORDER for x in range(column, column + SLOT)):
+    if bottom - top < SLOT - 4 and not any(pixels[x, top] == THEME["hover"] for x in range(column, column + SLOT)):
         top = bottom - SLOT
     return column, top
 
@@ -131,9 +149,9 @@ def slot_state(image, column, top):
                 dark += 1
     edge = pixels[column + 8, top]
     above = pixels[column + 8, top - 2]
-    if dark >= 12 or not (edge[2] > 200 and edge[2] - edge[0] > 25 and sum(above) < sum(edge) - 40):
+    if dark >= 12 or not (edge[2] > THEME["min_blue"] and edge[2] - edge[0] > 25 and sum(above) < sum(edge) - 40):
         return None
-    return "hover" if edge == HOVER_BORDER else "normal"
+    return "hover" if edge == THEME["hover"] else "normal"
 
 
 def same_scroll(first, second, slot):
@@ -181,10 +199,16 @@ def icon_from_captures(captures, index, target):
     return True
 
 
+SOURCE_DIRS = {"rango": ("datos", "capturas"), "exclusivo": ("datos_exclusivos", "exclusivos"), "nuevo": ("datos_nuevos", "kits_nuevos")}
+
+
 def load_kit(group, folder, catalog):
-    data_dir = SOURCE / ("datos" if group == "rango" else "datos_exclusivos")
-    capture_dir = SOURCE / ("capturas" if group == "rango" else "exclusivos") / folder
+    data_name, capture_name = SOURCE_DIRS[group]
+    data_dir = SOURCE / data_name
+    capture_dir = SOURCE / capture_name / folder
     details = json.loads((data_dir / f"{folder.lower()}.json").read_text(encoding="utf-8"))
+    if catalog is None:
+        catalog = details  # Kits nuevos: la categoría va en el propio JSON.
     # La categoría está en kits_diosesmon.json: se busca cada objeto por nombre e id, en orden.
     pending = list(catalog["items"])
     items = []
@@ -221,10 +245,11 @@ def load_kit(group, folder, catalog):
 def main():
     catalog = json.loads((SOURCE / "kits_diosesmon.json").read_text(encoding="utf-8"))
     groups = []
-    for group, kits, entries in (("rango", RANKS, catalog["kits_rango"]), ("exclusivo", EXCLUSIVES, catalog["kits_exclusivos"])):
+    for group, kits, entries in (("rango", RANKS, catalog["kits_rango"]), ("exclusivo", EXCLUSIVES, catalog["kits_exclusivos"]),
+                                 ("nuevo", NEW_EXCLUSIVES, [None] * len(NEW_EXCLUSIVES))):
         for meta, entry in zip(kits, entries):
             details, items, capture_dir = load_kit(group, meta["folder"], entry)
-            groups.append((group, meta, entry, details, items, capture_dir))
+            groups.append((group, meta, entry or details, details, items, capture_dir))
 
     # Iconos: primero texturas del juego; lo que no tenga, recorte de la captura.
     icons = download_icons({item["id"] for *_, items, _ in groups for item in items if item["id"].split(":")[0] in ("minecraft", "cobblemon")}
@@ -242,13 +267,16 @@ def main():
     missing = []
     kits_out = []
     for group, meta, entry, details, items, capture_dir in groups:
+        THEME.update(THEMES["halloween" if group == "nuevo" else "normal"])
         captures = sorted(capture_dir.glob("*_item.png"))
         by_file = {path.name: position for position, path in enumerate(captures)}
         for item in items:
             icon = icons.get(item["id"])
             if not icon:
-                target = ITEMS_IMG / f"{item['id'].replace(':', '_')}.png"
-                manual = MANUAL_ICONS / target.name
+                # Los kits nuevos reutilizan ids (tier1_sword…) con otra textura: sus iconos van aparte.
+                icon_dir = ITEMS_IMG / "halloween-2026" if group == "nuevo" and item["id"].startswith("diosesmon-client:") else ITEMS_IMG
+                target = icon_dir / f"{item['id'].replace(':', '_')}.png"
+                manual = (MANUAL_ICONS / "halloween-2026" if icon_dir != ITEMS_IMG else MANUAL_ICONS) / target.name
                 if manual.exists():
                     target.parent.mkdir(parents=True, exist_ok=True)
                     target.write_bytes(manual.read_bytes())
@@ -269,13 +297,23 @@ def main():
         # Skin del kit: figura de la pantalla del kit (primera captura).
         KITS_IMG.mkdir(parents=True, exist_ok=True)
         skin = KITS_IMG / f"{meta['key']}.png"
+        if group == "nuevo":
+            # El kit nuevo de Charizard no pisa la skin de ningún otro: van en su propia carpeta.
+            skin = KITS_IMG / "halloween-2026" / f"{meta['key']}.png"
+            skin.parent.mkdir(parents=True, exist_ok=True)
         if captures:
-            Image.open(captures[0]).convert("RGB").crop(SKIN_BOX).save(skin)
+            source = capture_dir / meta["skinFrom"] if meta.get("skinFrom") else captures[0]
+            Image.open(source).convert("RGB").crop(SKIN_BOX).save(skin)
         items.sort(key=lambda item: CATEGORIES.index(item["category"]) if item["category"] in CATEGORIES else len(CATEGORIES))
         kit = {
-            "key": meta["key"], "group": group, "name": meta["name"], "color": meta["color"],
+            "key": meta["key"], "group": "rango" if group == "rango" else "exclusivo", "name": meta["name"], "color": meta["color"],
             "skin": skin.relative_to(ROOT).as_posix(), "items": items,
         }
+        if group == "exclusivo":
+            kit["available"] = False
+        if group == "nuevo":
+            kit["edition"] = NEW_EDITION["name"]
+            kit["saleUntil"] = NEW_EDITION["saleUntil"]
         if group == "rango":
             kit["perks"] = meta["perks"]
             if meta.get("coins"):
@@ -284,7 +322,7 @@ def main():
                 kit["store"] = meta["store"]
         else:
             kit["price"] = entry.get("precio")
-            kit["specialty"] = meta["specialty"]
+            kit["specialty"] = meta.get("specialty") or entry.get("especialidad", "")
             kit["perks"] = entry.get("ventajas") or []
             kit["setBonus"] = True
         kits_out.append(kit)

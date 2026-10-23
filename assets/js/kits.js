@@ -8,6 +8,10 @@
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
   const money = (value) => String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   const state = { group: "rango", key: "usuario", item: 0 };
+  // Pestañas: rango, exclusivos en rotación y exclusivos fuera de rotación (los kits rotan cada mes).
+  const onSale = (kit) => kit.available !== false && !(kit.saleUntil && Date.now() > Date.parse(kit.saleUntil));
+  const groupOf = (kit) => (kit.group === "exclusivo" && !onSale(kit) ? "antiguo" : kit.group);
+  const saleDate = (kit) => new Intl.DateTimeFormat("es", { day: "numeric", month: "long", timeZone: "America/Santiago" }).format(new Date(kit.saleUntil));
 
   // Cabecera: las cinco skins de rango en fila.
   document.getElementById("kit-hero").innerHTML = kits.filter((kit) => kit.group === "rango")
@@ -16,7 +20,7 @@
   const itemTile = (item, index, kit) => `
     <button class="kit-item${index === state.item ? " is-active" : ""}" type="button" data-item="${index}" title="${escapeHtml(item.name)}">
       <span class="kit-slot${item.slotIcon ? " is-capture" : ""}"><img src="${item.icon}" alt="" loading="lazy">${item.qty > 1 && !item.slotIcon ? `<b>${item.qty}</b>` : ""}</span>
-      <span class="kit-item-name" style="${/\b(EEVEE|SANDSLASH|SCEPTILE|METAGROSS|HO-OH|ENTRENADOR|AS|LIDER|MAESTRO|Usuario)\b/.test(item.name) ? `color:${kit.color}` : ""}">${escapeHtml(item.name)}</span>
+      <span class="kit-item-name" style="${/\b(EEVEE|SANDSLASH|SCEPTILE|METAGROSS|HO-OH|GRIMER ALOLA|HOUNDOOM|DUSKNOIR|CHARIZARD|GIRATINA|ENTRENADOR|AS|LIDER|MAESTRO|Usuario)\b/.test(item.name) ? `color:${kit.color}` : ""}">${escapeHtml(item.name)}</span>
     </button>`;
 
   const itemInfo = (item, kit) => {
@@ -47,11 +51,11 @@
   }
 
   function renderList() {
-    list.innerHTML = kits.filter((kit) => kit.group === state.group).map((kit) => `
+    list.innerHTML = kits.filter((kit) => groupOf(kit) === state.group).map((kit) => `
       <button class="dr-item kit-list-item${kit.key === state.key ? " is-active" : ""}" type="button" data-kit="${kit.key}" style="--section-color:${kit.color}" aria-current="${kit.key === state.key}">
         <span class="dr-item-art kit-list-art"><img src="${kit.skin}" alt="" loading="lazy"></span>
         <span class="dr-item-text">
-          <strong>Kit ${escapeHtml(kit.name)}</strong>
+          <strong>Kit ${escapeHtml(kit.name)}${groupOf(kit) === "antiguo" ? ' <span class="kit-off">Fuera de rotación</span>' : ""}</strong>
           <small>${kit.items.length} objetos${kit.price ? ` · <span class="kit-coins"><img src="${coinIcon}" alt="">${money(kit.price)}</span>` : kit.group === "rango" ? ` · ${kit.key === "usuario" ? "Gratis" : "Cada 9 días"}` : ""}</small>
         </span>
       </button>`).join("");
@@ -66,7 +70,8 @@
       <div class="kit-head">
         <img class="kit-skin" src="${kit.skin}" alt="Skin del Kit ${escapeHtml(kit.name)}">
         <div class="kit-head-text">
-          <p class="kit-kind">${kit.group === "rango" ? "Kit de rango" : "Kit exclusivo"}</p>
+          <p class="kit-kind">${kit.group === "rango" ? "Kit de rango" : `Kit exclusivo${kit.edition ? ` · ${escapeHtml(kit.edition)}` : ""}`}</p>
+          ${groupOf(kit) === "antiguo" ? '<p class="kit-off-note">🔄 <strong>Fuera de rotación:</strong> ahora no se puede comprar, pero los kits rotan cada mes y puede volver. Si ya lo compraste, puedes seguir reclamándolo cada 15 días.</p>' : kit.saleUntil ? `<p class="kit-sale">⏳ A la venta hasta el <strong>${saleDate(kit)}</strong></p>` : ""}
           <h3>Kit ${escapeHtml(kit.name)}</h3>
           ${kit.price ? `<p class="kit-price"><img src="${coinIcon}" alt="" width="28" height="28"><strong>${money(kit.price)}</strong> DiosesCoins</p>` : ""}
           ${kit.coins ? `<p class="kit-price is-small"><img src="${coinIcon}" alt="" width="24" height="24">Incluye <strong>${kit.coins}</strong> DiosesCoins al comprar el rango</p>` : ""}
@@ -74,7 +79,7 @@
           <ul class="kit-perks">${kit.perks.map((perk) => `<li>${escapeHtml(perk)}</li>`).join("")}</ul>
           ${kit.group === "rango" ? rankLimits(kit) : ""}
           ${kit.store ? `<a class="kit-store" href="${kit.store}" target="_blank" rel="noreferrer">Ver el rango en la tienda ↗</a>` : ""}
-          ${kit.setBonus ? '<p class="kit-set-note">Las ventajas exclusivas se activan al equiparte <strong>toda la armadura</strong> del kit.</p>' : ""}
+          ${kit.setBonus ? '<p class="kit-set-note">Las ventajas exclusivas se activan al equiparte <strong>toda la armadura</strong> del kit.</p><p class="kit-set-note">Una vez comprado, lo reclamas <strong>cada 15 días</strong>, aunque salga de rotación.</p>' : ""}
         </div>
       </div>
       ${itemInfo(kit.items[state.item], kit)}
@@ -87,6 +92,7 @@
 
   function render() {
     tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.group === state.group)));
+    tabs.forEach((tab) => { tab.hidden = !kits.some((kit) => groupOf(kit) === tab.dataset.group); });
     renderList();
     renderDetail();
   }
@@ -94,7 +100,7 @@
   function select(key, scroll) {
     const kit = kits.find((entry) => entry.key === key);
     if (!kit) return;
-    state.group = kit.group;
+    state.group = groupOf(kit);
     state.key = key;
     state.item = 0;
     history.replaceState(null, "", `#${key}`);
@@ -103,7 +109,7 @@
   }
 
   tabs.forEach((tab) => tab.addEventListener("click", () => {
-    select(kits.find((kit) => kit.group === tab.dataset.group).key, false);
+    select(kits.find((kit) => groupOf(kit) === tab.dataset.group).key, false);
   }));
   list.addEventListener("click", (event) => {
     const button = event.target.closest("[data-kit]");
@@ -148,7 +154,7 @@
 
   const initial = kits.find((kit) => kit.key === location.hash.slice(1));
   if (initial) {
-    state.group = initial.group;
+    state.group = groupOf(initial);
     state.key = initial.key;
   }
   render();

@@ -14,6 +14,9 @@ import re
 import sys
 import tarfile
 from pathlib import Path
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from diosesmon_config import AVAILABLE_THROUGH  # noqa: E402
 
 from openpyxl import Workbook, load_workbook
 from openpyxl.formatting.rule import CellIsRule
@@ -24,7 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent
 EXCEL = ROOT / "tools" / "source" / "drops-diosesmon.xlsx"
 OUTPUT = ROOT / "data" / "drop-overrides.js"
 CACHE = ROOT / "tools" / "build-cache" / "cobblemon-1.7.3-data.tar.gz"
-MAX_NATIONAL_ID = 493
+MAX_NATIONAL_ID = AVAILABLE_THROUGH  # Generaciones activas en el servidor (diosesmon_config).
 DROP_HEADERS = ["Nº", "Pokémon", "Identificador", "Objeto", "ID del objeto", "Tipo", "Cantidad / prob.", "Activo en Diosesmon", "Nota (opcional)"]
 ITEM_HEADERS = ["Objeto", "ID del objeto", "Tipo", "Lo sueltan", "Desactivar para todos"]
 

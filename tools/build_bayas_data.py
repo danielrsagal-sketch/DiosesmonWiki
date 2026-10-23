@@ -28,6 +28,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from diosesmon_config import AVAILABLE_THROUGH  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 FUSION = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT
@@ -231,8 +234,8 @@ def main():
             elif name.startswith("species/"):
                 species = json.loads(tar.extractfile(member).read())
                 dex = species.get("nationalPokedexNumber", 9999)
-                if dex > 493:
-                    continue  # Diosesmon: generaciones 1-4.
+                if dex > AVAILABLE_THROUGH:
+                    continue  # Diosesmon: solo las generaciones activas.
                 for entry in (species.get("drops") or {}).get("entries", []):
                     item = entry.get("item", "")
                     if item.endswith("_berry"):

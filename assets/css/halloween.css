@@ -1,0 +1,73 @@
+/* Tema temporal de Halloween. Lo carga site-nav.js solo mientras dura el evento (SEASON_EVENT.until)
+   y añade la clase .is-halloween a <html>. Para quitarlo antes, basta con cambiar esa fecha. */
+html.is-halloween {
+  --dex-bg: #0f0a18;
+  --dex-panel: #1b1228;
+  --dex-line: #3b2752;
+  --dex-yellow: #ff8c1a;
+  --bg: #0f0a18;
+  --bg-2: #150d21;
+  --panel: #1b1228;
+  --panel-2: #21162f;
+  --panel-3: #281b38;
+  --line: #3b2752;
+  --line-2: #573a74;
+  --gold: #ff8c1a;
+  --gold-2: #ffb35c;
+  --gold-3: #ffe6c7;
+  --gold-deep: #c9630d;
+  --gold-glow: rgba(255, 140, 26, .32);
+  background: #0f0a18;
+}
+html.is-halloween body {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -10%, #3d1d5a 0, transparent 70%),
+    radial-gradient(ellipse 50% 35% at 100% 100%, #ff8c1a14 0, transparent 70%),
+    #0f0a18;
+  background-attachment: fixed;
+}
+
+/* Barra superior: noche morada con borde de calabaza. */
+html.is-halloween .dex-topbar { background: linear-gradient(180deg, #2a1640, #120a1c); border-bottom: 2px solid #ff8c1a66; box-shadow: 0 6px 26px #000a, 0 2px 18px #ff8c1a1f; }
+html.is-halloween .dex-brand .brand-accent { color: #ff8c1a; }
+html.is-halloween .dex-brand::after { content: "🎃"; margin-left: -4px; font-size: 20px; filter: drop-shadow(0 0 6px #ff8c1a88); animation: hw-theme-bob 3s ease-in-out infinite; }
+html.is-halloween .dex-nav a:hover, html.is-halloween .nav-more-btn:hover, html.is-halloween .nav-more.is-open .nav-more-btn { background: #2b1a3d; border-color: #5b3d7a; }
+html.is-halloween .dex-nav a.active, html.is-halloween .nav-more-btn.active { background: #2f1c40; border-color: #ff8c1aaa; }
+html.is-halloween .nav-more-menu { background: #1a1026; border-color: #4a3166; }
+html.is-halloween .nav-badge { color: #170e24; background: #ff8c1a; animation-name: hw-theme-badge; }
+html.is-halloween .feedback-cta { background: linear-gradient(135deg, #3a1f12, #1a1026 70%); border-color: #ff8c1a88; }
+html.is-halloween .feedback-cta em { color: #ff8c1a; }
+
+/* Detalles que usan el amarillo fijo. */
+html.is-halloween .eyebrow { color: #ff8c1a; }
+html.is-halloween .hero-tips li { background: #1b1228; border-color: #3b2752; }
+html.is-halloween .site-footer { border-top-color: #3b2752; }
+html.is-halloween .site-footer a { color: #ffb35c; }
+
+/* Decoración: telarañas en las esquinas y murciélagos que cruzan la pantalla (no tapan nada). */
+.hw-deco { position: fixed; inset: 0; z-index: 90; pointer-events: none; overflow: hidden; }
+.hw-web { position: absolute; top: 64px; width: 150px; height: 150px; opacity: .3; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23e8dcff' stroke-width='.8'%3E%3Cpath d='M0 0L100 100M0 0L100 40M0 0L40 100M0 0L100 0M0 0L0 100'/%3E%3Cpath d='M18 0Q14 14 0 18M38 0Q30 30 0 38M60 0Q47 47 0 60M84 0Q65 65 0 84'/%3E%3C/svg%3E") no-repeat; }
+.hw-web.is-left { left: 0; }
+.hw-web.is-right { right: 0; transform: scaleX(-1); }
+.hw-bat { position: absolute; left: -60px; width: 34px; height: 16px; opacity: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 30'%3E%3Cpath fill='%23140b1f' stroke='%23ff8c1a' stroke-opacity='.35' d='M32 10c2-4 4-5 6-3 0-3 1-5 3-6-1 4 1 7 5 8 4-3 10-4 18-2-5 2-8 6-9 11-3-3-7-3-10 0-2-3-5-3-7 0-2 3-4 5-6 7-2-2-4-4-6-7-2-3-5-3-7 0-3-3-7-3-10 0-1-5-4-9-9-11 8-2 14-1 18 2 4-1 6-4 5-8 2 1 3 3 3 6 2-2 4-1 6 3z'/%3E%3C/svg%3E") no-repeat center / contain; animation: hw-theme-fly 18s linear infinite; }
+.hw-bat:nth-child(3) { top: 18%; animation-delay: 0s; }
+.hw-bat:nth-child(4) { top: 32%; width: 24px; animation-delay: -6s; animation-duration: 22s; }
+.hw-bat:nth-child(5) { top: 12%; width: 28px; animation-delay: -12s; animation-duration: 26s; }
+@keyframes hw-theme-fly {
+  0% { transform: translate(0, 0); opacity: 0; }
+  5% { opacity: .85; }
+  25% { transform: translate(30vw, -30px); }
+  50% { transform: translate(60vw, 20px); }
+  75% { transform: translate(90vw, -20px); opacity: .85; }
+  80%, 100% { transform: translate(110vw, 0); opacity: 0; }
+}
+@keyframes hw-theme-bob { 0%, 100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-3px) rotate(6deg); } }
+@keyframes hw-theme-badge { 0%, 100% { box-shadow: 0 0 0 0 #ff8c1a80; } 50% { box-shadow: 0 0 0 6px #ff8c1a00; } }
+@media (max-width: 700px) {
+  .hw-web { top: 56px; width: 90px; height: 90px; }
+  html.is-halloween .dex-brand::after { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hw-bat { display: none; }
+  html.is-halloween .dex-brand::after { animation: none; }
+}

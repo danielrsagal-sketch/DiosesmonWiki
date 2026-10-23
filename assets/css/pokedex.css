@@ -210,6 +210,8 @@ body.modal-open { overflow: hidden; }
 .rarity-uncommon { background: #2f6aa6; }
 .rarity-rare { background: #7a4bb5; }
 .rarity-ultra-rare { background: #b07a12; }
+.rarity-special { background: #9a3d6e; }
+.rarity-legendary { background: linear-gradient(135deg, #b07a12, #8a3fc0); }
 .biome-tags { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 7px; }
 .biome-tag { --tag-bg: #3a4a63; --tag-line: #7287a8; --tag-ink: #fff; max-width: 100%; }
 .biome-tag summary { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; color: var(--tag-ink); background: var(--tag-bg); border: 1px solid var(--tag-line); border-radius: 999px; font-size: 16px; font-weight: 700; list-style: none; cursor: pointer; user-select: none; }

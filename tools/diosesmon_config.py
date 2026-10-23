@@ -1,7 +1,7 @@
 """Qué Pokémon están disponibles en Diosesmon (compartido por los generadores de datos)."""
 
-# Generaciones activas en el servidor: 1 a 4.
-AVAILABLE_THROUGH = 493
+# Generaciones activas en el servidor: 1 a 5 (hasta Teselia).
+AVAILABLE_THROUGH = 649
 
 # Legendarios de otras generaciones que salen en los Tesoros (cajas de Pokémon Legendario y Legendario Shiny).
 # Se pueden conseguir e intercambiar, así que la wiki los trata como disponibles.

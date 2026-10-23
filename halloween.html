@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#120a1c">
+  <meta name="description" content="Evento de Halloween en Diosesmon: el Ticket Calabaza, el Bingo Halloween con sus 8 misiones y consejos, la Casa Encantada y las 90 decoraciones de la tienda en 3D.">
+  <title>Halloween | DiosesmonWiki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/topbar.css?v=18">
+  <link rel="stylesheet" href="assets/css/site-base.css?v=2">
+  <link rel="stylesheet" href="assets/css/v-components.css?v=4">
+  <link rel="stylesheet" href="assets/css/section.css?v=1">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="assets/css/halloween-event.css?v=4">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+  <script src="assets/js/site-nav.js?v=25" defer></script>
+  <script src="data/halloween-data.js?v=3" defer></script>
+  <script src="data/halloween-decor.js?v=1" defer></script>
+  <script src="assets/js/model3d.js?v=1" defer></script>
+  <script src="assets/js/halloween.js?v=5" defer></script>
+</head>
+<body style="--section-color: #ff8c1a">
+  <header class="dex-topbar">
+    <div class="dex-header-inner">
+      <a class="dex-brand" href="index.html" aria-label="DiosesmonWiki, inicio">
+        <img class="dex-logo" src="assets/img/diosesmon-emblem.png" alt="" width="42" height="40">
+        <span>Diosesmon<span class="brand-accent">Wiki</span></span>
+      </a>
+      <nav class="dex-nav" aria-label="Navegación principal" data-site-nav>
+        <a href="index.html">Inicio</a>
+        <a href="pokedex.html">Pokédex</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <a class="feedback-cta" href="feedback.html" title="Envíanos ideas, errores o datos que falten"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png" alt="" width="44" height="44"><span><i aria-hidden="true"></i><b>¿Ideas o errores?</b> <em>Cuéntanos</em></span></a>
+    </div>
+  </header>
+
+  <main class="sec-shell hw-page">
+    <section class="sec-hero">
+      <div>
+        <p class="eyebrow">EVENTO DE TEMPORADA</p>
+        <h1>Halloween en Diosesmon</h1>
+        <p class="sec-lead">Compra el <strong>Ticket Calabaza</strong>, completa las misiones del <strong>Bingo Halloween</strong> para ganar sus premios y atrévete a entrar en la <strong>Casa Encantada</strong>.</p>
+        <ul class="hero-tips">
+          <li><img src="assets/img/eventos/halloween/ticket.png" alt="">Ticket Calabaza</li>
+          <li><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/607.png" alt="">8 misiones de Bingo</li>
+          <li><img src="assets/img/eventos/halloween/baya-calabaza.png" alt="">Baya Calabaza</li>
+        </ul>
+      </div>
+      <div class="sec-art" aria-hidden="true">
+        <img class="sec-mon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/609.png" alt="">
+        <img class="sec-item" src="assets/img/eventos/halloween/baya-calabaza.png" alt="">
+      </div>
+    </section>
+
+    <section class="v-section hw-ticket-wrap" aria-labelledby="hw-ticket-title">
+      <div class="hw-ticket v-card">
+        <img class="hw-ticket-img" id="hw-ticket-img" src="assets/img/eventos/halloween/ticket.png" alt="Ticket Calabaza" width="156" height="95">
+        <div class="hw-ticket-body">
+          <h2 class="hw-ticket-name" id="hw-ticket-title">Ticket <span>Calabaza</span></h2>
+          <p class="hw-ticket-price" id="hw-ticket-price"></p>
+          <p class="hw-ticket-how">Se compra en el menú <strong>Evento</strong> del PokePad (tecla <kbd>V</kbd>). Lo necesitas para participar.</p>
+          <p class="hw-includes-title">Incluye acceso a</p>
+          <ul class="hw-includes" id="hw-includes"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="v-section" id="bingo" aria-labelledby="hw-bingo-title">
+      <h2 class="v-title" id="hw-bingo-title">Bingo Halloween</h2>
+      <p class="v-intro">Cada misión completada destapa una casilla del cartón. Hay premio por hacer <strong>una línea</strong> y por completar el <strong>cartón entero</strong>. Marca aquí tu progreso: se guarda en este navegador.</p>
+      <div class="hw-bingo">
+        <div class="hw-card-wrap v-card">
+          <div class="hw-card" id="hw-card" role="img" aria-label="Cartón del bingo"></div>
+          <p class="hw-card-count" id="hw-card-count"></p>
+          <div class="hw-rewards" id="hw-rewards"></div>
+          <p class="hw-small">En la wiki las casillas siguen el orden de las misiones; en el juego pueden estar en otro orden.</p>
+          <button class="v-btn is-ghost is-sm" type="button" id="hw-reset">Reiniciar mi progreso</button>
+        </div>
+        <ol class="hw-missions" id="hw-missions"></ol>
+      </div>
+    </section>
+
+    <section class="v-section" id="casa-encantada" aria-labelledby="hw-house-title">
+      <h2 class="v-title" id="hw-house-title">Casa Encantada</h2>
+      <div class="hw-house v-card">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png" alt="" width="96" height="96">
+        <div>
+          <p>Con el Ticket Calabaza puedes entrar en la <strong>Casa Encantada</strong>. Allí, en la Mansión Encantada, están dos misiones del Bingo: los <strong>3 Entrenadores Misteriosos</strong> y los <strong>20 Litwick escondidos</strong>.</p>
+          <p class="hw-small">¿Sabes algo más de la Casa Encantada? <a href="feedback.html">Cuéntanoslo</a> y lo añadimos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="v-section" id="mapa-mansion" aria-labelledby="hw-map-title">
+      <h2 class="v-title" id="hw-map-title">Mapa de la Mansión Encantada</h2>
+      <p class="v-intro">Haz zoom y arrastra para moverte. El <strong>Adivinador</strong> siempre se ve; los <strong>Litwick escondidos</strong> están ocultos para no destriparte la misión. Si te atascas, enséñalos y marca los que vayas encontrando: cuentan en tu misión del Bingo.</p>
+      <div class="hw-map-bar">
+        <button type="button" class="v-btn is-sm" id="hw-map-spoiler" aria-pressed="false">👀 Mostrar los Litwick (spoiler)</button>
+        <div class="hw-map-floors" id="hw-map-floors" role="group" aria-label="Filtrar por altura" hidden></div>
+        <span class="hw-small" id="hw-map-count"></span>
+      </div>
+      <div class="hw-map v-card" id="hw-map" aria-label="Mapa de la Mansión Encantada"></div>
+      <p class="hw-small">Mapa del mundo de la Mansión (1 píxel = 1 bloque). La Y de cada Litwick te dice a qué altura está: la Mansión tiene varios pisos.</p>
+    </section>
+
+    <section class="v-section" id="tienda" aria-labelledby="hw-shop-title">
+      <h2 class="v-title" id="hw-shop-title">Tienda del evento</h2>
+      <p class="v-intro">Todo lo que se vende en el menú Evento del PokePad. Las decoraciones llevan la etiqueta <strong>3D</strong>: <strong>pulsa una para verla en 3D</strong> y gírala arrastrando.</p>
+      <div id="hw-shop"></div>
+      <details class="hw-more v-card">
+        <summary>Más decoraciones de Halloween del juego <span class="hw-small">(<span id="hw-decor-count">79</span> que no se venden en la tienda del evento)</span></summary>
+        <p class="hw-small">Están en el mod del servidor, pero no salen en la tienda del evento: pueden llegar por otras vías (Tesoros, eventos…). También se ven en 3D.</p>
+        <div class="hw-decor-tools">
+          <label class="hw-search"><span aria-hidden="true">🔎</span><input type="search" id="hw-decor-search" placeholder="Buscar: ataúd, caldero, trono…" aria-label="Buscar decoración" autocomplete="off"></label>
+          <span class="hw-small" id="hw-decor-shown"></span>
+        </div>
+        <ul class="hw-decor" id="hw-decor"></ul>
+      </details>
+    </section>
+
+    <dialog class="hw-viewer" id="hw-viewer" aria-labelledby="hw-viewer-title">
+      <div class="hw-viewer-head">
+        <h3 id="hw-viewer-title"></h3>
+        <button type="button" class="hw-viewer-close" id="hw-viewer-close" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="hw-viewer-stage" id="hw-viewer-stage"><p class="hw-viewer-loading" id="hw-viewer-loading">Cargando modelo…</p></div>
+      <div class="hw-viewer-foot">
+        <span>Arrastra para girar · rueda o pellizco para acercar</span>
+        <span class="hw-viewer-nav">
+          <button type="button" class="v-btn is-ghost is-sm" id="hw-viewer-prev" aria-label="Anterior">←</button>
+          <button type="button" class="v-btn is-ghost is-sm" id="hw-viewer-reset">Centrar</button>
+          <button type="button" class="v-btn is-ghost is-sm" id="hw-viewer-next" aria-label="Siguiente">→</button>
+        </span>
+      </div>
+    </dialog>
+
+    <footer class="site-footer">
+      <span>DiosesmonWiki · Evento de Halloween</span>
+      <a href="novedades.html">Novedades</a>
+    </footer>
+  </main>
+</body>
+</html>

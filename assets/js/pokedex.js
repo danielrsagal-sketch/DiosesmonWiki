@@ -403,7 +403,7 @@ function loadDetails() {
   if (window.POKEDEX_DETAILS) return Promise.resolve();
   detailsPromise ??= new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = "data/pokemon-details.js?v=6";
+    script.src = "data/pokemon-details.js?v=8";
     script.onload = resolve;
     script.onerror = () => {
       detailsPromise = null;
@@ -673,14 +673,15 @@ function renderSpawns(spawns) {
   const entries = spawns.map((spawn) => `<article class="spawn-entry">
       <div class="spawn-meta">
         <span class="spawn-rarity rarity-${escapeHtml(spawn.rarity)}">${escapeHtml(spawn.bucket)}</span>
-        <span class="spawn-fact">Nv. ${escapeHtml(spawn.level)}</span>
-        <span class="spawn-fact">${escapeHtml(spawn.position)}</span>
+        ${spawn.level ? `<span class="spawn-fact">Nv. ${escapeHtml(spawn.level)}</span>` : ""}
+        ${spawn.position ? `<span class="spawn-fact">${escapeHtml(spawn.position)}</span>` : ""}
         ${spawn.notes.map((note) => `<span class="spawn-note">${escapeHtml(note)}</span>`).join("")}
       </div>
-      <div class="biome-tags">${spawn.biomes.map(biomeTag).join("")}</div>
+      ${spawn.biomes.length ? `<div class="biome-tags">${spawn.biomes.map(biomeTag).join("")}</div>` : ""}
       ${spawn.excluded.length ? `<div class="biome-tags is-excluded"><span class="biome-except">Excepto</span>${spawn.excluded.map(biomeTag).join("")}</div>` : ""}
     </article>`).join("");
-  return `<p class="detail-footnote">Pulsa un hábitat para ver sus biomas. <span class="biome-chip is-terralith is-legend">Terralith</span> marca biomas del mod.</p><div class="spawn-list">${entries}</div>`;
+  const help = spawns.some((spawn) => spawn.biomes.length) ? `<p class="detail-footnote">Pulsa un hábitat para ver sus biomas. <span class="biome-chip is-terralith is-legend">Terralith</span> marca biomas del mod.</p>` : "";
+  return `${help}<div class="spawn-list">${entries}</div>`;
 }
 
 // ---- Captura (fórmula de Cobblemon 1.7.3) ----
@@ -846,7 +847,7 @@ async function renderPokemonDetail(pokemon, requestId, formKey = "") {
       ${detailSection("Drops", renderDrops(pokemon, data.drops))}
     </div>
     ${renderFamily(pokemon, nodeKey(pokemon.id, form ? formKey : ""))}
-    ${detailSection("Hábitat", pokemon.form && !pokemon.obtainable ? `<p class="detail-empty">Aún no aparece en el servidor; sus spawns se activarán cuando llegue ${escapeHtml(pokemon.regionBadge)}.</p>` : pokemon.form ? '<p class="detail-empty">No aparece salvaje en el servidor; se consigue evolucionando su forma normal.</p>' : pokemon.treasure ? '<p class="detail-empty">No aparece salvaje en el servidor: se consigue abriendo los Tesoros de Pokémon Legendario (1,89%).</p>' : renderSafari(pokemon.id) + renderSpawns(data.spawns))}
+    ${detailSection("Hábitat", pokemon.form && !pokemon.obtainable ? `<p class="detail-empty">Aún no aparece en el servidor; sus spawns se activarán cuando llegue ${escapeHtml(pokemon.regionBadge)}.</p>` : pokemon.form ? '<p class="detail-empty">No aparece salvaje en el servidor; se consigue evolucionando su forma normal.</p>' : pokemon.treasure && !data.spawns?.length ? '<p class="detail-empty">No aparece salvaje en el servidor: se consigue abriendo los Tesoros de Pokémon Legendario (1,89%).</p>' : renderSafari(pokemon.id) + renderSpawns(data.spawns) + (pokemon.treasure ? '<p class="detail-footnote">También sale en los <a href="tesoros.html#legendario">Tesoros</a> de Pokémon Legendario.</p>' : ""))}
     ${detailSection("Movimientos", tabs)}
     ${detailSection("Captura", renderCatch(data, data.spawns))}
     <p class="detail-source">Datos de Diosesmon</p>`;

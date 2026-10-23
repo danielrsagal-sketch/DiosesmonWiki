@@ -20,16 +20,16 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-from diosesmon_config import is_available
+from diosesmon_config import AVAILABLE_THROUGH, is_available
 
 
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / "tools" / "build-cache"
 OUTPUT = ROOT / "data" / "pokemon-details.js"
+CUSTOM_SPAWNS = ROOT / "tools" / "source" / "spawns-diosesmon.json"
 CATALOG_OUTPUT = ROOT / "data" / "pokemon-catalog-extra.js"
 BIOME_INDEX_OUTPUT = ROOT / "data" / "pokemon-biomes.js"
 ANYWHERE_TAG = "cobblemon:is_overworld"
-AVAILABLE_THROUGH = 493
 MAX_NATIONAL_ID = 1025
 SPANISH_LANGUAGE_ID = "7"
 POKEAPI_CSV = "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/"
@@ -479,6 +479,21 @@ def main():
             "notes": notes,
         })
 
+    # Spawns propios de Diosesmon (tools/source/spawns-diosesmon.json): se suman a los de Cobblemon.
+    custom = json.loads(CUSTOM_SPAWNS.read_text(encoding="utf-8")) if CUSTOM_SPAWNS.exists() else {}
+    for national, extra_spawns in custom.get("extra", {}).items():
+        for raw in extra_spawns:
+            spawns_by_node.setdefault(str(national), []).append({
+                "bucket": raw.get("bucket") or BUCKETS.get(raw.get("rarity"), "Especial"),
+                "rarity": raw.get("rarity", "special"),
+                "level": raw.get("level", ""),
+                "position": raw.get("position", ""),
+                "biomes": [key for key in (register_tag(ref) for ref in raw.get("biomes", [])) if key],
+                "excluded": [key for key in (register_tag(ref) for ref in raw.get("excluded", [])) if key],
+                "notes": raw.get("notes", []),
+            })
+    legendary_spawn = custom.get("legendarios")
+
     def parse_moves(raw_moves):
         moves = {"level": [], "tm": [], "egg": [], "tutor": [], "legacy": []}
         seen_moves = set()
@@ -715,6 +730,12 @@ def main():
             continue
         entry = build_entry(data)
         entry["spawns"] = spawns_by_node.get(str(national_id), [])
+        # Legendarios y singulares sin spawn en Cobblemon: en Diosesmon los invoca el mod del servidor.
+        labels = set(data.get("labels", []))
+        if legendary_spawn and not entry["spawns"] and national_id <= AVAILABLE_THROUGH and labels & {"legendary", "mythical"}:
+            entry["spawns"] = [{"bucket": legendary_spawn.get("bucket", "Evento legendario"), "rarity": "legendary", "level": "",
+                                "position": legendary_spawn.get("position", ""), "biomes": [], "excluded": [],
+                                "notes": legendary_spawn.get("notes", [])}]
         entry["forms"] = {}
         for form in regional_forms(data):
             key = form["name"].lower()

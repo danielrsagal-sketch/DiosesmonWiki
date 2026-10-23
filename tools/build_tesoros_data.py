@@ -179,7 +179,7 @@ def main():
          "keys": "Sus llaves no se pueden comprar en el menú de Tesoros.",
          "note": "Te da el Pokémon con la skin del Team Rocket puesta. Cada uno tiene versión normal (8,52%) y shiny (0,57%).", "rewards": rocket},
         {"key": "habilidad-oculta", "name": "Pokémon con Habilidad Oculta", "color": "#7f6bff", "kind": "all", "price": 1949,
-         "keys": "Llave a 1.949 DiosesCoins.", "note": "Puede tocar cualquier Pokémon de las generaciones 1 a 4, siempre con su habilidad oculta (0,24% cada uno).", "rewards": []},
+         "keys": "Llave a 1.949 DiosesCoins.", "note": "Puede tocar cualquier Pokémon de las generaciones 1 a 5, siempre con su habilidad oculta (unos 0,15% cada uno).", "rewards": []},
         {"key": "gachapon", "name": "Gachapon", "color": "#ff9fd6", "kind": "items", "price": 491,
          "keys": "Llave a 491 DiosesCoins.", "rewards": items_box("gachapon", "Kit_06", GACHAPON)},
         {"key": "safari", "name": "Safari", "color": "#9ce35a", "kind": "models", "price": None, "pricePoints": 1000,

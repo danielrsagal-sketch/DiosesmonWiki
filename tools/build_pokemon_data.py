@@ -4,7 +4,7 @@ import json
 import urllib.request
 from pathlib import Path
 
-from diosesmon_config import TREASURE_LEGENDARIES, is_available
+from diosesmon_config import AVAILABLE_THROUGH, TREASURE_LEGENDARIES, is_available
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -12,7 +12,6 @@ OUTPUT = ROOT / "data" / "pokemon-data.js"
 SOURCE = "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/"
 SPANISH_LANGUAGE_ID = "7"
 MAX_NATIONAL_ID = 1025
-AVAILABLE_THROUGH = 493
 
 
 def read_csv(filename):
