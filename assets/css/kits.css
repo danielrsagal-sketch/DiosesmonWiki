@@ -34,6 +34,7 @@
 .kit-off { color: #ffd0d6; background: #4a1822; border: 1px solid #ff5a6e66; }
 .kit-edition { color: #1a0f24; background: #ff8c1a; }
 .kit-off-note { margin: 6px 0 10px; padding: 8px 12px; color: #ffd0d6; background: #3a1620; border: 1px solid #ff5a6e55; border-radius: 10px; font-size: 14px; }
+.kit-secret { margin: 6px 0 10px; padding: 8px 12px; color: #e6ecff; background: #1f2440; border: 1px dashed #c9d8ff88; border-radius: 10px; font-size: 14px; }
 .kit-sale { margin: 6px 0 10px; color: #ffcf9c; font-size: 14px; }
 .kit-sale strong { color: #ff8c1a; }
 

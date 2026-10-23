@@ -21,6 +21,7 @@ window.DIOSESMON_NOVEDADES = [
     title: "Kits exclusivos de Halloween",
     items: [
       "Ya están en <a href=\"kits.html\">Kits</a> los 5 kits exclusivos nuevos: <strong>Grimer Alola</strong> (3.000), <strong>Houndoom</strong> (4.800), <strong>Dusknoir</strong> (6.750), <strong>Charizard</strong> (8.250) y <strong>Giratina</strong> (11.800 DiosesCoins).",
+      "<strong>Kit secreto Fantasma</strong> (11.800 DiosesCoins): no sale en el menú de Kits, se compra en la tienda de muebles. Trae armas y armadura con Levitación y Amortiguación, y 20 decoraciones de Halloween en una shulker.",
       "Cada uno con todos sus objetos, encantamientos, su especialidad y las ventajas de llevar la armadura completa. Se venden hasta el 18 de noviembre y, una vez comprado, se reclama cada 15 días.",
       "Los kits exclusivos rotan cada mes: los anteriores (Eevee, Sandslash, Sceptile, Metagross y Ho-Oh) están en la pestaña <strong>Fuera de rotación</strong>. Si ya los compraste, los sigues reclamando cada 15 días.",
     ],

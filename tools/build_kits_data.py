@@ -75,6 +75,8 @@ NEW_EXCLUSIVES = [
     {"key": "charizard", "name": "Charizard", "folder": "Kit_04", "color": "#ff8c1a"},
     # Su primera captura repite la pantalla de selección: la skin sale de la segunda.
     {"key": "giratina", "name": "Giratina", "folder": "Kit_05", "color": "#d24b4b", "skinFrom": "02_item.png"},
+    # Kit secreto: no sale en el menú de Kits, se compra en la tienda de muebles.
+    {"key": "fantasma", "name": "Fantasma", "folder": "Kit_06", "color": "#c9d8ff", "secret": "Kit secreto: no sale en el menú de Kits, se compra en la tienda de muebles."},
 ]
 # Objetos de Minecraft cuyo icono es la textura de un bloque.
 MINECRAFT_BLOCK_ICONS = {
@@ -87,7 +89,7 @@ EXTERNAL_ICONS = {"simpletms:tr_blank": "https://raw.githubusercontent.com/PokeA
 FALLBACK_PARTS = ("helmet", "chestplate", "leggings", "boots", "sword", "pickaxe", "axe", "shovel", "hoe")
 # Orden de las categorías en la página.
 CATEGORIES = ["Armas", "Herramientas", "Armadura", "Pokéballs", "Curación", "Vitaminas", "Objetos de mejora",
-              "Objetos equipables", "Objetos de evolución", "Bayas", "Especial", "Comida", "Recursos"]
+              "Objetos equipables", "Objetos de evolución", "Bayas", "Especial", "Comida", "Recursos", "Decoración (en una shulker)"]
 CATEGORY_ALIASES = {"Poké Balls": "Pokéballs"}
 
 # Rejilla del menú de kits en las capturas (1936×1048): bordes y fondos de los slots.
@@ -272,11 +274,17 @@ def main():
         by_file = {path.name: position for position, path in enumerate(captures)}
         for item in items:
             icon = icons.get(item["id"])
+            # Decoraciones de Halloween: su miniatura 3D (tools/build_halloween3d.py) en vez del recorte de la casilla.
+            thumb = ROOT / "assets" / "img" / "halloween3d" / f"{item['id'].split(':')[-1]}.png"
+            if not icon and item["id"].startswith("diosesmon-client:halloween_") and thumb.exists():
+                icon = thumb.relative_to(ROOT).as_posix()
             if not icon:
                 # Los kits nuevos reutilizan ids (tier1_sword…) con otra textura: sus iconos van aparte.
                 icon_dir = ITEMS_IMG / "halloween-2026" if group == "nuevo" and item["id"].startswith("diosesmon-client:") else ITEMS_IMG
+                if meta.get("secret") and icon_dir != ITEMS_IMG:
+                    icon_dir = icon_dir / meta["key"]  # El kit secreto repite ids (tier5_*) con otra textura.
                 target = icon_dir / f"{item['id'].replace(':', '_')}.png"
-                manual = (MANUAL_ICONS / "halloween-2026" if icon_dir != ITEMS_IMG else MANUAL_ICONS) / target.name
+                manual = (MANUAL_ICONS / icon_dir.relative_to(ITEMS_IMG) if icon_dir != ITEMS_IMG else MANUAL_ICONS) / target.name
                 if manual.exists():
                     target.parent.mkdir(parents=True, exist_ok=True)
                     target.write_bytes(manual.read_bytes())
@@ -311,6 +319,8 @@ def main():
         }
         if group == "exclusivo":
             kit["available"] = False
+        if meta.get("secret"):
+            kit["secret"] = meta["secret"]
         if group == "nuevo":
             kit["edition"] = NEW_EDITION["name"]
             kit["saleUntil"] = NEW_EDITION["saleUntil"]

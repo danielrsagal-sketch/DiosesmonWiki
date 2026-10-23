@@ -38,6 +38,13 @@
 .hw-reward span { grid-row: span 2; font-size: 24px; }
 .hw-reward b { color: #fff; }
 .hw-reward small { color: #a896be; font-size: 11.5px; line-height: 1.35; }
+.hw-rewards { grid-template-columns: 1fr; }
+.hw-prizes { grid-column: 1 / -1; display: grid; gap: 4px; margin: 6px 0 0; padding: 0; list-style: none; }
+.hw-prizes li { display: flex; align-items: center; gap: 8px; padding: 3px 6px; color: #fff; background: #21152f; border-radius: 8px; font-size: 12.5px; text-align: left; }
+.hw-prizes img { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; image-rendering: pixelated; }
+.hw-prizes li > span { grid-row: auto; font-size: 13px; font-weight: 600; line-height: 1.3; }
+.hw-prizes li > span[aria-hidden] { font-size: 20px; }
+.hw-prizes small { display: block; font-weight: 400; color: #a896be; font-size: 11px; line-height: 1.3; }
 .hw-reward.is-got { border-color: #43db95; background: #12251e; }
 .hw-reward.is-got b::after { content: " ✓"; color: #43db95; }
 .hw-card-wrap .v-btn { margin-top: 12px; }

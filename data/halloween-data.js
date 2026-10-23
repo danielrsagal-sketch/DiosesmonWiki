@@ -60,10 +60,10 @@ window.HALLOWEEN_EVENT = {
         { name: "Globo naranja", price: 15000, cur: "$", img: "globo-naranja", perk: "+25% de experiencia en combate" },
       ] },
       { name: "Mascotas", items: [
-        { name: "Mascota Gengar de Halloween", price: 300, cur: "dc", img: "mascota-gengar" },
-        { name: "Mascota Esqueleto de Halloween", price: 300, cur: "dc", img: "mascota-esqueleto", note: "Nombre por confirmar" },
-        { name: "Milotic", price: 300, cur: "dc", img: "milotic" },
-        { name: "Mascota Charizard de Halloween", price: 300, cur: "dc", img: "mascota-charizard" },
+        { name: "Mascota Gengar de Halloween", price: 380, cur: "dc", img: "mascota-gengar" },
+        { name: "Mascota Esqueleto de Halloween", price: 380, cur: "dc", img: "mascota-esqueleto", note: "Nombre por confirmar" },
+        { name: "Milotic", price: 380, cur: "dc", img: "milotic" },
+        { name: "Mascota Charizard de Halloween", price: 380, cur: "dc", img: "mascota-charizard" },
         { name: "Mascota Frankenstein", price: 220, cur: "dc", img: "mascota-frankenstein" },
         { name: "Mascota Fantasma", price: 220, cur: "dc", img: "mascota-fantasma" },
         { name: "Mascota Bruja", price: 220, cur: "dc", img: "mascota-bruja" },
@@ -78,10 +78,15 @@ window.HALLOWEEN_EVENT = {
     ],
   },
   bingo: {
-    // Premios: por hacer una línea y por completar el cartón. Contenido pendiente de confirmar.
+    // Premios: por hacer una línea y por completar el cartón. items: [texto, imagen opcional, nota opcional].
     rewards: [
-      { key: "linea", name: "Línea", text: "Por completar una línea del cartón.", items: [] },
-      { key: "bingo", name: "Bingo", text: "Por completar el cartón entero.", items: [] },
+      { key: "linea", name: "Línea", text: "Por completar una línea del cartón.", items: [["8.000 PokéDólares"]] },
+      { key: "bingo", name: "Bingo", text: "Por completar el cartón entero.", items: [
+        ["Chapa Verde", "assets/img/eventos/halloween/chapa-verde.png", "Cambia el tamaño de tu Pokémon (Shift + clic derecho al aire para elegir y clic derecho en el Pokémon para aplicarlo). En la tienda cuesta 780 DiosesCoins."],
+        ["Milotic de Halloween", "assets/img/eventos/halloween/tienda/milotic.png", "Mascota exclusiva del evento"],
+        ["Globo naranja", "assets/img/eventos/halloween/tienda/globo-naranja.png", "+25% de experiencia en combate"],
+        ["20.000 PokéDólares"],
+      ] },
     ],
     missions: [
       {

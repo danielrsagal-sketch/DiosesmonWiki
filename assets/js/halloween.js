@@ -155,7 +155,8 @@
     $("#hw-card-count").innerHTML = `Casillas <b>${count}/8</b>${count === 8 ? " · <strong>¡BINGO!</strong>" : lines ? ` · <strong>¡${lines === 1 ? "Línea" : `${lines} líneas`}!</strong>` : ""}`;
     $("#hw-rewards").innerHTML = EV.bingo.rewards.map((reward) => {
       const got = reward.key === "linea" ? lines > 0 : count === 8;
-      return `<div class="hw-reward${got ? " is-got" : ""}"><span aria-hidden="true">${reward.key === "linea" ? "🧰" : "🎁"}</span><b>${esc(reward.name)}</b><small>${esc(reward.text)} ${reward.items.length ? esc(reward.items.join(", ")) : "Premio por confirmar."}</small></div>`;
+      const prizes = reward.items.map(([name, img, note]) => `<li title="${esc(note || name)}">${img ? `<img src="${img}" alt="" width="32" height="32" loading="lazy">` : '<span aria-hidden="true">💰</span>'}<span>${esc(name)}${note ? `<small>${esc(note)}</small>` : ""}</span></li>`).join("");
+      return `<div class="hw-reward${got ? " is-got" : ""}"><span aria-hidden="true">${reward.key === "linea" ? "🧰" : "🎁"}</span><b>${esc(reward.name)}</b><small>${esc(reward.text)}</small>${prizes ? `<ul class="hw-prizes">${prizes}</ul>` : ""}</div>`;
     }).join("");
   }
   function renderMissions() {

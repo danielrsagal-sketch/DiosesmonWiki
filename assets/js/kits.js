@@ -20,7 +20,7 @@
   const itemTile = (item, index, kit) => `
     <button class="kit-item${index === state.item ? " is-active" : ""}" type="button" data-item="${index}" title="${escapeHtml(item.name)}">
       <span class="kit-slot${item.slotIcon ? " is-capture" : ""}"><img src="${item.icon}" alt="" loading="lazy">${item.qty > 1 && !item.slotIcon ? `<b>${item.qty}</b>` : ""}</span>
-      <span class="kit-item-name" style="${/\b(EEVEE|SANDSLASH|SCEPTILE|METAGROSS|HO-OH|GRIMER ALOLA|HOUNDOOM|DUSKNOIR|CHARIZARD|GIRATINA|ENTRENADOR|AS|LIDER|MAESTRO|Usuario)\b/.test(item.name) ? `color:${kit.color}` : ""}">${escapeHtml(item.name)}</span>
+      <span class="kit-item-name" style="${/\b(EEVEE|SANDSLASH|SCEPTILE|METAGROSS|HO-OH|FANTASMA|GRIMER ALOLA|HOUNDOOM|DUSKNOIR|CHARIZARD|GIRATINA|ENTRENADOR|AS|LIDER|MAESTRO|Usuario)\b/.test(item.name) ? `color:${kit.color}` : ""}">${escapeHtml(item.name)}</span>
     </button>`;
 
   const itemInfo = (item, kit) => {
@@ -55,7 +55,7 @@
       <button class="dr-item kit-list-item${kit.key === state.key ? " is-active" : ""}" type="button" data-kit="${kit.key}" style="--section-color:${kit.color}" aria-current="${kit.key === state.key}">
         <span class="dr-item-art kit-list-art"><img src="${kit.skin}" alt="" loading="lazy"></span>
         <span class="dr-item-text">
-          <strong>Kit ${escapeHtml(kit.name)}${groupOf(kit) === "antiguo" ? ' <span class="kit-off">Fuera de rotación</span>' : ""}</strong>
+          <strong>Kit ${escapeHtml(kit.name)}${groupOf(kit) === "antiguo" ? ' <span class="kit-off">Fuera de rotación</span>' : kit.secret ? ' <span class="kit-edition">Secreto</span>' : ""}</strong>
           <small>${kit.items.length} objetos${kit.price ? ` · <span class="kit-coins"><img src="${coinIcon}" alt="">${money(kit.price)}</span>` : kit.group === "rango" ? ` · ${kit.key === "usuario" ? "Gratis" : "Cada 9 días"}` : ""}</small>
         </span>
       </button>`).join("");
@@ -71,6 +71,7 @@
         <img class="kit-skin" src="${kit.skin}" alt="Skin del Kit ${escapeHtml(kit.name)}">
         <div class="kit-head-text">
           <p class="kit-kind">${kit.group === "rango" ? "Kit de rango" : `Kit exclusivo${kit.edition ? ` · ${escapeHtml(kit.edition)}` : ""}`}</p>
+          ${kit.secret ? `<p class="kit-secret">🤫 ${escapeHtml(kit.secret)}</p>` : ""}
           ${groupOf(kit) === "antiguo" ? '<p class="kit-off-note">🔄 <strong>Fuera de rotación:</strong> ahora no se puede comprar, pero los kits rotan cada mes y puede volver. Si ya lo compraste, puedes seguir reclamándolo cada 15 días.</p>' : kit.saleUntil ? `<p class="kit-sale">⏳ A la venta hasta el <strong>${saleDate(kit)}</strong></p>` : ""}
           <h3>Kit ${escapeHtml(kit.name)}</h3>
           ${kit.price ? `<p class="kit-price"><img src="${coinIcon}" alt="" width="28" height="28"><strong>${money(kit.price)}</strong> DiosesCoins</p>` : ""}
