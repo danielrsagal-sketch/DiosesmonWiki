@@ -20,7 +20,7 @@
     list.innerHTML = boxes.map((box) => `
       <button class="dr-item tr-item${box.key === state.key ? " is-active" : ""}" type="button" data-box="${box.key}" style="--section-color:${box.color}" aria-current="${box.key === state.key}">
         <span class="dr-item-art tr-art"><img src="${box.icon}" alt="" loading="lazy"></span>
-        <span class="dr-item-text"><strong>${escapeHtml(box.name)}</strong><small>${box.kind === "all" ? "Gen 1–4" : `${box.rewards.length} premios`} · ${priceTag(box)}</small></span>
+        <span class="dr-item-text"><strong>${escapeHtml(box.name)}</strong><small>${box.kind === "all" ? "Gen 1–5" : `${box.rewards.length} premios`} · ${priceTag(box)}</small></span>
       </button>`).join("");
   }
 

@@ -129,6 +129,72 @@
 .hw-viewer-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 16px; color: #b4a4c9; font-size: 13px; border-top: 1px solid #432a5c; }
 .hw-viewer-nav { display: flex; gap: 6px; }
 
+/* Adivinador */
+.hw-adv { display: grid; grid-template-columns: minmax(250px, 320px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.hw-adv-team { position: sticky; top: 84px; padding: 16px; }
+.hw-adv-skin { display: block; width: 64px; height: 128px; margin: 0 auto 10px; image-rendering: pixelated; filter: drop-shadow(0 6px 10px #000a) drop-shadow(0 0 12px #b04bff55); }
+.hw-adv-team h3 { display: flex; align-items: center; justify-content: space-between; margin: 0 0 10px; color: #fff; font-size: 17px; }
+.hw-adv-team h3 span { padding: 2px 10px; color: #170e24; background: var(--hw-orange); border-radius: 999px; font: 700 12px "DM Mono", monospace; }
+.hw-adv-team ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.hw-adv-team a { display: grid; grid-template-columns: 64px 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 8px; padding: 4px 10px 4px 4px; color: inherit; background: #1a1026; border: 1px solid var(--hw-line); border-radius: 12px; text-decoration: none; }
+.hw-adv-team a:hover { border-color: var(--hw-orange); }
+.hw-adv-team a img { grid-row: span 2; width: 64px; height: 64px; image-rendering: pixelated; }
+.hw-adv-team b { align-self: end; color: #fff; }
+.hw-types { display: flex; gap: 4px; align-self: start; }
+.hw-types i { padding: 1px 7px; color: #fff; background: var(--t); border-radius: 999px; font: 700 10px "DM Mono", monospace; font-style: normal; text-transform: uppercase; }
+.hw-quiz { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.hw-q { padding: 14px 16px; }
+.hw-q-text { margin: 0 0 10px; color: #fff; font-size: 16px; font-weight: 600; }
+.hw-q-text span { display: block; margin-bottom: 2px; color: var(--hw-orange); font: 600 12px "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.hw-q-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.hw-q-opt { display: flex; align-items: center; gap: 10px; padding: 8px 12px 8px 8px; color: #f2f4fb; text-align: left; background: #1a1026; border: 2px solid #5b3d7a; border-radius: 10px; font: inherit; font-size: 14px; cursor: pointer; }
+.hw-q-opt:hover:not(:disabled) { border-color: var(--hw-orange); }
+.hw-q-opt b { display: grid; place-items: center; flex: none; width: 30px; height: 30px; color: #170e24; background: var(--hw-orange); border-radius: 6px; font: 700 15px "DM Mono", monospace; }
+.hw-q-opt:disabled { cursor: default; opacity: .6; }
+.hw-q-opt.is-right { opacity: 1; border-color: #43db95; background: #12251e; }
+.hw-q-opt.is-right b { background: #43db95; }
+.hw-q-opt.is-wrong { opacity: 1; border-color: #ff5a6e; background: #2a1520; }
+.hw-q-opt.is-wrong b { background: #ff5a6e; }
+.hw-q-result { margin: 10px 0 0; font-size: 14px; }
+.hw-q-result.is-right { color: #6cf0a0; }
+.hw-q-result.is-wrong { color: #ff9aa6; }
+@media (max-width: 860px) {
+  .hw-adv { grid-template-columns: 1fr; }
+  .hw-adv-team { position: static; }
+}
+@media (max-width: 560px) {
+  .hw-q-options { grid-template-columns: 1fr; }
+}
+
+/* Recorrido de la Mansión */
+.hw-route { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; counter-reset: route; }
+.hw-route-step { position: relative; display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 16px; align-items: start; padding: 16px 18px; }
+.hw-route-step.is-battle { border-color: #ff8c1a66; }
+.hw-route-step.is-step { background: #1a1026; border-style: dashed; }
+.hw-route-skin { width: 64px; height: 128px; margin: 0 auto; image-rendering: pixelated; filter: drop-shadow(0 6px 10px #000a); }
+.hw-route-icon { display: grid; place-items: center; width: 64px; height: 64px; margin: 0 auto; font-size: 34px; background: #2d1d40; border-radius: 50%; }
+.hw-route-body h3 { margin: 0 0 4px; color: #fff; font-size: 20px; }
+.hw-route-body p { margin: 0 0 6px; color: #d8cde8; line-height: 1.5; }
+.hw-route-kicker { color: var(--hw-orange) !important; font: 600 12px "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.hw-route-team { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 6px; margin: 10px 0 12px; }
+.hw-route-mon { display: grid; justify-items: center; padding: 6px 4px; color: #e9e1f5; background: #1a1026; border: 1px solid var(--hw-line); border-radius: 10px; font-size: 12.5px; text-align: center; text-decoration: none; }
+.hw-route-mon:hover { border-color: var(--hw-orange); }
+.hw-route-mon img { width: 64px; height: 64px; image-rendering: pixelated; }
+.hw-route-label { margin: 0 0 6px !important; color: #b4a4c9 !important; font: 600 11px "DM Mono", monospace; letter-spacing: .1em; text-transform: uppercase; }
+.hw-route-rewards { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.hw-route-rewards li { display: grid; grid-template-columns: 40px auto; grid-template-rows: auto auto; column-gap: 8px; align-items: center; padding: 6px 12px 6px 6px; background: #2d1d40; border: 1px solid #ff8c1a55; border-radius: 12px; }
+.hw-route-rewards img, .hw-coin { grid-row: span 2; width: 40px; height: 40px; object-fit: contain; border-radius: 8px; image-rendering: pixelated; }
+.hw-coin { display: grid; place-items: center; font-size: 24px; }
+.hw-route-rewards b { color: #fff; font-size: 14px; }
+.hw-route-rewards small { color: #b4a4c9; font-size: 11.5px; }
+.hw-maze { margin: 10px 0 0; }
+.hw-maze img { display: block; max-width: 100%; height: auto; max-height: 70vh; border: 1px solid var(--hw-line); border-radius: 10px; image-rendering: pixelated; }
+.hw-pin img.is-face { width: 30px; height: 30px; margin: 0; border: 2px solid #ffd442; border-radius: 6px; filter: drop-shadow(0 2px 4px #000c); }
+@media (max-width: 560px) {
+  .hw-route-step { grid-template-columns: 1fr; }
+  .hw-route-skin, .hw-route-icon { margin: 0; }
+}
+
 /* Mapa de la Mansión */
 .hw-map-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 12px; }
 .hw-map-floors { display: flex; flex-wrap: wrap; gap: 6px; }

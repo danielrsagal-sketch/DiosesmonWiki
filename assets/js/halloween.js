@@ -197,6 +197,80 @@
   renderMissions();
   renderCard();
 
+  // ---------- El Adivinador: equipo y preguntas para practicar ----------
+  const ADV = EV.adivinador;
+  if (ADV && $("#hw-adv-team")) {
+    const TYPE_HEX = { Siniestro: "#624d4e", Fuego: "#e62829", Veneno: "#9141cb", Volador: "#81b9ef" };
+    $("#hw-adv-team").innerHTML = `${ADV.skin ? `<img class="hw-adv-skin" src="${ADV.skin}" alt="El Adivinador" width="64" height="128">` : ""}<h3>Equipo del ${esc(ADV.name)} <span>Nv. ${ADV.level}</span></h3>
+      <ul>${ADV.team.map((mon) => `<li><a href="pokedex.html#pokemon/${mon.id}"><img src="${SPRITES}/pokemon/${mon.id}.png" alt="" width="72" height="72" loading="lazy"><b>${esc(mon.name)}</b>
+        <span class="hw-types">${mon.types.map((type) => `<i style="--t:${TYPE_HEX[type] || "#666"}">${esc(type)}</i>`).join("")}</span></a></li>`).join("")}</ul>
+      <p class="hw-tip">💡 Un Pokémon de tipo <strong>Roca</strong> pega súper eficaz a los tres (Fuego y Volador son débiles a Roca). El tipo <strong>Eléctrico</strong> y el <strong>Hielo</strong> van muy bien contra Crobat y Honchkrow.</p>`;
+    $("#hw-quiz").innerHTML = ADV.questions.map((question, qi) => `<li class="hw-q v-card" data-q="${qi}">
+        <p class="hw-q-text"><span>Pregunta ${qi + 1} de ${ADV.questions.length}</span>${esc(question.q)}</p>
+        <div class="hw-q-options">${question.options.map((option, oi) => `<button type="button" class="hw-q-opt" data-o="${oi}"><b>${"ABCD"[oi]}</b>${esc(option)}</button>`).join("")}</div>
+        <p class="hw-q-result" hidden></p>
+      </li>`).join("");
+    $("#hw-quiz").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-o]");
+      if (!button) return;
+      const item = button.closest("[data-q]");
+      const question = ADV.questions[Number(item.dataset.q)];
+      const right = Number(button.dataset.o) === question.answer;
+      item.querySelectorAll("[data-o]").forEach((option) => {
+        option.disabled = true;
+        option.classList.toggle("is-right", Number(option.dataset.o) === question.answer);
+      });
+      if (!right) button.classList.add("is-wrong");
+      const result = item.querySelector(".hw-q-result");
+      result.hidden = false;
+      result.className = `hw-q-result ${right ? "is-right" : "is-wrong"}`;
+      result.textContent = `${right ? "✔ ¡Correcto!" : `✘ Era la ${"ABCD"[question.answer]}: ${question.options[question.answer]}.`}${question.why ? ` ${question.why}` : ""}`;
+    });
+  }
+
+  // ---------- Recorrido: Entrenadores Misteriosos, laberinto y parkour ----------
+  if (EV.route && $("#hw-route")) {
+    let battle = 0;
+    const monCard = (mon) => `<a class="hw-route-mon" href="pokedex.html#pokemon/${mon.id}" title="${esc(mon.label || mon.name)}">
+        <img src="${SPRITES}/pokemon/${mon.sprite || mon.id}.png" alt="" width="64" height="64" loading="lazy">
+        <span>${esc(mon.label || mon.name)}</span></a>`;
+    const reward = ([text, img, note]) => `<li>${img ? `<img src="${img}" alt="" width="40" height="40" loading="lazy">` : '<span class="hw-coin" aria-hidden="true">💰</span>'}<b>${esc(text)}</b>${note ? `<small>${esc(note)}</small>` : ""}</li>`;
+    $("#hw-route").innerHTML = EV.route.map((step) => {
+      if (step.kind === "battle") {
+        battle += 1;
+        return `<li class="hw-route-step is-battle v-card">
+          <img class="hw-route-skin" src="${step.skin}" alt="" width="64" height="128" loading="lazy">
+          <div class="hw-route-body">
+            <p class="hw-route-kicker">${esc(step.title)} · Nv. ${step.level}</p>
+            <h3>${esc(step.name)}</h3>
+            <p class="hw-small">${esc(step.where)}</p>
+            <div class="hw-route-team">${step.team.map(monCard).join("")}</div>
+            <p class="hw-route-label">Recompensa</p>
+            <ul class="hw-route-rewards">${step.rewards.map(reward).join("")}</ul>
+          </div>
+        </li>`;
+      }
+      return `<li class="hw-route-step is-step v-card">
+          <span class="hw-route-icon" aria-hidden="true">${step.icon}</span>
+          <div class="hw-route-body">
+            <h3>${esc(step.name)}</h3>
+            <p>${step.text}</p>
+            ${step.maze ? `<button type="button" class="v-btn is-ghost is-sm" data-maze aria-expanded="false">👀 Ver la ruta del laberinto (spoiler)</button>
+              <figure class="hw-maze" hidden><img src="${step.maze}" alt="Mapa del laberinto con la ruta marcada en rojo" width="446" height="858" loading="lazy">
+              <figcaption class="hw-small">Sigue la línea roja: empieza arriba a la izquierda (P) y baja hasta la salida.</figcaption></figure>` : ""}
+          </div>
+        </li>`;
+    }).join("");
+    $("#hw-route").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-maze]");
+      if (!button) return;
+      const figure = button.nextElementSibling;
+      figure.hidden = !figure.hidden;
+      button.setAttribute("aria-expanded", String(!figure.hidden));
+      button.textContent = figure.hidden ? "👀 Ver la ruta del laberinto (spoiler)" : "🙈 Ocultar la ruta";
+    });
+  }
+
   // ---------- Mapa de la Mansión (Leaflet): 1 píxel = 1 bloque; latlng = [-z, x] ----------
   const M = EV.mansion;
   if (M && window.L && $("#hw-map")) {
@@ -208,21 +282,31 @@
     map.fitBounds(box);
     const pin = (html, cls) => L.divIcon({ className: `hw-pin ${cls}`, html, iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -14] });
     const coords = ([x, y, z]) => `X ${x} · Y ${y} · Z ${z}`;
-    L.marker(toLatLng(M.adivinador), { icon: pin(`<img src="${SPRITES}/pokemon/202.png" alt="">`, "is-npc"), title: "Adivinador" })
-      .bindPopup(`<strong>Adivinador</strong><br>${coords(M.adivinador)}`).addTo(map);
+    L.marker(toLatLng(M.adivinador), { icon: pin(`<img src="${EV.adivinador?.face || `${SPRITES}/pokemon/202.png`}" alt="" class="is-face">`, "is-npc"), title: "Adivinador" })
+      .bindPopup(`<strong>Adivinador</strong> · Gimnasio Psíquico<br>${coords(M.adivinador)}<br><a href="#adivinador">Ver su equipo y sus preguntas</a>`).addTo(map);
+    // Los Entrenadores Misteriosos: casi en la misma X/Z, a distinta altura (centro, encima y más arriba).
+    (EV.route || []).filter((step) => step.pos).forEach((step, i, list) => {
+      const offset = (i - (list.length - 1) / 2) * 30;
+      const latlng = toLatLng(step.pos);
+      L.marker(L.latLng(latlng.lat, latlng.lng + offset), { icon: pin(`<img src="${step.face}" alt="" class="is-face">`, "is-npc"), title: step.name, zIndexOffset: 500 })
+        .bindPopup(`<strong>${esc(step.name)}</strong> · ${esc(step.title)}<br>${coords(step.pos)}<br>${esc(step.where)}<br><a href="#recorrido">Ver el recorrido</a>`).addTo(map);
+    });
 
     // Litwick: ocultos hasta pulsar «Mostrar»; los encontrados se guardan y cuentan en la misión.
-    const found = new Set(Array.isArray(progress.litwickFound) ? progress.litwickFound : []);
+    // Los encontrados se guardan por coordenadas («x,y,z»): no se descuadran si cambia la lista.
+    const keyOf = (point) => point.join(",");
+    const found = new Set((Array.isArray(progress.litwickFound) ? progress.litwickFound : []).filter((key) => typeof key === "string"));
     const mission = missions.find((m) => m.id === "litwick");
-    const floors = [["all", "Todos"], ["low", "Abajo (Y −24 a −22)"], ["mid", "Medio (Y −17 a −14)"], ["high", "Arriba (Y −7 a −2)"]];
-    const floorOf = (y) => (y <= -20 ? "low" : y <= -10 ? "mid" : "high");
+    const floors = [["all", "Todos"], ["low", "Abajo (Y −24 a −22)"], ["mid", "Medio (Y −17 a −14)"], ["high", "Arriba (Y −8 a −2)"], ["tower", "Torres (Y 36 a 95)"]];
+    const floorOf = (y) => (y <= -20 ? "low" : y <= -10 ? "mid" : y <= 10 ? "high" : "tower");
     let floor = "all";
     const layer = L.layerGroup();
     const markers = M.litwicks.map((point, i) => {
       const marker = L.marker(toLatLng(point), { title: `Litwick ${i + 1}` });
       marker.on("popupopen", (event) => {
         event.popup.getElement().querySelector("[data-found]")?.addEventListener("click", () => {
-          if (found.has(i)) found.delete(i); else found.add(i);
+          const key = keyOf(M.litwicks[i]);
+          if (found.has(key)) found.delete(key); else found.add(key);
           progress.litwickFound = [...found];
           if (mission) setValue(mission.id, Math.min(mission.goal, found.size));
           save();
@@ -235,7 +319,7 @@
     function paint() {
       markers.forEach((marker, i) => {
         const point = M.litwicks[i];
-        const done = found.has(i);
+        const done = found.has(keyOf(point));
         marker.setIcon(pin(`<img src="${SPRITES}/pokemon/607.png" alt=""><b>${i + 1}</b>`, done ? "is-found" : "is-lit"));
         marker.bindPopup(`<strong>Litwick ${i + 1}</strong><br>${coords(point)}<br><button type="button" class="hw-pin-btn" data-found>${done ? "Marcar como pendiente" : "✓ Lo encontré"}</button>`);
         const visible = floor === "all" || floorOf(point[1]) === floor;

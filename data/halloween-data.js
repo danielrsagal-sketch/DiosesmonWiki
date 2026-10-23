@@ -12,13 +12,44 @@ window.HALLOWEEN_EVENT = {
     image: "assets/img/eventos/halloween/ticket.png",
     includes: ["Bingo Halloween", "Casa Encantada"],
   },
+  // El Adivinador (Gimnasio Psíquico de la Mansión): 5 preguntas y luego combate. Cada fallo castiga a un Pokémon tuyo.
+  //   questions: las que nos salieron; answer = índice de la opción correcta (0 = A).
+  adivinador: {
+    name: "Adivino",
+    skin: "assets/img/eventos/halloween/adivinador.png", face: "assets/img/eventos/halloween/cara-adivinador.png",
+    level: 60,
+    team: [{ id: 229, name: "Houndoom", types: ["Siniestro", "Fuego"] }, { id: 169, name: "Crobat", types: ["Veneno", "Volador"] }, { id: 430, name: "Honchkrow", types: ["Siniestro", "Volador"] }],
+    questions: [
+      { q: "¿Qué hace la habilidad Rompemoldes?", options: ["Los ataques del usuario ignoran las habilidades del oponente", "Baja el ataque físico del rival", "Sube mucho la velocidad al iniciar el combate", "Los ataques del oponente ignoran la habilidad del usuario"], answer: 0 },
+      { q: "¿Cuál de estas evoluciones no es una evolución oficial de Eevee?", options: ["Glaceon", "Leafeon", "Sylveon", "Poiseon"], answer: 3 },
+      { q: "¿Cuál de estos Pokémon no es un Pokémon oficial?", options: ["Zorua", "Dudunsparce", "Dunsparce", "Bibaroof"], answer: 3, why: "El oficial es Bibarel." },
+      { q: "¿Qué hace el efecto de Quemado en un Pokémon?", options: ["Sube el Ataque Físico", "Baja el Ataque Especial", "Sube el Ataque Especial", "Baja el Ataque Físico"], answer: 3, why: "Además, le quita un poco de PS cada turno." },
+      { q: "¿Cuál de estos ataques Pokémon no es un ataque oficial del juego?", options: ["Octopresa", "Bastión Final", "Tumba Piedras", "Pesadilla"], answer: 2, why: "El oficial se llama Tumba Rocas. Octopresa y Bastión Final son de la 8.ª generación." },
+    ],
+  },
+  // Recorrido de la Mansión después del Adivinador: los 3 Entrenadores Misteriosos (misión del Bingo) y lo que hay entre ellos.
+  //   kind: "battle" (combate) o "step" (laberinto, parkour…). skin: su aspecto de frente (de la skin del juego). team: Pokémon a nivel 100 con aspecto de Halloween.
+  //   rewards: [texto, imagen opcional]. Los equipos son los que vimos; los aspectos de Halloween no salen en los sprites.
+  route: [
+    { kind: "battle", name: "Entrenador Misterioso", skin: "assets/img/eventos/halloween/entrenador-misterioso.png", face: "assets/img/eventos/halloween/cara-entrenador-misterioso.png", title: "1.er Entrenador Misterioso", where: "En el centro del mapa (X 0, Y −1, Z 0). Aparece al vencer al Adivinador.", pos: [0, -1, 0], level: 100,
+      team: [{ id: 609, name: "Chandelure" }, { id: 143, name: "Snorlax" }, { id: 430, name: "Honchkrow" }, { id: 94, name: "Gengar" }, { id: 468, name: "Togekiss" }, { id: 571, name: "Zoroark" }],
+      rewards: [["Collar de Almas", "assets/img/eventos/halloween/collar-de-almas.png", "Exclusivo y decorativo"], ["8.000 PokéDólares"]] },
+    { kind: "step", icon: "🌀", name: "El laberinto", text: "Cruza el laberinto hasta el portal: te teletransporta al siguiente combate." },
+    { kind: "battle", name: "Entrenadora Sangrienta", skin: "assets/img/eventos/halloween/entrenadora-sangrienta.png", face: "assets/img/eventos/halloween/cara-entrenadora-sangrienta.png", title: "2.º Entrenador Misterioso", where: "Al otro lado del portal del laberinto (X 0, Y 36, Z 2).", pos: [0, 36, 2], level: 100,
+      team: [{ id: 3, name: "Venusaur" }, { id: 350, name: "Milotic" }, { id: 9, name: "Blastoise" }, { id: 612, name: "Haxorus" }, { id: 59, name: "Arcanine" }, { id: 6, name: "Charizard" }],
+      rewards: [["Corona Maldita", "assets/img/eventos/halloween/corona-maldita.png", "Exclusiva y decorativa"], ["12.000 PokéDólares"], ["Globo rojo", "assets/img/eventos/halloween/tienda/globo-rojo.png", "Para el parkour"]] },
+    { kind: "step", icon: "🎈", name: "El parkour", text: "Usa el Globo rojo que te acaban de dar: en la mano saltas más alto y caes lento. <strong>Si te caes, vuelves al inicio del parkour.</strong>" },
+    { kind: "battle", name: "Rey Calabaza", skin: "assets/img/eventos/halloween/rey-calabaza.png", face: "assets/img/eventos/halloween/cara-rey-calabaza.png", title: "3.er Entrenador Misterioso", where: "Al final del parkour (X 0, Y 50, Z 0).", pos: [0, 50, 0], level: 100,
+      team: [{ id: 26, mega: "X", sprite: 10304, label: "Mega Raichu X" }, { id: 468, name: "Togekiss" }, { id: 149, name: "Dragonite" }, { id: 217, name: "Ursaring" }, { id: 448, name: "Lucario" }, { id: 25, name: "Pikachu" }],
+      rewards: [["Sombrero Embrujado", "assets/img/eventos/halloween/sombrero-embrujado.png", "Exclusivo y decorativo"], ["Globo morado", "assets/img/eventos/halloween/tienda/globo-morado.png", "+25% de probabilidad de Shiny"], ["17.000 PokéDólares"]] },
+  ],
   // Mapa de la Mansión Encantada (mundo multiworld:mansionencantada). Imagen del mapa de Xaero: 1 píxel = 1 bloque.
-  // bounds: bloques que cubre la imagen. Waypoints [x, y, z] del export de Xaero (cm$mansionhalloween_2.txt).
+  // bounds: bloques que cubre la imagen. Adivinador: waypoint de Xaero. Litwick [x, y, z]: los 33 que hay (mod diosesmon-npcs, /npcs exportar).
   mansion: {
     image: "assets/img/eventos/halloween/mansion.webp",
     bounds: { minX: -230, maxX: 230, minZ: -230, maxZ: 330 },
     adivinador: [143, -24, 106],
-    litwicks: [[43, -7, 33], [-37, -7, -16], [-50, -7, 63], [127, -24, 170], [-21, -24, 168], [-61, -24, 123], [-97, -14, 96], [-141, -22, 73], [-119, -24, 28], [-118, -24, 23], [-141, -14, -24], [-110, -24, -79], [-59, -24, -92], [-15, -7, -59], [129, -24, -16], [136, -23, 9], [164, -23, 41], [42, -23, 180], [-37, -24, 216], [-23, -5, -137], [-42, -7, -55], [-70, -7, -51], [-66, -7, 39], [89, -7, -22], [30, -3, -114], [111, -5, 13], [81, -2, 138], [40, -24, 211], [-9, -17, 252]],
+    litwicks: [[-37, -24, 216], [-9, -17, 252], [-21, -24, 168], [42, -23, 180], [40, -24, 211], [81, -2, 138], [127, -24, 168], [162, -22, 42], [111, -5, 13], [135, -23, 9], [129, -24, -16], [89, -7, -22], [43, -7, 33], [30, -3, -114], [-15, -8, -62], [-23, -5, -137], [-18, 37, -28], [-42, -7, -55], [-7, 95, -14], [-61, -24, -92], [-36, -7, -16], [-70, -7, -51], [-111, -24, -81], [-140, -14, -24], [-72, 36, 0], [-118, -24, 23], [-119, -24, 28], [-140, -23, 70], [-66, -7, 39], [-97, -14, 96], [-50, -7, 65], [-61, -24, 123], [-12, -3, 25]],
   },
   shop: {
     groups: [
@@ -103,8 +134,8 @@ window.HALLOWEEN_EVENT = {
         id: "entrenadores", goal: 3, icon: "items/dusk-ball",
         title: "Derrota a los 3 Entrenadores Misteriosos",
         text: "Vence a los tres Entrenadores Misteriosos que esperan en la Mansión.",
-        tip: "Están dentro de la Mansión Encantada. Lleva un equipo preparado: si quieres, móntalo antes en el constructor Competitivo.",
-        link: ["Montar un equipo", "competitivo.html"],
+        tip: "Primero vence al <strong>Adivinador</strong>: entonces aparece el 1.er Entrenador Misterioso en el centro de la Mansión. Luego vienen el laberinto, la <strong>Entrenadora Sangrienta</strong>, un parkour y el <strong>Rey Calabaza</strong>. Todos usan Pokémon de nivel 100.",
+        link: ["Ver el recorrido y sus equipos", "#recorrido"],
       },
       {
         id: "litwick", goal: 20, icon: "pokemon/607",

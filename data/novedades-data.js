@@ -8,6 +8,15 @@
 window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-23",
+    tag: "mejora",
+    title: "Gimnasios: Alto Mando y Campeona de Sinnoh",
+    items: [
+      "Ya están los equipos del <strong>Alto Mando de Sinnoh</strong> (Alecrán, Gaia, Fausto y Delos) y de la Campeona <strong>Cintia</strong>.",
+    ],
+    links: [["Ver Gimnasios", "gimnasios.html"]],
+  },
+  {
+    date: "2026-10-23",
     tag: "nuevo",
     title: "Kits exclusivos de Halloween",
     items: [
@@ -25,6 +34,7 @@ window.DIOSESMON_NOVEDADES = [
       "Nueva página del <a href=\"halloween.html\">evento de Halloween</a>: el <strong>Ticket Calabaza</strong> (45.000 PokéDólares), que da acceso al Bingo Halloween y a la Casa Encantada.",
       "Las <strong>8 misiones del Bingo</strong> explicadas, con los Pokémon que te sirven: los Fantasma del Safari, los Fuego y Siniestro del Nether, las líneas evolutivas que salen enteras en el Nether y la receta de la <strong>Baya Calabaza</strong>.",
       "Marca tu progreso y mira tu cartón: hay premio por <strong>línea</strong> y por <strong>cartón lleno</strong>.",
+      "Nuevo tesoro <a href=\"tesoros.html#legendarios-halloween\">Legendarios de Halloween</a>: skins de Dialga, Giratina, Groudon, Kyogre, Mew, Mewtwo y Rayquaza (14,29 % cada una).",
       "<strong>Mapa de la Mansión Encantada</strong> con zoom: el Adivinador y, si te atascas, los Litwick escondidos (ocultos por defecto, sin spoilers). Márcalos y cuentan en tu misión.",
       "La <strong>tienda del evento</strong> completa: globos, mascotas, peluches y decoraciones, con sus precios. Las decoraciones se ven en <strong>3D</strong>, sacadas del juego: pulsa una y gírala. Debajo, otras 79 decoraciones de Halloween del servidor.",
       "La wiki se viste de Halloween mientras dure el evento. El Safari ya no es la novedad: ahora está al lado de Inicio.",

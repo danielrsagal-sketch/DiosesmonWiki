@@ -16,13 +16,13 @@
   <link rel="stylesheet" href="assets/css/v-components.css?v=4">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="assets/css/halloween-event.css?v=4">
+  <link rel="stylesheet" href="assets/css/halloween-event.css?v=9">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
   <script src="assets/js/site-nav.js?v=25" defer></script>
-  <script src="data/halloween-data.js?v=3" defer></script>
+  <script src="data/halloween-data.js?v=10" defer></script>
   <script src="data/halloween-decor.js?v=1" defer></script>
   <script src="assets/js/model3d.js?v=1" defer></script>
-  <script src="assets/js/halloween.js?v=5" defer></script>
+  <script src="assets/js/halloween.js?v=12" defer></script>
 </head>
 <body style="--section-color: #ff8c1a">
   <header class="dex-topbar">
@@ -95,6 +95,21 @@
           <p class="hw-small">¿Sabes algo más de la Casa Encantada? <a href="feedback.html">Cuéntanoslo</a> y lo añadimos.</p>
         </div>
       </div>
+    </section>
+
+    <section class="v-section" id="adivinador" aria-labelledby="hw-adv-title">
+      <h2 class="v-title" id="hw-adv-title">El Adivinador · Gimnasio Psíquico</h2>
+      <p class="v-intro">En la Mansión te espera el <strong>Adivino</strong>. Antes del combate te hace <strong>5 preguntas</strong> de Pokémon: <strong>por cada fallo, uno de tus Pokémon empieza el combate castigado</strong> («el líder ha leído tu mente»). Practica aquí con las que nos salieron; pueden cambiar.</p>
+      <div class="hw-adv">
+        <div class="hw-adv-team v-card" id="hw-adv-team"></div>
+        <ol class="hw-quiz" id="hw-quiz"></ol>
+      </div>
+    </section>
+
+    <section class="v-section" id="recorrido" aria-labelledby="hw-route-title">
+      <h2 class="v-title" id="hw-route-title">Recorrido de la Mansión: los 3 Entrenadores Misteriosos</h2>
+      <p class="v-intro">Después del Adivinador empieza el recorrido. Vence a los tres Entrenadores Misteriosos (su misión del Bingo) y llévate sus objetos exclusivos de Halloween 2026. Todos sus Pokémon son de <strong>nivel 100</strong> y van con aspecto de Halloween.</p>
+      <ol class="hw-route" id="hw-route"></ol>
     </section>
 
     <section class="v-section" id="mapa-mansion" aria-labelledby="hw-map-title">
