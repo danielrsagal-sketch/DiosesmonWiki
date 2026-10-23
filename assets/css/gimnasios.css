@@ -101,3 +101,9 @@ body.modal-open { overflow: hidden; }
   .gym-trainer img { width: 80px; height: 80px; }
   .gym-card h4 { font-size: 19px; }
 }
+/* Gimnasio con varios líderes posibles (trío de Teselia): un botón por líder. */
+.gym-variants { display: flex; flex-wrap: wrap; gap: 6px; }
+.gym-variants .gym-team-btn { padding-right: 12px; font-size: 13px; }
+.gym-variants .gym-team-btn img { object-fit: contain; }
+.gym-team-btn.is-empty { flex-direction: row; color: #9aa9c4; background: #1a2338; border: 1px dashed #3a4c6e; box-shadow: none; cursor: default; }
+.gym-team-btn.is-empty small { margin-left: 4px; font-size: 11px; font-weight: 500; }

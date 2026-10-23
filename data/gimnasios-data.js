@@ -204,9 +204,15 @@ window.GYM_REGIONS = [
     // Equipos y recompensas pendientes: el servidor aún no ha publicado los oficiales.
     battles: [
       { kind: "leader", name: "Millo, Zeo y Maíz", type: "Planta, Fuego o Agua", badge: 33, badgeName: "Medalla Trío", trainer: "cilan", rewards: ["3.000 PokéDólares", "15 Dcoins"],
-        note: "El líder depende de tu inicial: te toca el que tiene ventaja. El equipo de abajo es el de Maíz (Agua), el que sale si elegiste inicial de tipo Fuego.",
-        trainers: [{ name: "Entrenador 1", team: [{ id: 594 }, { id: 423 }, { id: 550 }] }, { name: "Entrenador 2", team: [{ id: 457 }, { id: 395 }, { id: 400 }] }],
-        team: [{ id: 503 }, { id: 395 }, { id: 419 }, { id: 593 }, { id: 516 }, { id: 537 }] },
+        note: "El líder depende de tu inicial: te toca el que tiene ventaja sobre ella. Elige abajo el tuyo.",
+        // variants: un líder por inicial (Planta → Zeo, Fuego → Maíz, Agua → Millo). Cada uno con sus 2 entrenadores.
+        variants: [
+          { name: "Millo", type: "Planta", trainer: "cilan", trainers: [], team: [], note: "Si elegiste inicial de Agua" },
+          { name: "Zeo", type: "Fuego", trainer: "chili", trainers: [], team: [], note: "Si elegiste inicial de Planta" },
+          { name: "Maíz", type: "Agua", trainer: "cress", note: "Si elegiste inicial de Fuego",
+            trainers: [{ name: "Entrenador 1", team: [{ id: 594 }, { id: 423 }, { id: 550 }] }, { name: "Entrenador 2", team: [{ id: 457 }, { id: 395 }, { id: 400 }] }],
+            team: [{ id: 503 }, { id: 395 }, { id: 419 }, { id: 593 }, { id: 516 }, { id: 537 }] },
+        ] },
       { kind: "leader", name: "Aloe", type: "Normal", badge: 34, badgeName: "Medalla Base", trainer: "lenora", rewards: ["4.000 PokéDólares", "20 Dcoins"],
         trainers: [{ name: "Entrenador 1", team: [{ id: 400 }, { id: 531 }, { id: 586 }] }, { name: "Entrenador 2", team: [{ id: 521 }, { id: 508 }, { id: 424 }] }],
         team: [{ id: 508 }, { id: 428 }, { id: 521 }, { id: 573 }, { id: 398 }, { id: 424 }] },

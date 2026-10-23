@@ -91,7 +91,15 @@ function battleStages(region, battle) {
   ];
 }
 
+// Gimnasios con varios líderes posibles (variants): un botón por líder; los que no tienen equipo aún salen sin información.
+const variantBattle = (battle, variant) => ({ ...battle, ...variant, _base: battle });
 function teamButton(region, battle) {
+  if (battle.variants) {
+    const index = region.battles.indexOf(battle);
+    return `<div class="gym-variants">${battle.variants.map((variant, v) => (variant.team?.length
+      ? `<button class="gym-team-btn" type="button" data-team="${region.id}:${index}:${v}" title="${escapeHtml(variant.note ?? "")}"><img src="${TRAINER_SPRITES}/${variant.trainer}.png" alt="" width="28" height="28">${escapeHtml(variant.name)} · ${escapeHtml(variant.type)}</button>`
+      : `<span class="gym-team-btn is-empty" title="${escapeHtml(variant.note ?? "")} · aún sin información"><img src="${TRAINER_SPRITES}/${variant.trainer}.png" alt="" width="28" height="28">${escapeHtml(variant.name)} · ${escapeHtml(variant.type)}<small>Aún sin información</small></span>`)).join("")}</div>`;
+  }
   const target = battle.kind === "elite" ? region.battles.find((item) => item.kind === "champion") : battle;
   const ready = battleStages(region, target).some((stage) => stage.team.length);
   const index = region.battles.indexOf(target);
@@ -128,7 +136,7 @@ function pokemonCard(member) {
 
 function openTeam(region, battle, opener) {
   const stages = battleStages(region, battle);
-  const step = battle.kind === "champion" ? battle.title ?? "Campeón" : `Gimnasio ${region.battles.filter((item) => item.kind === "leader").indexOf(battle) + 1}`;
+  const step = battle.kind === "champion" ? battle.title ?? "Campeón" : `Gimnasio ${region.battles.filter((item) => item.kind === "leader").indexOf(battle._base ?? battle) + 1}`;
   const rules = [region.levelRule, region.allowed, battle.cap ? `Level cap ${battle.cap}` : ""].filter(Boolean);
   modal.style.setProperty("--section-color", region.color);
   modalPanel.innerHTML = `<button class="gym-modal-close" type="button" data-close-team aria-label="Cerrar" title="Cerrar (Esc)">×</button>
@@ -257,9 +265,11 @@ list.addEventListener("click", (event) => {
 detail.addEventListener("click", (event) => {
   const button = event.target.closest("[data-team]");
   if (!button) return;
-  const [regionId, index] = button.dataset.team.split(":");
+  const [regionId, index, variant] = button.dataset.team.split(":");
   const region = regions.find((item) => item.id === regionId);
-  if (region) openTeam(region, region.battles[Number(index)], button);
+  if (!region) return;
+  const battle = region.battles[Number(index)];
+  openTeam(region, variant !== undefined && battle.variants ? variantBattle(battle, battle.variants[Number(variant)]) : battle, button);
 });
 modal.addEventListener("click", (event) => {
   if (event.target.closest("[data-close-team]")) closeTeam();
