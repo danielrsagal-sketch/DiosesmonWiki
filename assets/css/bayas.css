@@ -205,3 +205,14 @@ th[aria-sort="ascending"] .bb-sort-ico, th[aria-sort="descending"] .bb-sort-ico 
   .bb-steps li::before { left: 14px; }
   .bb-grid { grid-template-columns: 1fr; }
 }
+
+/* Bayas reductoras de EVs (Catálogo) */
+.bb-ev { margin-bottom: 16px; padding: 16px 18px; border-color: #ff8c8c55; }
+.bb-ev-head h3 { margin: 0 0 4px; font-size: 18px; }
+.bb-ev-head p { margin: 0 0 12px; color: var(--text-2, #d8e3f6); line-height: 1.5; }
+.bb-ev-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 8px; }
+.bb-ev-item { display: flex; align-items: center; gap: 8px; padding: 6px 10px 6px 6px; color: inherit; text-align: left; background: var(--panel-2, #16233c); border: 1px solid var(--line, #2b3d5c); border-radius: 12px; font: inherit; cursor: pointer; }
+.bb-ev-item:hover { border-color: var(--gold, #ffd442); }
+.bb-ev-item span { display: grid; }
+.bb-ev-item small { color: #ff9a9a; font-size: 12.5px; }
+.bb-ev-foot { margin: 12px 0 0; font-size: 14px; color: var(--muted, #9aa9c4); }

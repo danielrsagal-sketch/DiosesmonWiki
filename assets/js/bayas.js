@@ -139,7 +139,7 @@
     const uses = [];
     if (b.bait.length) uses.push(`<li><strong>🎣 Cebo en la Poké Caña:</strong> ${b.bait.map((e) => `${esc(e.text)}`).join(" · ")}</li>`);
     uses.push(`<li><strong>🧃 Condimento de Bongurchata:</strong> aporta ${b.flavourTotal} puntos de sabor (${Object.entries(b.flavours).map(([f, v]) => `${esc(D.flavours[f])} ${v}`).join(", ")}).</li>`);
-    if (b.category === "ev") uses.push(`<li><strong>📉 Bajar EVs:</strong> ${esc(b.fieldUse)}</li>`);
+    if (b.category === "ev") uses.push(`<li><strong>📉 Bajar EVs:</strong> ${esc(b.fieldUse)} <a href="entrenamiento-ev.html#ev-how-title">Ver Entrenamiento EV →</a></li>`);
     else if (b.fieldUse) uses.push(`<li><strong>🎒 Fuera de combate:</strong> ${esc(b.fieldUse)}</li>`);
 
     dialogBody.innerHTML = `
@@ -433,6 +433,12 @@
   // ---------- Arranque ----------
   renderCatalog();
   renderTarget();
+  // Bayas reductoras de EVs (bloque del Catálogo), en el orden de las estadísticas.
+  const EV_ORDER = [["pomeg", "PS"], ["kelpsy", "Ataque"], ["qualot", "Defensa"], ["hondew", "At. Esp."], ["grepa", "Def. Esp."], ["tamato", "Velocidad"]];
+  const evList = document.getElementById("bb-ev-list");
+  if (evList) evList.innerHTML = EV_ORDER.filter(([id]) => B[id]).map(([id, stat]) => `<button type="button" class="bb-ev-item" data-berry="${id}">
+      ${sprite(B[id], 40)}<span><b>${esc(shortName(B[id]))}</b><small>−10 EVs de ${esc(stat)}</small></span></button>`).join("");
+
   renderPair();
   layout(B.oran, B.cheri);
   renderMutTable();
@@ -440,6 +446,7 @@
   renderTable();
   const fromHash = location.hash.replace("#", "");
   if (fromHash.startsWith("baya-") && B[fromHash.slice(5)]) { showTab("catalogo", false, false); openBerry(fromHash.slice(5)); }
+  else if (fromHash === "reductoras") { showTab("catalogo", false, false); document.getElementById("reductoras")?.scrollIntoView({ block: "start" }); }
   else showTab(tabIds.includes(fromHash) ? fromHash : store.get("tab", "catalogo"), false, tabIds.includes(fromHash));
   window.addEventListener("hashchange", () => { const h = location.hash.replace("#", ""); if (tabIds.includes(h)) showTab(h, false, false); });
 })();

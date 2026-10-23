@@ -203,8 +203,13 @@ window.GYM_REGIONS = [
     allowed: "Por confirmar",
     // Equipos y recompensas pendientes: el servidor aún no ha publicado los oficiales.
     battles: [
-      { kind: "leader", name: "Millo, Zeo y Maíz", type: "Planta, Fuego o Agua", badge: 33, badgeName: "Medalla Trío", trainer: "cilan", team: [], unconfirmed: true },
-      { kind: "leader", name: "Aloe", type: "Normal", badge: 34, badgeName: "Medalla Base", trainer: "lenora", team: [] },
+      { kind: "leader", name: "Millo, Zeo y Maíz", type: "Planta, Fuego o Agua", badge: 33, badgeName: "Medalla Trío", trainer: "cilan", rewards: ["3.000 PokéDólares", "15 Dcoins"],
+        note: "El líder depende de tu inicial: te toca el que tiene ventaja. El equipo de abajo es el de Maíz (Agua), el que sale si elegiste inicial de tipo Fuego.",
+        trainers: [{ name: "Entrenador 1", team: [{ id: 594 }, { id: 423 }, { id: 550 }] }, { name: "Entrenador 2", team: [{ id: 457 }, { id: 395 }, { id: 400 }] }],
+        team: [{ id: 503 }, { id: 395 }, { id: 419 }, { id: 593 }, { id: 516 }, { id: 537 }] },
+      { kind: "leader", name: "Aloe", type: "Normal", badge: 34, badgeName: "Medalla Base", trainer: "lenora", rewards: ["4.000 PokéDólares", "20 Dcoins"],
+        trainers: [{ name: "Entrenador 1", team: [{ id: 400 }, { id: 531 }, { id: 586 }] }, { name: "Entrenador 2", team: [{ id: 521 }, { id: 508 }, { id: 424 }] }],
+        team: [{ id: 508 }, { id: 428 }, { id: 521 }, { id: 573 }, { id: 398 }, { id: 424 }] },
       { kind: "leader", name: "Camus", type: "Bicho", badge: 35, badgeName: "Medalla Insecto", trainer: "burgh", team: [] },
       { kind: "leader", name: "Camila", type: "Eléctrico", badge: 36, badgeName: "Medalla Voltio", trainer: "elesa", team: [] },
       { kind: "leader", name: "Yakón", type: "Tierra", badge: 37, badgeName: "Medalla Temblor", trainer: "clay", team: [] },

@@ -432,3 +432,7 @@
 .caza-plan:hover { text-decoration: underline; }
 .caza-foot { margin: 10px 0 0; color: #b6c3d9; font-size: 14px; }
 .caza-foot strong { color: #fff; }
+.ev-method-icons a { display: inline-flex; border-radius: 6px; }
+.ev-method-icons a:hover { background: #ffffff14; }
+.ev-method-more { display: inline-block; margin-top: 8px; color: #86cfff; font-size: 14px; font-weight: 600; text-decoration: none; }
+.ev-method-more:hover { text-decoration: underline; }

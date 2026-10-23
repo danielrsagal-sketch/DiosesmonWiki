@@ -9,6 +9,25 @@ window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-23",
     tag: "mejora",
+    title: "Gimnasios de Teselia: primeros equipos",
+    items: [
+      "Ya están los equipos y recompensas de los dos primeros gimnasios de <strong>Teselia</strong>: el del trío Millo, Zeo y Maíz (3.000 PokéDólares y 15 Dcoins) y el de Aloe (4.000 PokéDólares y 20 Dcoins), con sus entrenadores.",
+    ],
+    links: [["Ver Gimnasios", "gimnasios.html"]],
+  },
+  {
+    date: "2026-10-23",
+    tag: "mejora",
+    title: "Bayas reductoras de EVs",
+    items: [
+      "En <a href=\"bayas.html#reductoras\">Bayas</a>, un apartado nuevo con las 6 bayas que <strong>quitan 10 EVs</strong> de una estadística (Grana, Algama, Íspero, Meluce, Uvav y Tamate).",
+      "Conectado con <a href=\"entrenamiento-ev.html\">Entrenamiento EV</a>: desde allí cada baya abre su ficha, y desde la ficha vuelves a Entrenamiento.",
+    ],
+    links: [["Ver las bayas reductoras", "bayas.html#reductoras"]],
+  },
+  {
+    date: "2026-10-23",
+    tag: "mejora",
     title: "Gimnasios: Alto Mando y Campeona de Sinnoh",
     items: [
       "Ya están los equipos del <strong>Alto Mando de Sinnoh</strong> (Alecrán, Gaia, Fausto y Delos) y de la Campeona <strong>Cintia</strong>.",

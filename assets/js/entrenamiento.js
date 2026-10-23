@@ -48,7 +48,7 @@
     { title: "Plumas", value: "+1", tone: "up", icons: STATS.map((stat) => stat.feather),
       text: "Suma de uno en uno, para dejar la stat exacta.",
       recipe: "Mesa de crafteo: 3 plumas y 1 hoja de menta de la stat (salen 3)." },
-    { title: "Bayas reductoras", value: "−10", tone: "down", icons: STATS.map((stat) => stat.berry),
+    { title: "Bayas reductoras", value: "−10", tone: "down", icons: STATS.map((stat) => stat.berry), links: STATS.map((stat) => `bayas.html#baya-${stat.berry.replace("_berry", "")}`), more: ["Ver las bayas reductoras", "bayas.html#reductoras"],
       text: "Quitan 10 EVs de su stat y suben la amistad. Sirven para corregir errores.",
       recipe: "Se cultivan. También son el ingrediente de vitaminas, mochis y caramelos." },
     { title: "Mochi reinicio", value: "0", tone: "down", icons: ["fresh_start_mochi"],
@@ -61,9 +61,10 @@
         <h3>${method.title}</h3>
         <span class="ev-method-value">${method.value}</span>
       </div>
-      <div class="ev-method-icons">${method.icons.map((item) => img(item, 30)).join("")}${method.pokeball ? '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="" width="30" height="30">' : ""}</div>
+      <div class="ev-method-icons">${method.icons.map((item, i) => (method.links ? `<a href="${method.links[i]}" title="Ver en Bayas">${img(item, 30)}</a>` : img(item, 30))).join("")}${method.pokeball ? '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="" width="30" height="30">' : ""}</div>
       <p>${method.text}</p>
       <p class="ev-method-recipe">${method.recipe}</p>
+      ${method.more ? `<a class="ev-method-more" href="${method.more[1]}">${method.more[0]} →</a>` : ""}
     </article>`).join("");
 
   // Calculadora: rivales y combates necesarios.

@@ -15,10 +15,10 @@
   <link rel="stylesheet" href="assets/css/site-base.css?v=2">
   <link rel="stylesheet" href="assets/css/v-components.css?v=4">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
-  <link rel="stylesheet" href="assets/css/bayas.css?v=2">
+  <link rel="stylesheet" href="assets/css/bayas.css?v=3">
   <script src="assets/js/site-nav.js?v=25" defer></script>
   <script src="data/bayas-data.js?v=2" defer></script>
-  <script src="assets/js/bayas.js?v=1" defer></script>
+  <script src="assets/js/bayas.js?v=2" defer></script>
 </head>
 <body style="--section-color: #43db95">
   <header class="dex-topbar">
@@ -62,6 +62,14 @@
     <section class="bb-panel" id="panel-catalogo" role="tabpanel" aria-labelledby="tab-catalogo">
       <h2 class="v-title">Catálogo de bayas</h2>
       <p class="v-intro">Pulsa una baya para ver su ficha completa. Los tiempos son los del mod en minutos; en el juego cada ciclo dura un 40 % más (te lo explicamos en <a href="#cultivar" data-tab-link="cultivar">Cómo cultivar</a>).</p>
+      <div class="bb-ev v-card" id="reductoras">
+        <div class="bb-ev-head">
+          <h3>📉 Bayas reductoras de EVs</h3>
+          <p>Cada una <strong>quita 10 EVs</strong> de su estadística y sube la amistad. Sirven para corregir un reparto de EVs que te has pasado, sin empezar de cero. Dáselas desde el inventario; no se comen en combate.</p>
+        </div>
+        <div class="bb-ev-list" id="bb-ev-list"></div>
+        <p class="bb-ev-foot">Cómo sumar y quitar EVs, y qué Pokémon derrotar para cada estadística: <a href="entrenamiento-ev.html#ev-how-title">Entrenamiento EV →</a></p>
+      </div>
       <div class="bb-filters v-card">
         <div class="bb-filter-row">
           <label class="v-field bb-grow"><span>Buscar</span><span class="v-search"><input id="cat-search" type="search" placeholder="Nombre, efecto, bioma, abono…" autocomplete="off"></span></label>

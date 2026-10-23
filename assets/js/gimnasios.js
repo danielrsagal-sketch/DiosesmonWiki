@@ -182,6 +182,7 @@ function renderBattle(region, battle, index, progress) {
       </div>
       ${cap}
       ${battle.kind === "leader" ? '<p class="gym-note">Antes del líder: 2 entrenadores del gimnasio</p>' : ""}
+      ${battle.note ? `<p class="gym-note">${escapeHtml(battle.note)}</p>` : ""}
     </div>
     <div class="gym-footer">
       ${battle.kind === "elite"
