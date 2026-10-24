@@ -203,7 +203,7 @@ window.GYM_REGIONS = [
     available: true,
     color: "#e8ecf4",
     badge: 33,
-    levelRule: "Por confirmar",
+    levelRule: "Rivales a nivel 100 · combates nivelados a 50",
     allowed: "Solo Pokémon de Sinnoh y Teselia (4.ª y 5.ª gen)",
     allowedGens: [4, 5],
     battles: [
