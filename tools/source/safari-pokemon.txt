@@ -91,6 +91,23 @@ Xatu
 Exeggcute
 Abra
 Girafarig
+# 5.ª generación
+Swoobat
+Sandile
+Krokorok
+Sigilyph
+Zorua
+Zoroark
+Gothitelle
+Lampent
+Golurk
+Munna
+Musharna
+Purrloin
+Scrafty
+Beheeyem
+Reuniclus
+Golett
 
 [cumbres] Cumbres Salvajes
 Sudowoodo
@@ -154,6 +171,10 @@ Sealeo
 Delibird
 Sneasel
 Dewgong
+# 5.ª generación
+Cryogonal
+Vanillish
+Cubchoo
 
 [selva] Selva Ancestral
 Seedot
@@ -218,3 +239,16 @@ Nosepass
 Gastly
 Growlithe (raro)
 Tyranitar (raro)
+# 5.ª generación
+Boldore
+Darmanitan
+Simisear
+Volcarona
+Heatmor
+Druddigon
+Larvesta
+Lampent
+Axew
+Dwebble
+Crustle
+Fraxure

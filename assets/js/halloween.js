@@ -120,7 +120,7 @@
     const extra = [
       m.mons ? `<div class="hw-mons">${m.mons.map(monChip).join("")}</div>` : "",
       m.lines ? `<div class="hw-lines">${m.lines.map((line) => `<div class="hw-line">${line.map(monChip).join('<i aria-hidden="true">›</i>')}</div>`).join("")}</div>` : "",
-      m.recipe ? `<div class="hw-recipe"><img src="${m.recipe}" alt="Receta: una calabaza en el centro rodeada por las 8 bayas" width="244" height="250"><span aria-hidden="true">▶</span><img src="${m.icon}" alt="Baya Calabaza" width="82" height="84"></div>
+      m.recipe ? `<div class="hw-recipe"><img src="${m.recipe}" alt="Receta: una calabaza en el centro rodeada por las 8 bayas" width="277" height="192"><img src="${m.icon}" alt="Baya Calabaza" width="66" height="66"></div>
         <div class="hw-berries">${m.berries.map(([id, name]) => `<a class="hw-berry" href="bayas.html#baya-${id}"><img src="assets/img/bayas/${id}_berry.png" alt="" width="32" height="32">Baya ${esc(name)}</a>`).join("")}</div>` : "",
       m.image ? `<img class="hw-mission-img" src="${m.image}" alt="Así es un Litwick escondido" width="142" height="196" loading="lazy">` : "",
       m.link ? `<a class="v-btn is-ghost is-sm hw-link" href="${m.link[1]}">${esc(m.link[0])} →</a>` : "",

@@ -41,7 +41,7 @@ window.HALLOWEEN_EVENT = {
     { kind: "step", icon: "🎈", name: "El parkour", text: "Usa el Globo rojo que te acaban de dar: en la mano saltas más alto y caes lento. <strong>Si te caes, vuelves al inicio del parkour.</strong>" },
     { kind: "battle", name: "Rey Calabaza", skin: "assets/img/eventos/halloween/rey-calabaza.png", face: "assets/img/eventos/halloween/cara-rey-calabaza.png", title: "3.er Entrenador Misterioso", where: "Al final del parkour (X 0, Y 50, Z 0).", pos: [0, 50, 0], level: 100,
       team: [{ id: 26, mega: "X", sprite: 10304, label: "Mega Raichu X" }, { id: 468, name: "Togekiss" }, { id: 149, name: "Dragonite" }, { id: 217, name: "Ursaring" }, { id: 448, name: "Lucario" }, { id: 25, name: "Pikachu" }],
-      rewards: [["Sombrero Embrujado", "assets/img/eventos/halloween/sombrero-embrujado.png", "Exclusivo y decorativo"], ["Globo morado", "assets/img/eventos/halloween/tienda/globo-morado.png", "+25% de probabilidad de Shiny"], ["17.000 PokéDólares"]] },
+      rewards: [["Sombrero Embrujado", "assets/img/eventos/halloween/sombrero-embrujado.png", "Exclusivo y decorativo"], ["Globo morado", "assets/img/eventos/halloween/tienda/globo-morado.png", "+25% de probabilidad de Shiny"], ["Llave del Tesoro Halloween", "assets/img/eventos/halloween/llave-tesoro-halloween.png", "Garantiza una skin de Halloween (sin el Pokémon). Úsala en /warp tesoros"], ["17.000 PokéDólares"]] },
   ],
   // Mapa de la Mansión Encantada (mundo multiworld:mansionencantada). Imagen del mapa de Xaero: 1 píxel = 1 bloque.
   // bounds: bloques que cubre la imagen. Adivinador: waypoint de Xaero. Litwick [x, y, z]: los 33 que hay (mod diosesmon-npcs, /npcs exportar).
@@ -93,9 +93,9 @@ window.HALLOWEEN_EVENT = {
         id: "safari-fantasma", goal: 30, icon: "pokemon/92",
         title: "Captura 30 Pokémon Fantasma en el Safari",
         text: "Captura treinta Pokémon de tipo Fantasma dentro del Safari.",
-        tip: "El <strong>Valle Sombrío</strong> es la mejor zona: tiene 16 Pokémon Fantasma. También salen en Selva Ancestral, Tierras Ígneas, Cumbres Salvajes y Campos Árticos.",
+        tip: "El <strong>Valle Sombrío</strong> es la mejor zona: tiene 21 Pokémon Fantasma, ahora también Litwick, Golett y sus evoluciones. También salen en Selva Ancestral, Tierras Ígneas (Litwick y su línea), Cumbres Salvajes y Campos Árticos.",
         link: ["Ver el mapa del Safari", "safari.html"],
-        mons: [[92, "Gastly"], [93, "Haunter"], [94, "Gengar"], [200, "Misdreavus"], [292, "Shedinja"], [302, "Sableye"], [353, "Shuppet"], [354, "Banette"], [355, "Duskull"], [356, "Dusclops"], [425, "Drifloon"], [426, "Drifblim"], [429, "Mismagius"], [442, "Spiritomb"], [477, "Dusknoir"], [478, "Froslass"]],
+        mons: [[92, "Gastly"], [93, "Haunter"], [94, "Gengar"], [200, "Misdreavus"], [292, "Shedinja"], [302, "Sableye"], [353, "Shuppet"], [354, "Banette"], [355, "Duskull"], [356, "Dusclops"], [425, "Drifloon"], [426, "Drifblim"], [429, "Mismagius"], [442, "Spiritomb"], [477, "Dusknoir"], [478, "Froslass"], [607, "Litwick"], [608, "Lampent"], [609, "Chandelure"], [622, "Golett"], [623, "Golurk"]],
       },
       {
         id: "cria-fantasma", goal: 3, icon: "items/lucky-egg",

@@ -7,6 +7,17 @@
 //   links: botones al final [["Texto", "pagina.html"], …] (opcional)
 window.DIOSESMON_NOVEDADES = [
   {
+    date: "2026-10-24",
+    tag: "mejora",
+    title: "Safari: llegan Pokémon de Teselia",
+    items: [
+      "<strong>Valle Sombrío:</strong> Purrloin, Munna, Woobat, Sandile, Scraggy, Sigilyph, Zorua, Gothita, Solosis, Elgyem, Litwick y Golett, con sus evoluciones.",
+      "<strong>Tierras Ígneas:</strong> Pansear, Roggenrola, Darumaka, Dwebble, Litwick, Axew, Druddigon, Heatmor y Larvesta, con sus evoluciones.",
+      "<strong>Campos Árticos:</strong> Vanillite, Cubchoo y Cryogonal, con sus evoluciones.",
+    ],
+    links: [["Ver el Safari", "safari.html"]],
+  },
+  {
     date: "2026-10-23",
     tag: "mejora",
     title: "Gimnasios de Teselia: primeros equipos",
