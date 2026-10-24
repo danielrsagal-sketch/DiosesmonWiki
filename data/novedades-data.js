@@ -14,6 +14,8 @@ window.DIOSESMON_NOVEDADES = [
       "<strong>Valle Sombrío:</strong> Purrloin, Munna, Woobat, Sandile, Scraggy, Sigilyph, Zorua, Gothita, Solosis, Elgyem, Litwick y Golett, con sus evoluciones.",
       "<strong>Tierras Ígneas:</strong> Pansear, Roggenrola, Darumaka, Dwebble, Litwick, Axew, Druddigon, Heatmor y Larvesta, con sus evoluciones.",
       "<strong>Campos Árticos:</strong> Vanillite, Cubchoo y Cryogonal, con sus evoluciones.",
+      "<strong>Cumbres Salvajes:</strong> Drilbur, Roggenrola, Timburr, Sandile, Dwebble, Karrablast, Ferroseed, Klink, Mienfoo, Golett, Rufflet y Durant, con sus evoluciones.",
+      "<strong>Río y Océano:</strong> Tynamo, Eelektrik y Eelektross.",
     ],
     links: [["Ver el Safari", "safari.html"]],
   },

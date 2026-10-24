@@ -57,6 +57,8 @@ Wailord
 Seaking
 Clamperl
 Qwilfish
+# 5.ª generación
+Eelektrik
 
 [valle] Valle Sombrío
 Grumpig
@@ -158,6 +160,22 @@ Mothim
 Ledian
 Phanpy
 Masquerain
+# 5.ª generación
+Golett
+Gurdurr
+Crustle
+Klink
+Escavalier
+Krookodile
+Drilbur
+Ferroseed
+Ferrothorn
+Rufflet
+Durant
+Klang
+Mienfoo
+Golurk
+Boldore
 
 [articos] Campos Árticos
 Froslass
