@@ -9,6 +9,36 @@ window.DIOSESMON_NOVEDADES = [
   {
     date: "2026-10-24",
     tag: "mejora",
+    title: "Teselia completa en Gimnasios",
+    items: [
+      "Ya están los equipos y recompensas de los gimnasios de <strong>Camus, Camila, Yakón, Gerania, Junco e Iris</strong>, con sus entrenadores.",
+      "También el <strong>Alto Mando</strong> (Anís, Aza, Catleya y Lotto) y el Campeón <strong>Mirto</strong>: 20.000 PokéDólares y 90 Dcoins.",
+      "<a href=\"dexrewards.html\">DexRewards</a>: completar el 25 % de Teselia da 3.000 PokéDólares.",
+    ],
+    links: [["Ver Gimnasios", "gimnasios.html"]],
+  },
+  {
+    date: "2026-10-24",
+    tag: "mejora",
+    title: "Gimnasios: consejos para cada combate",
+    items: [
+      "Al abrir el equipo de un gimnasio, abajo del todo tienes <strong>consejos</strong>: con qué tipos atacar, qué tipos aguantan sus ataques, el Pokémon más difícil, megas e inmunidades.",
+      "Te propone <strong>Pokémon que puedes usar</strong> en ese gimnasio, respetando el límite de generaciones de cada región: Kanto, sin límite; Johto, gen 1 y 2; Hoenn, gen 2 y 3; Sinnoh, gen 3 y 4; Teselia, gen 4 y 5.",
+    ],
+    links: [["Ver Gimnasios", "gimnasios.html"]],
+  },
+  {
+    date: "2026-10-24",
+    tag: "mejora",
+    title: "Halloween: barra de secciones",
+    items: [
+      "La página del evento tiene una barra fija para saltar al Ticket, el Bingo, la Casa Encantada, el Mapa, el Adivinador, los Entrenadores o la Tienda. El mapa de la Mansión ya no tapa la barra superior.",
+    ],
+    links: [["Ver el evento", "halloween.html"]],
+  },
+  {
+    date: "2026-10-24",
+    tag: "mejora",
     title: "Safari: llegan Pokémon de Teselia",
     items: [
       "<strong>Valle Sombrío:</strong> Purrloin, Munna, Woobat, Sandile, Scraggy, Sigilyph, Zorua, Gothita, Solosis, Elgyem, Litwick y Golett, con sus evoluciones.",

@@ -13,6 +13,7 @@
 //   trainers: los 2 entrenadores del gimnasio antes del líder, p. ej. [{ name: "Entrenador 1", team: [{ id: 138 }] }]
 //   El Alto Mando hace de entrenadores previos del Campeón: no da recompensa propia.
 //   unconfirmed: true marca nombres pendientes de confirmar en el servidor
+// allowedGens (de cada región): generaciones de los Pokémon que puedes usar en sus gimnasios (los consejos solo proponen esos).
 //
 // Level caps de Kanto y Johto según https://wiki.diosesmon.net/tutoriales/gimnasios
 window.GYM_REGIONS = [
@@ -87,7 +88,8 @@ window.GYM_REGIONS = [
     color: "#ffd442",
     badge: 9,
     levelRule: "Level cap según tus medallas",
-    allowed: "Pokémon de cualquier generación",
+    allowed: "Solo Pokémon de Kanto y Johto (1.ª y 2.ª gen)",
+    allowedGens: [1, 2],
     battles: [
       { kind: "leader", name: "Pegaso", type: "Volador", badge: 9, badgeName: "Medalla Céfiro", trainer: "falkner", cap: 64, capAfter: 68, rewards: ["2.000 PokéDólares", "MT Respiro"],
         trainers: [
@@ -150,7 +152,8 @@ window.GYM_REGIONS = [
     color: "#4bb6ff",
     badge: 17,
     levelRule: "Rivales a nivel 100 · combates nivelados a 50",
-    allowed: "Solo Pokémon de Hoenn y Johto",
+    allowed: "Solo Pokémon de Johto y Hoenn (2.ª y 3.ª gen)",
+    allowedGens: [2, 3],
     battles: [
       { kind: "leader", name: "Petra", type: "Roca", badge: 17, badgeName: "Medalla Piedra", trainer: "roxanne", rewards: ["30 Dcoins", "4.500 PokéDólares", "DT Avalancha"], team: [] },
       { kind: "leader", name: "Marcial", type: "Lucha", badge: 18, badgeName: "Medalla Puño", trainer: "brawly", rewards: ["30 Dcoins", "4.600 PokéDólares", "DT Puño Incremento"], team: [] },
@@ -175,7 +178,8 @@ window.GYM_REGIONS = [
     color: "#b38cff",
     badge: 25,
     levelRule: "Rivales a nivel 100 · combates nivelados a 50",
-    allowed: "Solo Pokémon de Sinnoh y Hoenn",
+    allowed: "Solo Pokémon de Hoenn y Sinnoh (3.ª y 4.ª gen)",
+    allowedGens: [3, 4],
     battles: [
       { kind: "leader", name: "Roco", type: "Roca", badge: 25, badgeName: "Medalla Lignito", trainer: "roark", rewards: ["3.500 PokéDólares", "DT Romperrocas"], team: [] },
       { kind: "leader", name: "Gardenia", type: "Planta", badge: 26, badgeName: "Medalla Bosque", trainer: "gardenia", rewards: ["3.800 PokéDólares", "DT Energibola"], team: [] },
@@ -200,8 +204,8 @@ window.GYM_REGIONS = [
     color: "#e8ecf4",
     badge: 33,
     levelRule: "Por confirmar",
-    allowed: "Por confirmar",
-    // Equipos y recompensas pendientes: el servidor aún no ha publicado los oficiales.
+    allowed: "Solo Pokémon de Sinnoh y Teselia (4.ª y 5.ª gen)",
+    allowedGens: [4, 5],
     battles: [
       { kind: "leader", name: "Millo, Zeo y Maíz", type: "Planta, Fuego o Agua", badge: 33, badgeName: "Medalla Trío", trainer: "cilan", rewards: ["3.000 PokéDólares", "15 Dcoins"],
         note: "El líder depende de tu inicial: te toca el que tiene ventaja sobre ella. Elige abajo el tuyo.",
@@ -216,17 +220,30 @@ window.GYM_REGIONS = [
       { kind: "leader", name: "Aloe", type: "Normal", badge: 34, badgeName: "Medalla Base", trainer: "lenora", rewards: ["4.000 PokéDólares", "20 Dcoins"],
         trainers: [{ name: "Entrenador 1", team: [{ id: 400 }, { id: 531 }, { id: 586 }] }, { name: "Entrenador 2", team: [{ id: 521 }, { id: 508 }, { id: 424 }] }],
         team: [{ id: 508 }, { id: 428 }, { id: 521 }, { id: 573 }, { id: 398 }, { id: 424 }] },
-      { kind: "leader", name: "Camus", type: "Bicho", badge: 35, badgeName: "Medalla Insecto", trainer: "burgh", team: [] },
-      { kind: "leader", name: "Camila", type: "Eléctrico", badge: 36, badgeName: "Medalla Voltio", trainer: "elesa", team: [] },
-      { kind: "leader", name: "Yakón", type: "Tierra", badge: 37, badgeName: "Medalla Temblor", trainer: "clay", team: [] },
-      { kind: "leader", name: "Gerania", type: "Volador", badge: 38, badgeName: "Medalla Jet", trainer: "skyla", team: [] },
-      { kind: "leader", name: "Junco", type: "Hielo", badge: 39, badgeName: "Medalla Iceberg", trainer: "brycen", team: [] },
-      { kind: "leader", name: "Lirio", type: "Dragón", badge: 40, badgeName: "Medalla Leyenda", trainer: "drayden", team: [], unconfirmed: true },
-      { kind: "elite", name: "Anís", type: "Fantasma", trainer: "shauntal", team: [], unconfirmed: true },
-      { kind: "elite", name: "Lotto", type: "Lucha", trainer: "marshal", team: [], unconfirmed: true },
-      { kind: "elite", name: "Sabino", type: "Siniestro", trainer: "grimsley", team: [], unconfirmed: true },
-      { kind: "elite", name: "Catleya", type: "Psíquico", trainer: "caitlin", team: [], unconfirmed: true },
-      { kind: "champion", name: "Mirto", title: "Campeón de Teselia", trainer: "alder", team: [] },
+      { kind: "leader", name: "Camus", type: "Bicho", badge: 35, badgeName: "Medalla Insecto", trainer: "burgh", rewards: ["5.000 PokéDólares", "25 Dcoins"],
+        trainers: [{ name: "Entrenador 1", team: [{ id: 402 }, { id: 545 }, { id: 416 }] }, { name: "Entrenador 2", team: [{ id: 414 }, { id: 558 }, { id: 632 }] }],
+        team: [{ id: 637 }, { id: 617 }, { id: 589 }, { id: 542 }, { id: 469 }, { id: 596 }] },
+      { kind: "leader", name: "Camila", type: "Eléctrico", badge: 36, badgeName: "Medalla Voltio", trainer: "elesa", rewards: ["6.000 PokéDólares", "30 Dcoins"],
+        trainers: [{ name: "Entrenador 1", team: [{ id: 404 }, { id: 462 }, { id: 417 }] }, { name: "Entrenador 2", team: [{ id: 587 }, { id: 479, sprite: 10009, types: ["Eléctrico", "Agua"], note: "Rotom Lavado" }, { id: 604 }] }],
+        team: [{ id: 479, sprite: 10009, types: ["Eléctrico", "Agua"], note: "Rotom Lavado" }, { id: 596 }, { id: 523 }, { id: 618 }, { id: 462 }, { id: 405 }] },
+      { kind: "leader", name: "Yakón", type: "Tierra", badge: 37, badgeName: "Medalla Temblor", trainer: "clay", rewards: ["7.000 PokéDólares", "35 Dcoins"],
+        trainers: [{ name: "Entrenador 1", team: [{ id: 552 }, { id: 537 }, { id: 464 }] }, { name: "Entrenador 2", team: [{ id: 445 }, { id: 530 }, { id: 623 }] }],
+        team: [{ id: 450 }, { id: 423 }, { id: 473 }, { id: 472 }, { id: 530 }, { id: 445 }] },
+      { kind: "leader", name: "Gerania", type: "Volador", badge: 38, badgeName: "Medalla Jet", trainer: "skyla", rewards: ["8.000 PokéDólares", "40 Dcoins"],
+        trainers: [{ name: "Entrenador 1", team: [{ id: 430 }, { id: 628 }, { id: 581 }] }, { name: "Entrenador 2", team: [{ id: 426 }, { id: 441 }, { id: 561 }] }],
+        team: [{ id: 472 }, { id: 468 }, { id: 567 }, { id: 528 }, { id: 398 }, { id: 630 }] },
+      { kind: "leader", name: "Junco", type: "Hielo", badge: 39, badgeName: "Medalla Iceberg", trainer: "brycen", rewards: ["9.000 PokéDólares", "45 Dcoins"],
+        trainers: [{ name: "Entrenador 1", team: [{ id: 478 }, { id: 460 }, { id: 479, sprite: 10010, types: ["Eléctrico", "Hielo"], note: "Rotom Frío" }] }, { name: "Entrenador 2", team: [{ id: 614 }, { id: 471 }, { id: 615 }] }],
+        team: [{ id: 473 }, { id: 461 }, { id: 614 }, { id: 584 }, { id: 615 }, { id: 471 }] },
+      { kind: "leader", name: "Iris", type: "Dragón", badge: 40, badgeName: "Medalla Leyenda", trainer: "iris", rewards: ["13.000 PokéDólares", "50 Dcoins"],
+        note: "Es el gimnasio de Lirio, pero al final te enfrentas a Iris.",
+        trainers: [{ name: "Entrenador 1", team: [{ id: 612 }, { id: 635 }, { id: 621 }] }, { name: "Entrenador 2", team: [{ id: 445 }, { id: 611 }, { id: 634 }] }],
+        team: [{ id: 611 }, { id: 445 }, { id: 635 }, { id: 621 }, { id: 612 }, { id: 444 }] },
+      { kind: "elite", name: "Anís", type: "Fantasma", trainer: "shauntal", team: [{ id: 609 }, { id: 442 }, { id: 623 }, { id: 563 }] },
+      { kind: "elite", name: "Aza", type: "Siniestro", trainer: "grimsley", team: [{ id: 442 }, { id: 560 }, { id: 625 }, { id: 553 }] },
+      { kind: "elite", name: "Catleya", type: "Psíquico", trainer: "caitlin", team: [{ id: 579 }, { id: 475 }, { id: 518 }, { id: 561 }] },
+      { kind: "elite", name: "Lotto", type: "Lucha", trainer: "marshal", team: [{ id: 534 }, { id: 448 }, { id: 475 }, { id: 620 }] },
+      { kind: "champion", name: "Mirto", title: "Campeón de Teselia", trainer: "alder", rewards: ["20.000 PokéDólares", "90 Dcoins"], team: [{ id: 598 }, { id: 637 }, { id: 635 }, { id: 468 }, { id: 612 }, { id: 571 }] },
     ],
   },
   { id: "kalos", name: "Kalos", generation: 6, available: false, color: "#7ad7ff", battles: [] },

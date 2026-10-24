@@ -59,7 +59,7 @@ window.DEXREWARDS = [
     ],
   },
   { id: "sinnoh", title: "Generación 4 – Sinnoh", subtitle: "Gen 4", range: [387, 493], sprite: 448, color: "#b38cff", milestones: [25, 50, 75, 100] },
-  { id: "unova", title: "Generación 5 – Teselia", subtitle: "Gen 5", range: [494, 649], sprite: 495, color: "#e8ecf4", milestones: [25, 50, 75, 100] },
+  { id: "unova", title: "Generación 5 – Teselia", subtitle: "Gen 5", range: [494, 649], sprite: 495, color: "#e8ecf4", milestones: [{ percent: 25, rewards: ["3.000 PokéDólares"] }, 50, 75, 100] },
   { id: "kalos", title: "Generación 6 – Kalos", subtitle: "Gen 6", range: [650, 721], sprite: 700, color: "#7ad7ff", milestones: [25, 50, 75, 100] },
   { id: "alola", title: "Generación 7 – Alola", subtitle: "Gen 7", range: [722, 809], sprite: 722, color: "#ffa64d", milestones: [25, 50, 75, 100] },
   { id: "galar", title: "Generación 8 – Galar", subtitle: "Gen 8", range: [810, 905], sprite: 813, color: "#ff6fb1", milestones: [25, 50, 75, 100] },

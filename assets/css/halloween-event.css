@@ -235,3 +235,11 @@
 @media (prefers-reduced-motion: reduce) {
   .hw-ticket-img, .hw-house img, .hw-cell.is-done { animation: none; }
 }
+
+/* Barra de secciones del evento (fija al hacer scroll) */
+.hw-page .v-section { scroll-margin-top: 140px; }
+.hw-tabs { margin-top: 8px; }
+.hw-tabs .v-tab.is-active { color: #170e24; background: var(--hw-orange); border-color: var(--hw-orange); }
+.hw-tabs .v-tab:hover:not(.is-active) { border-color: #ff8c1a88; }
+/* El mapa crea su propia capa: los paneles de Leaflet no pasan por encima de la barra superior. */
+.hw-map { position: relative; z-index: 0; isolation: isolate; }

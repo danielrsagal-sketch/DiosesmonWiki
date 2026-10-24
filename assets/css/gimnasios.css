@@ -107,3 +107,14 @@ body.modal-open { overflow: hidden; }
 .gym-variants .gym-team-btn img { object-fit: contain; }
 .gym-team-btn.is-empty { flex-direction: row; color: #9aa9c4; background: #1a2338; border: 1px dashed #3a4c6e; box-shadow: none; cursor: default; }
 .gym-team-btn.is-empty small { margin-left: 4px; font-size: 11px; font-weight: 500; }
+
+/* Consejos del combate (al final de la ventana del equipo) */
+.gym-tips { margin: 18px 0 4px; padding: 16px 18px; background: #0d1729; border: 1px solid var(--section-color, #ffd442); border-radius: 14px; }
+.gym-tips h3 { margin: 0 0 10px; color: #fff; font-size: 17px; }
+.gym-tips ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.gym-tips li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; color: #d8e3f6; }
+.gym-tips li strong { color: #fff; }
+.gym-tips li small { flex-basis: 100%; color: #9aa9c4; font-size: 13px; line-height: 1.45; }
+.gym-tips li a { color: #86cfff; }
+.gym-tips-note { margin: 10px 0 0; color: #6b7a96; font-size: 12px; }
+.gym-gens { padding: 1px 8px; color: #08101f; background: var(--section-color, #ffd442); border-radius: 999px; font: 700 11px "DM Mono", monospace; }

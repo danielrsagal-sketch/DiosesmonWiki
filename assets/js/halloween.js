@@ -112,6 +112,19 @@
     if (event.key === "ArrowRight") openDecor(current + 1);
   });
 
+  // ---------- Barra de secciones: marca la sección que se está viendo ----------
+  const tabs = $$("#hw-tabs a");
+  const spy = new IntersectionObserver((entries) => {
+    const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+    if (!visible) return;
+    tabs.forEach((tab) => tab.classList.toggle("is-active", tab.getAttribute("href") === `#${visible.target.id}`));
+    const active = tabs.find((tab) => tab.classList.contains("is-active"));
+    // En móvil la barra se desliza de lado para que la pestaña activa quede a la vista (sin mover la página).
+    const bar = $("#hw-tabs");
+    if (active && bar) bar.scrollTo({ left: active.offsetLeft - bar.clientWidth / 2 + active.clientWidth / 2, behavior: "smooth" });
+  }, { rootMargin: "-150px 0px -55% 0px" });
+  tabs.forEach((tab) => { const target = document.querySelector(tab.getAttribute("href")); if (target) spy.observe(target); });
+
   // ---------- Bingo ----------
   const monChip = ([id, name]) => `<a class="hw-mon" href="pokedex.html#pokemon/${id}" title="${esc(name)}"><img src="${SPRITES}/pokemon/${id}.png" alt="" width="48" height="48" loading="lazy"><span>${esc(name)}</span></a>`;
   function missionHtml(m, index) {

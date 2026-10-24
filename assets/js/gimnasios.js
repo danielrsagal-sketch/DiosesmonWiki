@@ -134,6 +134,82 @@ function pokemonCard(member) {
     </${element}>`;
 }
 
+
+// ---------- Consejos automáticos (se calculan con los equipos de cada combate) ----------
+// Tabla de tipos de Cobblemon 1.7.3 (atacante × defensor): 0 inmune, 1 = ½, 2 neutro, 3 = ×2.
+const TYPE_ORDER = ["Normal", "Lucha", "Volador", "Veneno", "Tierra", "Roca", "Bicho", "Fantasma", "Acero", "Fuego", "Agua", "Planta", "Eléctrico", "Psíquico", "Hielo", "Dragón", "Siniestro", "Hada"];
+const TYPE_CHART = "222221201222222222321123103222213231232221321223122222222111210223222223220323123321322222213212321322223222211122211123232231022222232222232212222223221112123223222221323113223122222233222311222122221133121131222122223202222231122122232322221222212202223232221113221322222222221222222320212222232222232211232122221122222332";
+const TYPE_MULT = { 0: 0, 1: 0.5, 2: 1, 3: 2 };
+const effect = (attack, defenders) => defenders.reduce((total, defender) => {
+  const a = TYPE_ORDER.indexOf(attack);
+  const d = TYPE_ORDER.indexOf(defender);
+  return a < 0 || d < 0 ? total : total * TYPE_MULT[TYPE_CHART[a * 18 + d]];
+}, 1);
+const typesOf = (member) => member.types ?? speciesById.get(member.id)?.types ?? [];
+const nameOf = (member) => {
+  const base = member.name ?? speciesById.get(member.id)?.name ?? `#${member.id}`;
+  return member.mega ? `Mega-${base}${typeof member.mega === "string" ? ` ${member.mega}` : ""}` : member.form ? `${base} de ${REGIONAL_LABELS[member.form] ?? member.form}` : base;
+};
+const typeChip = (type) => `<span class="gym-type" style="--type-color:var(--type-${slug(type)}, #60718d)">${escapeHtml(type)}</span>`;
+
+// Pokémon que puedes usar en la región: totalmente evolucionados, disponibles y sin legendarios (total < 580).
+const finalForms = () => {
+  const parents = new Set((window.POKEDEX_SPECIES ?? []).map((pokemon) => pokemon.evolvesFrom).filter(Boolean));
+  return (window.POKEDEX_SPECIES ?? []).filter((pokemon) => (pokemon.kind === "pokemon" || !pokemon.kind) && pokemon.available !== false && !parents.has(pokemon.id) && pokemon.total < 580);
+};
+function examplesFor(type, gens, used) {
+  return finalForms().filter((pokemon) => pokemon.types.includes(type) && (!gens || gens.includes(pokemon.generation)) && !used.has(pokemon.id))
+    .sort((a, b) => b.total - a.total).slice(0, 3);
+}
+function gymTips(stages, region) {
+  const mons = stages.flatMap((stage) => stage.team);
+  if (!mons.length) return "";
+  const main = stages.filter((stage) => stage.main).flatMap((stage) => stage.team);
+  // Ataque: tipos que pegan ×2 (o más) a más Pokémon rivales y que pocos resisten.
+  const attack = TYPE_ORDER.map((type) => {
+    const values = mons.map((member) => effect(type, typesOf(member)));
+    return { type, strong: values.filter((v) => v > 1).length, weak: values.filter((v) => v < 1).length };
+  }).filter((row) => row.strong).sort((a, b) => (b.strong - b.weak) - (a.strong - a.weak) || b.strong - a.strong).slice(0, 4);
+  // Defensa: sus ataques suelen ser de sus propios tipos (STAB). Tipos que los resisten mejor.
+  const stab = new Map();
+  mons.forEach((member) => typesOf(member).forEach((type) => stab.set(type, (stab.get(type) ?? 0) + 1)));
+  const defend = TYPE_ORDER.map((type) => {
+    let score = 0;
+    let hurt = 0;
+    stab.forEach((count, attackType) => {
+      const value = effect(attackType, [type]);
+      if (value < 1) score += count;
+      if (value > 1) { score -= count; hurt += count; }
+    });
+    return { type, score, hurt };
+  }).filter((row) => row.score > 0).sort((a, b) => b.score - a.score).slice(0, 3);
+  const common = [...stab.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3);
+  // Peligros: los del líder (o campeón) con menos debilidades, y las megas.
+  const tough = main.map((member) => ({ member, weak: TYPE_ORDER.filter((type) => effect(type, typesOf(member)) > 1) }))
+    .sort((a, b) => a.weak.length - b.weak.length);
+  const toughest = tough[0];
+  const megas = main.filter((member) => member.mega);
+  const immunities = mons.map((member) => ({ member, immune: TYPE_ORDER.filter((type) => effect(type, typesOf(member)) === 0) })).filter((row) => row.immune.length);
+  const items = [
+    attack.length && `<li><strong>Ataca con</strong> ${attack.map((row) => typeChip(row.type)).join("")}<small>${attack.map((row) => `${row.type}: pega ×2 a ${row.strong} de ${mons.length}`).join(" · ")}</small></li>`,
+    attack.length && (() => {
+      const used = new Set();
+      const picks = attack.slice(0, 3).map((row) => {
+        const list = examplesFor(row.type, region.allowedGens, used);
+        list.forEach((pokemon) => used.add(pokemon.id));
+        return list.length ? `${row.type}: ${list.map((pokemon) => `<a href="pokedex.html#pokemon/${pokemon.id}">${escapeHtml(pokemon.name)}</a>`).join(", ")}` : "";
+      }).filter(Boolean);
+      return picks.length ? `<li><strong>Pokémon que te sirven</strong>${region.allowedGens ? `<span class="gym-gens">Solo gen ${region.allowedGens.join(" y ")}</span>` : ""}<small>${picks.join(" · ")}</small></li>` : "";
+    })(),
+    defend.length && `<li><strong>Aguantan bien sus ataques</strong> ${defend.map((row) => typeChip(row.type)).join("")}<small>Sus tipos más repetidos son ${common.map(([type, count]) => `${type} (${count})`).join(", ")}: lo normal es que ataquen con ellos.</small></li>`,
+    toughest && toughest.weak.length && `<li><strong>Cuidado con ${escapeHtml(nameOf(toughest.member))}</strong><small>Es el más difícil de su equipo: solo le pega ×2 ${toughest.weak.join(", ")}.</small></li>`,
+    megas.length && `<li><strong>Megaevolución</strong><small>${megas.map((member) => escapeHtml(nameOf(member))).join(", ")} megaevoluciona: sube mucho sus estadísticas y puede cambiar de tipo y de habilidad.</small></li>`,
+    immunities.length && `<li><strong>Inmunidades</strong><small>${immunities.slice(0, 4).map(({ member, immune }) => `${escapeHtml(nameOf(member))} no recibe daño de ${immune.join(" ni ")}`).join(" · ")}.</small></li>`,
+    '<li><strong>Prepárate</strong><small>Lleva un equipo variado y por encima del nivel si puedes; usa la <a href="competitivo.html">calculadora Competitivo</a> para revisar las debilidades de tu equipo contra estos tipos.</small></li>',
+  ].filter(Boolean);
+  return `<section class="gym-tips"><h3>💡 Consejos para este combate</h3><ul>${items.join("")}</ul><p class="gym-tips-note">Calculados con los tipos de sus Pokémon; sus movimientos pueden cubrir otras debilidades.</p></section>`;
+}
+
 function openTeam(region, battle, opener) {
   const stages = battleStages(region, battle);
   const step = battle.kind === "champion" ? battle.title ?? "Campeón" : `Gimnasio ${region.battles.filter((item) => item.kind === "leader").indexOf(battle._base ?? battle) + 1}`;
@@ -156,7 +232,8 @@ function openTeam(region, battle, opener) {
     <ol class="gym-stages">${stages.map((stage, index) => `<li class="gym-stage${stage.main ? " is-main" : ""}">
         <h3><span>${index + 1}</span>${escapeHtml(stage.label)}</h3>
         ${stage.team.length ? `<div class="gym-mon-grid">${stage.team.map(pokemonCard).join("")}</div>` : '<p class="gym-team-pending">Equipo por confirmar</p>'}
-      </li>`).join("")}</ol>`;
+      </li>`).join("")}</ol>
+    ${gymTips(stages, region)}`;
   modalOpener = opener;
   modal.hidden = false;
   document.body.classList.add("modal-open");

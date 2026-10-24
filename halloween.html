@@ -16,13 +16,13 @@
   <link rel="stylesheet" href="assets/css/v-components.css?v=4">
   <link rel="stylesheet" href="assets/css/section.css?v=1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="assets/css/halloween-event.css?v=11">
+  <link rel="stylesheet" href="assets/css/halloween-event.css?v=12">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
   <script src="assets/js/site-nav.js?v=25" defer></script>
   <script src="data/halloween-data.js?v=14" defer></script>
   <script src="data/halloween-decor.js?v=1" defer></script>
   <script src="assets/js/model3d.js?v=1" defer></script>
-  <script src="assets/js/halloween.js?v=14" defer></script>
+  <script src="assets/js/halloween.js?v=15" defer></script>
 </head>
 <body style="--section-color: #ff8c1a">
   <header class="dex-topbar">
@@ -58,7 +58,17 @@
       </div>
     </section>
 
-    <section class="v-section hw-ticket-wrap" aria-labelledby="hw-ticket-title">
+    <nav class="v-tabs hw-tabs" aria-label="Secciones del evento" id="hw-tabs">
+      <a class="v-tab is-active" href="#ticket">🎟️ Ticket</a>
+      <a class="v-tab" href="#bingo">🎯 Bingo</a>
+      <a class="v-tab" href="#casa-encantada">🏚️ Casa Encantada</a>
+      <a class="v-tab" href="#mapa-mansion">🗺️ Mapa</a>
+      <a class="v-tab" href="#adivinador">🔮 Adivinador</a>
+      <a class="v-tab" href="#recorrido">⚔️ Entrenadores</a>
+      <a class="v-tab" href="#tienda">🛒 Tienda</a>
+    </nav>
+
+    <section class="v-section hw-ticket-wrap" id="ticket" aria-labelledby="hw-ticket-title">
       <div class="hw-ticket v-card">
         <img class="hw-ticket-img" id="hw-ticket-img" src="assets/img/eventos/halloween/ticket.png" alt="Ticket Calabaza" width="156" height="95">
         <div class="hw-ticket-body">
